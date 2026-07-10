@@ -1,6 +1,6 @@
 # H1IT-Powershell
 
-Interaktiv læringsside til PowerShell-undervisning på H1 IT / Infrastruktur og Cyber.
+Interaktiv læringsside til **Serverautomatisering I — 16862** (PowerShell) på H1 IT / Infrastruktur og Cyber.
 
 PowerShell dækkes over **2 dage** (uge 37–38) som del af det samlede infrastrukturprojekt.
 
@@ -41,6 +41,19 @@ npm run dev
 
 Åbn http://localhost:5173/
 
+### AI-feedback lokalt
+
+Kør API'en i en separat terminal:
+
+```bash
+cd api
+npm install
+cp ../.env.example ../.env   # tilføj OPENAI_API_KEY
+npm run dev
+```
+
+Frontend proxyer `/api` til `localhost:3000` under `npm run dev`.
+
 ## Kør lokalt med Docker
 
 ```bash
@@ -58,6 +71,8 @@ Deploy sker via Dokploy med Docker Compose:
 docker compose up -d --build
 ```
 
+Sæt `OPENAI_API_KEY` i Dokploy-miljøvariabler for at aktivere AI-feedback på øvelser.
+
 ### Routing (Mercantec)
 
 1. Cloudflare: `*.mercantec.tech` (wildcard CNAME → tunnel)
@@ -73,3 +88,4 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 - `/dag-2` — Sikkerhed, fjernadmin, WBEM, data
 - `/projekt` — Projektkobling med use cases og Mermaid-diagrammer
 - `/ordbog` — Opslagsguide til PowerShell-begreber
+- `/lokalt` — Lokale opgaver (PC / driftsetup, terminal, VS Code, Git)

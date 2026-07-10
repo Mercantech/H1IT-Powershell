@@ -1,0 +1,109 @@
+.lokal-anbefaling h2,
+.lokal-git h2 {
+  margin-top: 0;
+  color: var(--ps-accent);
+}
+
+.lokal-tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.lokal-tool h3 {
+  margin-top: 0;
+  font-size: 1.05rem;
+}
+
+.lokal-tool p {
+  margin-bottom: 0.5rem;
+  color: var(--ps-text-muted);
+}
+
+.lokal-tool-hint {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ps-accent) !important;
+  margin-bottom: 0 !important;
+}
+
+.lokal-git {
+  margin: 1.5rem 0;
+  border-color: var(--ps-accent);
+}
+
+.lokal-git ul {
+  margin-bottom: 1rem;
+}
+
+.lokal-git-foot {
+  margin-bottom: 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--ps-border);
+  font-size: 0.95rem;
+}
+
+.lokal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lokal-opgave {
+  scroll-margin-top: 6rem;
+}
+
+.lokal-opgave h3 {
+  margin-top: 0.75rem;
+  color: var(--ps-text);
+}
+
+.lokal-opgave-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.lokal-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--ps-bg-secondary);
+  border: 1px solid var(--ps-border);
+  color: var(--ps-text-muted);
+}
+
+.lokal-badge-phase {
+  color: var(--ps-accent);
+  border-color: rgba(94, 168, 255, 0.4);
+}
+
+.lokal-badge-tool {
+  color: var(--ps-prompt);
+  border-color: rgba(255, 255, 0, 0.25);
+}
+
+.lokal-steps {
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+}
+
+.lokal-steps li {
+  margin-bottom: 0.4rem;
+  color: var(--ps-text-muted);
+}
+
+.lokal-deliverable {
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.lokal-cta-links {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}

@@ -1,3 +1,4 @@
+import { course } from '../data/course';
 import { NavLink, Outlet } from 'react-router-dom';
 import './Layout.css';
 
@@ -7,6 +8,7 @@ const navItems = [
   { to: '/dag-2', label: 'Dag 2', end: false },
   { to: '/projekt', label: 'Projektkobling', end: false },
   { to: '/ordbog', label: 'Ordbog', end: false },
+  { to: '/lokalt', label: 'Lokale opgaver', end: false },
 ];
 
 export function Layout() {
@@ -20,7 +22,9 @@ export function Layout() {
               <span className="dot yellow" />
               <span className="dot green" />
             </span>
-            <span className="ps-title">PowerShell — H1 IT / Infrastruktur og Cyber</span>
+            <span className="ps-title">
+              {course.fullName} · {course.topic}
+            </span>
           </div>
           <nav className="ps-nav">
             {navItems.map((item) => (
@@ -42,7 +46,10 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className="ps-footer">
-        <p>H1 IT — PowerShell undervisning (uge 37–38) · Infrastrukturprojekt</p>
+        <p>
+          {course.fullName} · {course.program} · {course.teachingPeriod} ·
+          Infrastrukturprojekt
+        </p>
       </footer>
     </div>
   );

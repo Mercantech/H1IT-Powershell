@@ -31,25 +31,30 @@
   color: var(--ps-text-muted);
 }
 
-.code-block-content {
-  background: var(--ps-bg-input);
-  padding: 1rem;
-  margin: 0;
-  overflow-x: auto;
+.code-block-path {
+  margin-left: auto;
   font-family: var(--ps-font-mono);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.code-prompt {
+  font-size: 0.75rem;
   color: var(--ps-prompt);
-  user-select: none;
 }
 
-.code-block-content code {
-  background: none;
-  padding: 0;
-  color: var(--ps-text);
+.code-block-editor {
+  background: var(--ps-bg-input);
+}
+
+.code-block-loading {
+  padding: 1rem;
+  font-family: var(--ps-font-mono);
+  font-size: 0.85rem;
+  color: var(--ps-text-muted);
+}
+
+.code-block-editor .monaco-editor,
+.code-block-editor .monaco-editor .margin,
+.code-block-editor .monaco-editor-background {
+  background-color: var(--ps-bg-input) !important;
+}
+
+.code-block-editor .monaco-editor .view-lines {
+  padding-left: 0.25rem;
 }

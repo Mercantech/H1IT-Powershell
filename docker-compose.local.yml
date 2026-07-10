@@ -9,7 +9,15 @@ services:
       - default
     labels: []
 
+  exercise-api:
+    ports:
+      - "${API_PORT:-3000}:3000"
+    networks:
+      - default
+
 networks:
   default:
   dokploy-network:
+    external: false
+  internal:
     external: false

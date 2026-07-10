@@ -131,14 +131,18 @@ Get-Service | Select-Object Name, Status, StartType | Export-Csv .\\services.csv
       </section>
 
       <div className="cta-box">
-        <h3>Klar til at anvende det i jeres projekt?</h3>
+        <h3>Klar til at øve lokalt?</h3>
         <p>
-          Se den dedikerede Projektkobling-side med helhedsdiagram, use cases
-          og en projektrelevant mini-opgave.
+          Tag opgaverne med i driftsetup — og lav projektscripts i VS Code med Git.
         </p>
-        <Link to="/projekt" className="btn btn-primary">
-          Gå til Projektkobling →
-        </Link>
+        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/lokalt" className="btn btn-primary">
+            Lokale opgaver →
+          </Link>
+          <Link to="/projekt" className="btn btn-secondary">
+            Projektkobling
+          </Link>
+        </div>
       </div>
     </div>
   );

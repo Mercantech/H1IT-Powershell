@@ -88,6 +88,31 @@
   font-weight: 600;
 }
 
+.code-exercise-result-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.25rem;
+}
+
+.code-exercise-ai-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(94, 168, 255, 0.2);
+  color: var(--ps-accent);
+}
+
+.code-exercise-error {
+  margin-top: 0.75rem;
+  color: var(--ps-error);
+  font-size: 0.9rem;
+}
+
 .code-exercise-result.correct span {
   color: var(--ps-success);
 }

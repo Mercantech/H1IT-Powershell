@@ -5,19 +5,41 @@
 #   2. Tunnel ingress: *.mercantec.tech → http://localhost:80
 #   3. Traefik (Dokploy): Host(`<domæne>`) → container-port
 #
-# Kun frontend er eksponeret via Traefik.
+# Kun frontend er eksponeret via Traefik. exercise-api er kun internt (proxy via nginx /api).
 #
 # Lokal udvikling med host-porte:
 #   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
 
 services:
+  exercise-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - internal
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      PORT: "3000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
+
   frontend:
     build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
+    depends_on:
+      exercise-api:
+        condition: service_healthy
     networks:
       - dokploy-network
+      - internal
     labels:
       - traefik.enable=true
       - traefik.docker.network=dokploy-network
@@ -35,3 +57,4 @@ services:
 networks:
   dokploy-network:
     external: true
+  internal:

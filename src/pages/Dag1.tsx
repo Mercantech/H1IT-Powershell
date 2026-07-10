@@ -110,11 +110,17 @@ svc`}
       </section>
 
       <div className="cta-box">
-        <h3>Færdig med Dag 1?</h3>
-        <p>Gå videre til Dag 2 eller se hvordan det kobles på jeres projekt.</p>
+        <h3>Øv i jeres eget miljø</h3>
+        <p>
+          Gå videre til lokale opgaver på PC eller i driftsetup — terminal til test,
+          VS Code til scripts.
+        </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/dag-2" className="btn btn-primary">
-            Dag 2 →
+          <Link to="/lokalt" className="btn btn-primary">
+            Lokale opgaver →
+          </Link>
+          <Link to="/dag-2" className="btn btn-secondary">
+            Dag 2
           </Link>
           <Link to="/projekt" className="btn btn-secondary">
             Projektkobling

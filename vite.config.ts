@@ -7,4 +7,13 @@ export default defineConfig({
   optimizeDeps: {
     include: ['monaco-editor'],
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

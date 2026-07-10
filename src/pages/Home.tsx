@@ -1,3 +1,4 @@
+import { course } from '../data/course';
 import { Link } from 'react-router-dom';
 import { MermaidDiagram } from '../components/MermaidDiagram';
 import { ModuleCard } from '../components/ModuleCard';
@@ -9,11 +10,12 @@ export function Home() {
   return (
     <div className="container">
       <header className="page-header">
-        <h1>PowerShell — H1 IT</h1>
+        <h1>{course.fullName}</h1>
         <p>
-          Interaktiv læringsside til PowerShell-undervisningen som del af
-          infrastruktur- og cyberforløbet. PowerShell dækkes over 2 dage
-          (uge 37–38) og kobles direkte på jeres samlede infrastrukturprojekt.
+          Interaktiv læringsside til {course.topic}-undervisningen i{' '}
+          {course.title} som del af {course.program}. PowerShell dækkes over 2
+          dage ({course.teachingPeriod}) og kobles direkte på jeres samlede
+          infrastrukturprojekt.
         </p>
       </header>
 
@@ -41,6 +43,11 @@ export function Home() {
             title="Ordbog"
             description="Hurtig opslagsguide til PowerShell-begreber som -WhatIf, pipeline, cmdlets og mere."
             to="/ordbog"
+          />
+          <ModuleCard
+            title="Lokale opgaver"
+            description="Øvelser på jeres PC eller i driftsetup — terminal, VS Code og Git-anbefaling."
+            to="/lokalt"
           />
         </div>
       </section>
