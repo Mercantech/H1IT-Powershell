@@ -104,13 +104,13 @@ export function Home() {
             <span>Terminal</span>
           </div>
           <div className="tools-strip-item">
-            <div className="tools-strip-logo tools-strip-logo--dark">
+            <div className="tools-strip-logo">
               <img src={assets.vscode} alt="VS Code" />
             </div>
             <span>VS Code</span>
           </div>
           <div className="tools-strip-item">
-            <div className="tools-strip-logo tools-strip-logo--dark">
+            <div className="tools-strip-logo">
               <img src={assets.git} alt="Git" />
             </div>
             <span>Git</span>
