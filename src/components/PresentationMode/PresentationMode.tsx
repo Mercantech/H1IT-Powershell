@@ -15,7 +15,7 @@ const scrollLayouts = new Set(['bullets', 'code', 'runnable', 'table', 'quiz', '
 function SlideContent({ slide }: { slide: PresentationSlide }) {
   const scrollable = scrollLayouts.has(slide.layout);
 
-  const wrap = (children: React.ReactNode, className = '') => (
+  const wrap = (children: ReactNode, className = '') => (
     <div className={`pres-slide pres-slide--content ${scrollable ? 'pres-slide--scroll' : ''} ${className}`}>
       {children}
     </div>
