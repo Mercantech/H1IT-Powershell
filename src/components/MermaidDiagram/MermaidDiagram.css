@@ -9,11 +9,12 @@
 }
 
 .mermaid-container {
-  background: var(--ps-bg-card);
+  background: linear-gradient(160deg, rgba(2, 56, 110, 0.7), rgba(1, 36, 86, 0.9));
   border: 1px solid var(--ps-border);
   border-radius: var(--ps-radius);
   padding: 1rem;
   overflow-x: auto;
+  box-shadow: var(--ps-glow-soft);
 }
 
 .mermaid-container svg {

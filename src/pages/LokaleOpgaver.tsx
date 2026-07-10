@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom';
+import { ToolCard } from '../components/ToolCard';
+import { assets } from '../data/assets';
 import {
   environmentLabels,
   localExercises,
@@ -49,29 +51,36 @@ export function LokaleOpgaver() {
       <section className="lokal-anbefaling card">
         <h2>Anbefalede værktøjer</h2>
         <div className="lokal-tools">
-          <div className="lokal-tool">
-            <h3>PowerShell-terminalen</h3>
+          <ToolCard
+            name="PowerShell-terminalen"
+            icon="powershell"
+            hint="God til: Get-Help, pipeline, -WhatIf, Invoke-Command"
+          >
             <p>
               Brug terminalen når du <strong>skriver og tester</strong> enkeltlinjer,
               pipeliner og hurtige kommandoer. Åbn PowerShell 7 eller Windows
               PowerShell — skriv direkte og se resultatet med det samme.
             </p>
-            <p className="lokal-tool-hint">God til: Get-Help, pipeline, -WhatIf, Invoke-Command</p>
-          </div>
-          <div className="lokal-tool">
-            <h3>Visual Studio Code</h3>
+          </ToolCard>
+          <ToolCard
+            name="Visual Studio Code"
+            icon="vscode"
+            hint="God til: projektscripts, CSV-arbejde, rapport-eksempler"
+          >
             <p>
               Brug VS Code når du laver <strong>scripts (.ps1)</strong> med flere
               linjer, kommentarer og genbrugelig logik. Installér PowerShell-extensionen
               for syntax highlight, kørsel og fejlfindning.
             </p>
-            <p className="lokal-tool-hint">God til: projektscripts, CSV-arbejde, rapport-eksempler</p>
-          </div>
+          </ToolCard>
         </div>
       </section>
 
       <section className="lokal-git card">
-        <h2>Git — ikke pensum, men stærkt anbefalet</h2>
+        <div className="lokal-git-header">
+          <img src={assets.git} alt="" className="lokal-git-logo" />
+          <h2>Git — ikke pensum, men stærkt anbefalet</h2>
+        </div>
         <p>
           Det står ikke i pensum at I <em>skal</em> bruge Git — men vi anbefaler på det
           kraftigste at I lægger <strong>al jeres kode i et Git-repo</strong> (GitHub,

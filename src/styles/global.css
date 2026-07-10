@@ -14,7 +14,11 @@ html {
 
 body {
   font-family: var(--ps-font-sans);
-  background: var(--ps-bg-primary);
+  background-color: var(--ps-bg-primary);
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -15%, rgba(94, 168, 255, 0.18), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 20%, rgba(2, 56, 110, 0.5), transparent),
+    radial-gradient(ellipse 40% 30% at 0% 80%, rgba(1, 36, 86, 0.6), transparent);
   color: var(--ps-text);
   line-height: 1.6;
   min-height: 100vh;
@@ -86,13 +90,19 @@ code:not(pre code) {
   font-size: 0.95rem;
   cursor: pointer;
   border: none;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
   text-decoration: none;
 }
 
+.btn-glow:hover {
+  box-shadow: var(--ps-glow);
+  transform: translateY(-1px);
+}
+
 .btn-primary {
-  background: var(--ps-accent);
+  background: linear-gradient(135deg, var(--ps-accent), #3d8eef);
   color: var(--ps-bg-primary);
+  box-shadow: 0 4px 16px rgba(94, 168, 255, 0.25);
 }
 
 .btn-primary:hover {
@@ -113,11 +123,17 @@ code:not(pre code) {
 }
 
 .card {
-  background: var(--ps-bg-card);
+  background: linear-gradient(160deg, rgba(2, 56, 110, 0.85), rgba(2, 56, 110, 0.55));
   border: 1px solid var(--ps-border);
   border-radius: var(--ps-radius);
   padding: 1.25rem 1.5rem;
   margin-bottom: 1.25rem;
+  backdrop-filter: blur(8px);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  border-color: rgba(94, 168, 255, 0.35);
 }
 
 .card-grid {
@@ -128,12 +144,23 @@ code:not(pre code) {
 }
 
 .cta-box {
-  background: var(--ps-bg-secondary);
+  background: linear-gradient(145deg, rgba(0, 27, 54, 0.95), rgba(2, 56, 110, 0.7));
   border: 1px solid var(--ps-accent);
   border-radius: var(--ps-radius);
-  padding: 1.5rem;
+  padding: 1.75rem;
   margin: 2rem 0;
   text-align: center;
+  box-shadow: var(--ps-glow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(94, 168, 255, 0.12), transparent 70%);
+  pointer-events: none;
 }
 
 .cta-box h3 {

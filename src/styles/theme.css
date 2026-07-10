@@ -17,6 +17,9 @@
   --ps-error: #f14c4c;
   --ps-border: rgba(94, 168, 255, 0.3);
   --ps-radius: 8px;
+  --ps-glow: 0 0 32px rgba(94, 168, 255, 0.35);
+  --ps-glow-soft: 0 8px 32px rgba(94, 168, 255, 0.12);
+  --ps-glow-strong: 0 0 48px rgba(94, 168, 255, 0.25);
   --ps-font-mono: 'Cascadia Code', 'Cascadia Mono', Consolas, 'Courier New', monospace;
   --ps-font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
 }

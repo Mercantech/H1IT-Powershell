@@ -1,29 +1,64 @@
 .module-card {
   display: block;
-  background: var(--ps-bg-card);
+  position: relative;
+  background: linear-gradient(160deg, rgba(2, 56, 110, 0.9), rgba(1, 36, 86, 0.85));
   border: 1px solid var(--ps-border);
   border-radius: var(--ps-radius);
-  padding: 1.25rem;
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.15s, transform 0.15s;
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 a.module-card:hover {
-  border-color: var(--ps-accent);
-  transform: translateY(-2px);
+  border-color: rgba(94, 168, 255, 0.5);
+  transform: translateY(-4px);
+  box-shadow: var(--ps-glow-soft);
   text-decoration: none;
   color: inherit;
 }
+
+.module-card-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border-radius: var(--ps-radius) 0 0 var(--ps-radius);
+}
+
+.accent-blue .module-card-accent { background: linear-gradient(180deg, #5ea8ff, #3d8eef); }
+.accent-purple .module-card-accent { background: linear-gradient(180deg, #c586c0, #9b59b6); }
+.accent-cyan .module-card-accent { background: linear-gradient(180deg, #4ec9b0, #2ea88a); }
+.accent-yellow .module-card-accent { background: linear-gradient(180deg, #ffe566, #d4b800); }
+.accent-green .module-card-accent { background: linear-gradient(180deg, #6a9955, #4a7a3a); }
 
 .module-card h3 {
   margin-top: 0;
   color: var(--ps-accent);
   font-size: 1.1rem;
+  padding-right: 1.5rem;
 }
 
 .module-card p {
   margin: 0;
   font-size: 0.9rem;
   color: var(--ps-text-muted);
+}
+
+.module-card-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: var(--ps-accent);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+a.module-card:hover .module-card-arrow {
+  opacity: 1;
+  transform: translateY(-50%) translateX(4px);
 }

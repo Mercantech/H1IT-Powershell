@@ -6,30 +6,34 @@
 
 .lokal-tools {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.lokal-tool h3 {
-  margin-top: 0;
-  font-size: 1.05rem;
+.lokal-git-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
 }
 
-.lokal-tool p {
-  margin-bottom: 0.5rem;
-  color: var(--ps-text-muted);
+.lokal-git-header h2 {
+  margin: 0;
+  color: var(--ps-text);
 }
 
-.lokal-tool-hint {
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--ps-accent) !important;
-  margin-bottom: 0 !important;
+.lokal-git-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(240, 80, 50, 0.3));
 }
 
 .lokal-git {
   margin: 1.5rem 0;
-  border-color: var(--ps-accent);
+  border-color: rgba(240, 80, 50, 0.4);
+  background: linear-gradient(145deg, rgba(40, 20, 10, 0.25), rgba(2, 56, 110, 0.6));
 }
 
 .lokal-git ul {

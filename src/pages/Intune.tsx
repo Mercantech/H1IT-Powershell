@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { assets } from '../data/assets';
 import { CodeBlock } from '../components/CodeBlock';
 import { MermaidDiagram } from '../components/MermaidDiagram';
 import { intuneOverview } from '../data/diagrams';
@@ -38,14 +39,24 @@ const h1Parallels = [
 export function Intune() {
   return (
     <div className="container">
-      <header className="page-header">
-        <h1>PowerShell og Microsoft Intune</h1>
-        <p>
-          Mange elever møder PowerShell først på praktik eller job i forbindelse med
-          Intune. Her er hvad det er — og hvorfor det I lærer i Serverautomatisering I
-          stadig er relevant, selvom Intune er en cloud-løsning.
-        </p>
-      </header>
+      <section className="intune-hero">
+        <div className="intune-hero-bg" aria-hidden />
+        <div className="intune-hero-content">
+          <div className="intune-hero-logos">
+            <img src={assets.intune} alt="Microsoft Intune" className="intune-hero-logo" />
+            <span className="intune-hero-plus">+</span>
+            <img src={assets.powershell} alt="PowerShell" className="intune-hero-logo intune-hero-logo-ps" />
+          </div>
+          <div className="intune-hero-text">
+            <h1>PowerShell og Microsoft Intune</h1>
+            <p>
+              Mange elever møder PowerShell først på praktik eller job i forbindelse med
+              Intune. Her er hvad det er — og hvorfor det I lærer i Serverautomatisering I
+              stadig er relevant, selvom Intune er en cloud-løsning.
+            </p>
+          </div>
+        </div>
+      </section>
 
       <section className="module-section intune-note card">
         <p>

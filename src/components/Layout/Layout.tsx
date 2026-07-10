@@ -1,4 +1,5 @@
 import { course } from '../../data/course';
+import { assets } from '../../data/assets';
 import { NavLink, Outlet } from 'react-router-dom';
 import './Layout.css';
 
@@ -16,6 +17,7 @@ export function Layout() {
   return (
     <div className="layout">
       <header className="ps-header">
+        <div className="ps-header-glow" aria-hidden />
         <div className="ps-header-inner">
           <div className="ps-titlebar">
             <span className="ps-window-dots">
@@ -23,6 +25,7 @@ export function Layout() {
               <span className="dot yellow" />
               <span className="dot green" />
             </span>
+            <img src={assets.powershell} alt="" className="ps-header-logo" />
             <span className="ps-title">
               {course.fullName} · {course.topic}
             </span>
@@ -43,7 +46,7 @@ export function Layout() {
           </nav>
         </div>
       </header>
-      <main>
+      <main className="ps-main">
         <Outlet />
       </main>
       <footer className="ps-footer">
