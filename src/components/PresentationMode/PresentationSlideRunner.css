@@ -1,0 +1,98 @@
+.pres-runner {
+  margin-top: 0.75rem;
+}
+
+.pres-code--runner {
+  max-height: 28vh;
+  overflow-y: auto;
+  margin-bottom: 0.65rem;
+}
+
+.pres-runner-actions {
+  margin-bottom: 0.5rem;
+}
+
+.pres-run-btn {
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--ps-font-sans);
+  background: linear-gradient(135deg, rgba(94, 168, 255, 0.25), rgba(94, 168, 255, 0.12));
+  border: 1px solid rgba(94, 168, 255, 0.45);
+  border-radius: var(--ps-radius);
+  color: var(--ps-accent-hover);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.pres-run-btn:hover:not(:disabled) {
+  background: rgba(94, 168, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pres-run-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.pres-runner-output {
+  margin-top: 0.5rem;
+  padding: 0.85rem 1rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  animation: presRunnerIn 0.2s ease-out;
+}
+
+.pres-runner-output--loading {
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pres-runner-output pre {
+  margin: 0.35rem 0 0;
+  font-family: var(--ps-font-mono);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  max-height: 22vh;
+  overflow-y: auto;
+  color: var(--ps-text);
+}
+
+.pres-runner-path {
+  font-family: var(--ps-font-mono);
+  font-size: 0.72rem;
+  color: var(--ps-prompt);
+}
+
+.pres-runner-cursor {
+  color: var(--ps-prompt);
+  animation: presRunnerBlink 0.9s step-end infinite;
+}
+
+.pres-runner-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.7rem;
+  color: var(--ps-text-muted);
+}
+
+@keyframes presRunnerIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes presRunnerBlink {
+  50% {
+    opacity: 0;
+  }
+}

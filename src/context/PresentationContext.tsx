@@ -32,6 +32,7 @@ function isTypingTarget(target: EventTarget | null): boolean {
   if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
   if (target.isContentEditable) return true;
   if (target.closest('.monaco-editor')) return true;
+  if (target.closest('.pres-runner')) return true;
   return false;
 }
 

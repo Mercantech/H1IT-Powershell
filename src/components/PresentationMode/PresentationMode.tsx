@@ -1,3 +1,4 @@
+import { type ReactNode } from 'react';
 import { course } from '../../data/course';
 import { assets } from '../../data/assets';
 import {
@@ -6,9 +7,20 @@ import {
   type PresentationSlide,
 } from '../../data/presentationSlides';
 import { usePresentation } from '../../context/PresentationContext';
+import { PresentationSlideRunner } from './PresentationSlideRunner';
 import './PresentationMode.css';
 
+const scrollLayouts = new Set(['bullets', 'code', 'runnable', 'table', 'quiz', 'local']);
+
 function SlideContent({ slide }: { slide: PresentationSlide }) {
+  const scrollable = scrollLayouts.has(slide.layout);
+
+  const wrap = (children: React.ReactNode, className = '') => (
+    <div className={`pres-slide pres-slide--content ${scrollable ? 'pres-slide--scroll' : ''} ${className}`}>
+      {children}
+    </div>
+  );
+
   switch (slide.layout) {
     case 'title':
       return (
@@ -30,8 +42,8 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
       );
 
     case 'highlight':
-      return (
-        <div className="pres-slide pres-slide--content">
+      return wrap(
+        <>
           <h2 className="pres-heading">{slide.title}</h2>
           {slide.highlight && <p className="pres-callout">{slide.highlight}</p>}
           {slide.bullets && (
@@ -41,13 +53,102 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
               ))}
             </ul>
           )}
-        </div>
+        </>
+      );
+
+    case 'runnable':
+      return wrap(
+        <>
+          <h2 className="pres-heading">{slide.title}</h2>
+          {slide.highlight && <p className="pres-lead">{slide.highlight}</p>}
+          {slide.subtitle && <p className="pres-lead">{slide.subtitle}</p>}
+          {slide.code && slide.sampleOutput && (
+            <PresentationSlideRunner code={slide.code} sampleOutput={slide.sampleOutput} />
+          )}
+        </>
+      );
+
+    case 'table':
+      return wrap(
+        <>
+          <h2 className="pres-heading">{slide.title}</h2>
+          {slide.tableHeaders && slide.rows && (
+            <div className="pres-table-wrap">
+              <table className="pres-table">
+                <thead>
+                  <tr>
+                    {slide.tableHeaders.map((h) => (
+                      <th key={h}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {slide.rows.map((row) => (
+                    <tr key={row[0]}>
+                      {row.map((cell) => (
+                        <td key={cell}>{cell}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      );
+
+    case 'quiz':
+      return wrap(
+        <>
+          <h2 className="pres-heading">{slide.title}</h2>
+          {slide.quizQuestion && <p className="pres-quiz-question">{slide.quizQuestion}</p>}
+          {slide.quizOptions && (
+            <ul className="pres-bullets pres-bullets--quiz">
+              {slide.quizOptions.map((opt) => (
+                <li
+                  key={opt}
+                  className={opt === slide.quizAnswer ? 'pres-quiz-correct' : undefined}
+                >
+                  {opt}
+                  {opt === slide.quizAnswer && ' ✓'}
+                </li>
+              ))}
+            </ul>
+          )}
+          {slide.quizExplanation && (
+            <p className="pres-quiz-explanation">{slide.quizExplanation}</p>
+          )}
+        </>
+      );
+
+    case 'local':
+      return wrap(
+        <>
+          <h2 className="pres-heading">{slide.title}</h2>
+          {slide.subtitle && <p className="pres-lead">{slide.subtitle}</p>}
+          {slide.bullets && (
+            <p className="pres-local-meta">{slide.bullets.join(' · ')}</p>
+          )}
+          {slide.steps && (
+            <ol className="pres-steps">
+              {slide.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          )}
+          {slide.deliverable && (
+            <p className="pres-deliverable">
+              <strong>Aflevering:</strong> {slide.deliverable}
+            </p>
+          )}
+        </>
       );
 
     case 'code':
-      return (
-        <div className="pres-slide pres-slide--content">
+      return wrap(
+        <>
           <h2 className="pres-heading">{slide.title}</h2>
+          {slide.subtitle && <p className="pres-lead">{slide.subtitle}</p>}
           {slide.highlight && <p className="pres-lead">{slide.highlight}</p>}
           {slide.code && (
             <pre className="pres-code">
@@ -61,15 +162,15 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
               ))}
             </ul>
           )}
-        </div>
+        </>
       );
 
     case 'bullets':
     default:
-      return (
-        <div className="pres-slide pres-slide--content">
+      return wrap(
+        <>
           <h2 className="pres-heading">{slide.title}</h2>
-          {slide.subtitle && <p className="pres-lead">{slide.subtitle}</p>}
+          {slide.subtitle && <p className="pres-lead pres-lead--prompt">{slide.subtitle}</p>}
           {slide.bullets && (
             <ul className="pres-bullets">
               {slide.bullets.map((item) => (
@@ -77,7 +178,7 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
               ))}
             </ul>
           )}
-        </div>
+        </>
       );
   }
 }
@@ -143,7 +244,7 @@ export function PresentationMode() {
         </div>
 
         <p className="presentation-hint">
-          F5 fra start · Shift+F5 fra aktuel sektion · Piletaster eller mellemrum · Klik venstre/højre
+          F5 fra start · Shift+F5 fra sektion · Kør eksempel på slides med ▶ · Esc afslut
         </p>
       </footer>
 

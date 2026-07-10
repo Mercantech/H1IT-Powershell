@@ -103,4 +103,4 @@ Underviseren kan starte et slide-show direkte fra sitet (PowerPoint-lignende):
 | `Home` / `End` | Første / sidste slide |
 | `Esc` | Afslut præsentation |
 
-Slides defineres i `src/data/presentationSlides.ts`.
+Slides bygges automatisk fra alt pensum på Dag 1, Dag 2 og Projektkobling i `src/data/buildPresentationSlides.ts` (~70 slides inkl. quiz, lokale opgaver, use cases med kørbare eksempler).
