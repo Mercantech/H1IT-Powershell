@@ -100,7 +100,7 @@ svc`}
         </p>
       </section>
 
-      <section id="oevelser" className="module-section">
+      <section id="øvelser" className="module-section">
         <h2>Øvelser</h2>
         <p>Test din viden med disse kodeøvelser:</p>
         {dag1Exercises.map((ex) => (

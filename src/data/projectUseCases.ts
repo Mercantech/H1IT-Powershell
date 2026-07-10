@@ -53,7 +53,7 @@ Stop-Transcript`,
     relatedModule: '/dag-2#sikkerhed',
   },
   {
-    id: 'netvaerk',
+    id: 'netværk',
     title: 'Netværk og VLAN',
     component: 'Netværk',
     description:

@@ -1,18 +1,18 @@
 export const overviewFlow = `flowchart LR
     subgraph dag1 [Dag 1 - Uge 37]
-        A[Grundlaeggende] --> B[Cmdlets og hjaelp]
+        A["Grundlæggende"] --> B["Cmdlets og hjælp"]
         B --> C[Pipeline]
-        C --> D[Variabler og aliases]
-        D --> E[Quiz og oevelser]
+        C --> D["Variabler og aliases"]
+        D --> E["Quiz og øvelser"]
     end
     subgraph dag2 [Dag 2 - Uge 38]
-        F[Sikker scripting] --> G[WBEM/CIM]
-        G --> H[Datahaandtering]
-        H --> I[Projekt-automatisering]
-        I --> J[Quiz og oevelser]
+        F["Sikker scripting"] --> G[WBEM/CIM]
+        G --> H["Datahåndtering"]
+        H --> I["Projekt-automatisering"]
+        I --> J["Quiz og øvelser"]
     end
     dag1 --> dag2
-    dag2 --> K[H1 Infrastrukturprojekt]`;
+    dag2 --> K["H1 Infrastrukturprojekt"]`;
 
 export const projectOverview = `flowchart TB
     subgraph projekt [H1 Infrastrukturprojekt]
@@ -20,14 +20,14 @@ export const projectOverview = `flowchart TB
         DNS[DNS]
         DHCP[DHCP]
         Backup[Backup]
-        Net[Netvaerk og VLAN]
-        Sec[Netvaerkssikkerhed]
+        Net["Netværk og VLAN"]
+        Sec["Netværkssikkerhed"]
     end
     subgraph ps [PowerShell Automatisering]
-        Script[Scripts og cmdlets]
+        Script["Scripts og cmdlets"]
         Remote[Fjernadministration]
-        Monitor[Overvaagning og rapporter]
-        Safe[Sikker test med WhatIf]
+        Monitor["Overvågning og rapporter"]
+        Safe["Sikker test med WhatIf"]
     end
     Script --> AD
     Script --> DNS
@@ -36,17 +36,17 @@ export const projectOverview = `flowchart TB
     Monitor --> Net
     Safe --> Sec
     Krav[Kravspecifikation] --> Script
-    Script --> Dok[Dokumentation i rapport]`;
+    Script --> Dok["Dokumentation i rapport"]`;
 
 export const projectWorkflow = `flowchart LR
-    A[Læs krav fra case] --> B[Identificer gentagne opgaver]
-    B --> C[Skriv PowerShell-script]
-    C --> D[Test med WhatIf]
+    A["Læs krav fra case"] --> B["Identificer gentagne opgaver"]
+    B --> C["Skriv PowerShell-script"]
+    C --> D["Test med WhatIf"]
     D --> E{Virker det?}
     E -->|Nej| C
-    E -->|Ja| F[Kør i projektmiljoe]
-    F --> G[Dokumenter i rapport]
-    G --> H[Praesenter i projektfremlaeggelse]`;
+    E -->|Ja| F["Kør i projektmiljø"]
+    F --> G["Dokumenter i rapport"]
+    G --> H["Præsenter i projektfremlæggelse"]`;
 
 export const siteFlow = `flowchart TB
     subgraph dag1mod [Dag 1 Moduler]
@@ -63,12 +63,12 @@ export const siteFlow = `flowchart TB
     end
     subgraph projektpage [Projektkobling]
         P1[Helhedsdiagram]
-        P2[Use cases]
-        P3[GUI vs Script]
+        P2["Use cases"]
+        P3["GUI vs Script"]
     end
     dag1mod --> dag2mod
     dag2mod --> projektpage
-    projektpage --> Rapport[Projektrapport og fremlaeggelse]`;
+    projektpage --> Rapport["Projektrapport og fremlæggelse"]`;
 
 export const pipelineExample = `flowchart LR
     Input["Get-Service"] --> Pipe["|"]

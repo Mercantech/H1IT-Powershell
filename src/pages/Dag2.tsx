@@ -91,7 +91,7 @@ Get-CimInstance Win32_Process | Select-Object Name, ProcessId -First 10`}
         <p>
           CIM er erstatningen for ældre WMI-cmdlets og er standarden fremadrettet.
         </p>
-        <Link to="/projekt#netvaerk" className="project-link">
+        <Link to="/projekt#netværk" className="project-link">
           → Se projektkobling: Netværk
         </Link>
       </section>
@@ -121,7 +121,7 @@ Get-Service | Select-Object Name, Status, StartType | Export-Csv .\\services.csv
         </Link>
       </section>
 
-      <section id="oevelser" className="module-section">
+      <section id="øvelser" className="module-section">
         <h2>Øvelser</h2>
         <p>Test din viden med disse kodeøvelser:</p>
         {dag2Exercises.map((ex) => (
