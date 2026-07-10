@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
+import { LocalExercisesSection } from '../components/LocalExercisesSection';
 import { ModuleVideos } from '../components/ModuleVideos';
 import { Quiz } from '../components/Quiz';
 import { beginnerPlaylistUrl } from '../data/videos';
@@ -141,17 +142,20 @@ Get-Service | Select-Object Name, Status, StartType | Export-Csv .\\services.csv
         <Quiz questions={dag2Quiz} title="Dag 2 — Quiz" />
       </section>
 
+      <LocalExercisesSection phase="dag-2" />
+
       <div className="cta-box">
-        <h3>Klar til at øve lokalt?</h3>
+        <h3>Klar til projektet?</h3>
         <p>
-          Tag opgaverne med i driftsetup — og lav projektscripts i VS Code med Git.
+          Kobl scripting på jeres infrastrukturprojekt med use cases, deployment
+          og lokale projektopgaver.
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/lokalt" className="btn btn-primary">
-            Lokale opgaver →
+          <Link to="/projekt" className="btn btn-primary">
+            Projektkobling →
           </Link>
-          <Link to="/projekt" className="btn btn-secondary">
-            Projektkobling
+          <Link to="/dag-1" className="btn btn-secondary">
+            ← Dag 1
           </Link>
         </div>
       </div>

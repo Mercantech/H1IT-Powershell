@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
 import { MermaidDiagram } from '../components/MermaidDiagram';
+import { LocalExercisesSection } from '../components/LocalExercisesSection';
 import { UseCaseRunner } from '../components/UseCaseRunner';
 import {
   cronExample,
@@ -101,6 +102,8 @@ export function Projekt() {
         <CodeExercise exercise={projectExercise} />
       </section>
 
+      <LocalExercisesSection phase="projekt" />
+
       <section id="deployment" className="module-section">
         <h2>Fra script til drift — planlægning og deployment</h2>
         <p>
@@ -159,8 +162,8 @@ export function Projekt() {
             <strong>Relateret pensum:</strong>{' '}
             <Link to="/dag-2#sikkerhed">Sikker scripting</Link> (-WhatIf,
             transcript) · <Link to="/dag-2#fjernadmin">Fjernadministration</Link>{' '}
-            (Invoke-Command) · <Link to="/lokalt">Lokale opgaver</Link> (Git og
-            VS Code) · <Link to="/intune">Intune</Link> (script deployment på
+            (Invoke-Command) · <Link to="/dag-1#lokale-opgaver">Lokale opgaver</Link>{' '}
+            (Git og VS Code) · <Link to="/intune">Intune</Link> (script deployment på
             enheder)
           </p>
         </div>

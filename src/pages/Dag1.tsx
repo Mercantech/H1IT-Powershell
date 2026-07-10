@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
+import { LocalExercisesSection } from '../components/LocalExercisesSection';
 import { MermaidDiagram } from '../components/MermaidDiagram';
 import { ModuleVideos } from '../components/ModuleVideos';
 import { PipelineVisualizer } from '../components/PipelineVisualizer';
@@ -130,18 +131,17 @@ svc`}
         <Quiz questions={dag1Quiz} title="Dag 1 — Quiz" />
       </section>
 
+      <LocalExercisesSection phase="dag-1" showToolIntro showGitSection />
+
       <div className="cta-box">
-        <h3>Øv i jeres eget miljø</h3>
+        <h3>Klar til Dag 2?</h3>
         <p>
-          Gå videre til lokale opgaver på PC eller i driftsetup — terminal til test,
-          VS Code til scripts.
+          Fortsæt med sikker scripting, fjernadministration og datahåndtering —
+          eller kig forud på projektkoblingen.
         </p>
         <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/lokalt" className="btn btn-primary">
-            Lokale opgaver →
-          </Link>
-          <Link to="/dag-2" className="btn btn-secondary">
-            Dag 2
+          <Link to="/dag-2" className="btn btn-primary">
+            Dag 2 →
           </Link>
           <Link to="/projekt" className="btn btn-secondary">
             Projektkobling

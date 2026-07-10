@@ -36,8 +36,8 @@ export function Home() {
               <Link to="/dag-1" className="btn btn-primary btn-glow">
                 Start Dag 1
               </Link>
-              <Link to="/lokalt" className="btn btn-secondary">
-                Lokale opgaver
+              <Link to="/projekt" className="btn btn-secondary">
+                Projektkobling
               </Link>
             </div>
           </div>
@@ -72,12 +72,6 @@ export function Home() {
             description="Hurtig opslagsguide til PowerShell-begreber som -WhatIf, pipeline, cmdlets og mere."
             to="/ordbog"
             accent="yellow"
-          />
-          <ModuleCard
-            title="Lokale opgaver"
-            description="Øvelser på jeres PC eller i driftsetup — terminal, VS Code og Git-anbefaling."
-            to="/lokalt"
-            accent="green"
           />
           <ModuleCard
             title="Intune og PowerShell"

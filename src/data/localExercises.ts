@@ -13,12 +13,6 @@ export interface LocalExercise {
   relatedLink: string;
 }
 
-export const phaseLabels: Record<LocalExercisePhase, string> = {
-  'dag-1': 'Efter Dag 1',
-  'dag-2': 'Efter Dag 2',
-  projekt: 'I jeres infrastrukturprojekt',
-};
-
 export const environmentLabels: Record<LocalEnvironment, string> = {
   pc: 'Egen PC',
   driftsetup: 'Driftsetup / lab',
@@ -189,3 +183,7 @@ export const localExercises: LocalExercise[] = [
     relatedLink: '/projekt#serverdrift',
   },
 ];
+
+export function getLocalExercisesForPhase(phase: LocalExercisePhase): LocalExercise[] {
+  return localExercises.filter((exercise) => exercise.phase === phase);
+}

@@ -84,9 +84,8 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 ## Struktur
 
 - `/` — Forside med læringsmål og oversigt
-- `/dag-1` — Grundlæggende (cmdlets, pipeline, variabler)
-- `/dag-2` — Sikkerhed, fjernadmin, WBEM, data
-- `/projekt` — Projektkobling med use cases og Mermaid-diagrammer
+- `/dag-1` — Grundlæggende (cmdlets, pipeline, variabler) + lokale opgaver
+- `/dag-2` — Sikkerhed, fjernadmin, WBEM, data + lokale opgaver
+- `/projekt` — Projektkobling med use cases, deployment og projektopgaver
 - `/ordbog` — Opslagsguide til PowerShell-begreber
-- `/lokalt` — Lokale opgaver (PC / driftsetup, terminal, VS Code, Git)
 - `/intune` — PowerShell og Microsoft Intune (bro til praktik/job)

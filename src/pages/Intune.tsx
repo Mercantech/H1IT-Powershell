@@ -196,8 +196,8 @@ Write-Output "Mappe oprettet: $path"`}
           kalder på Graph og Intune.
         </p>
         <div className="intune-cta-links">
-          <Link to="/lokalt" className="btn btn-primary">
-            Lokale opgaver
+          <Link to="/dag-1#lokale-opgaver" className="btn btn-primary">
+            Lokale opgaver på Dag 1
           </Link>
           <Link to="/ordbog" className="btn btn-secondary">
             Ordbog
