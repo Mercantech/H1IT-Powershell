@@ -1,0 +1,30 @@
+.mermaid-wrapper {
+  margin: 1.5rem 0;
+}
+
+.mermaid-title {
+  font-size: 0.9rem;
+  color: var(--ps-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.mermaid-container {
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.mermaid-container svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-error {
+  color: var(--ps-error);
+  background: var(--ps-bg-input);
+  padding: 1rem;
+  border-radius: var(--ps-radius);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,55 @@
+.code-block {
+  margin: 1rem 0;
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  border: 1px solid var(--ps-border);
+}
+
+.code-block-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--ps-bg-secondary);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--ps-border);
+}
+
+.code-block-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.code-block-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.code-block-title {
+  font-family: var(--ps-font-mono);
+  font-size: 0.75rem;
+  color: var(--ps-text-muted);
+}
+
+.code-block-content {
+  background: var(--ps-bg-input);
+  padding: 1rem;
+  margin: 0;
+  overflow-x: auto;
+  font-family: var(--ps-font-mono);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.code-prompt {
+  color: var(--ps-prompt);
+  user-select: none;
+}
+
+.code-block-content code {
+  background: none;
+  padding: 0;
+  color: var(--ps-text);
+}

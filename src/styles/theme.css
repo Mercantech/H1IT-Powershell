@@ -1,0 +1,22 @@
+:root {
+  --ps-bg-primary: #012456;
+  --ps-bg-secondary: #001b36;
+  --ps-bg-card: #02386e;
+  --ps-bg-input: #0c1e3a;
+  --ps-text: #f0f0f0;
+  --ps-text-muted: #a0b4cc;
+  --ps-prompt: #ffff00;
+  --ps-cmdlet: #ffe566;
+  --ps-param: #9cdcfe;
+  --ps-string: #ce9178;
+  --ps-comment: #6a9955;
+  --ps-pipeline: #c586c0;
+  --ps-accent: #5ea8ff;
+  --ps-accent-hover: #8bc4ff;
+  --ps-success: #4ec9b0;
+  --ps-error: #f14c4c;
+  --ps-border: rgba(94, 168, 255, 0.3);
+  --ps-radius: 8px;
+  --ps-font-mono: 'Cascadia Code', 'Cascadia Mono', Consolas, 'Courier New', monospace;
+  --ps-font-sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+}

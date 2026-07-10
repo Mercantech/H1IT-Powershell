@@ -1,0 +1,109 @@
+.code-exercise-prompt {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.code-exercise-input-wrapper {
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.code-exercise-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--ps-bg-secondary);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--ps-text-muted);
+  border-bottom: 1px solid var(--ps-border);
+}
+
+.code-exercise-chrome .code-block-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.code-exercise-chrome .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.code-exercise-input-line {
+  display: flex;
+  background: var(--ps-bg-input);
+  padding: 0.75rem;
+  align-items: flex-start;
+}
+
+.code-exercise-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--ps-text);
+  font-family: var(--ps-font-mono);
+  font-size: 0.9rem;
+  resize: vertical;
+  outline: none;
+  line-height: 1.5;
+}
+
+.code-exercise-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.code-exercise-hint {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(94, 168, 255, 0.1);
+  border-radius: var(--ps-radius);
+  font-size: 0.9rem;
+  color: var(--ps-text-muted);
+}
+
+.code-exercise-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--ps-radius);
+}
+
+.code-exercise-result.correct {
+  background: rgba(78, 201, 176, 0.1);
+  border: 1px solid var(--ps-success);
+}
+
+.code-exercise-result.incorrect {
+  background: rgba(241, 76, 76, 0.1);
+  border: 1px solid var(--ps-error);
+}
+
+.code-exercise-result span {
+  font-weight: 600;
+}
+
+.code-exercise-result.correct span {
+  color: var(--ps-success);
+}
+
+.code-exercise-result.incorrect span {
+  color: var(--ps-error);
+}
+
+.code-exercise-result p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+}
+
+.code-exercise-facit {
+  margin-top: 0.5rem !important;
+  color: var(--ps-text-muted);
+}
+
+.code-exercise-facit code {
+  color: var(--ps-cmdlet);
+}

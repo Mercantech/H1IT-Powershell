@@ -1,0 +1,125 @@
+.pipeline-visualizer h4 {
+  margin-top: 0;
+  color: var(--ps-accent);
+}
+
+.pipeline-goal {
+  margin-bottom: 1.25rem;
+}
+
+.pipeline-label {
+  font-size: 0.85rem;
+  color: var(--ps-text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.pipeline-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 2.5rem;
+  padding: 0.75rem;
+  background: var(--ps-bg-input);
+  border-radius: var(--ps-radius);
+  border: 1px dashed var(--ps-border);
+}
+
+.pipeline-empty {
+  color: var(--ps-text-muted);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.pipeline-step-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.pipeline-pipe {
+  color: var(--ps-pipeline);
+  font-family: var(--ps-font-mono);
+  font-weight: bold;
+  margin: 0 0.35rem;
+  font-size: 1.1rem;
+}
+
+.pipeline-step {
+  font-family: var(--ps-font-mono);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-cmdlet);
+  color: var(--ps-cmdlet);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pipeline-step:hover {
+  background: rgba(255, 229, 102, 0.15);
+}
+
+.pipeline-available {
+  margin: 1.25rem 0;
+}
+
+.pipeline-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pipeline-option {
+  font-family: var(--ps-font-mono);
+  font-size: 0.8rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--ps-bg-secondary);
+  border: 1px solid var(--ps-border);
+  color: var(--ps-text);
+  border-radius: var(--ps-radius);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.pipeline-option:hover {
+  border-color: var(--ps-accent);
+}
+
+.pipeline-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.pipeline-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--ps-radius);
+}
+
+.pipeline-result.correct {
+  background: rgba(78, 201, 176, 0.1);
+  border: 1px solid var(--ps-success);
+}
+
+.pipeline-result.incorrect {
+  background: rgba(241, 76, 76, 0.1);
+  border: 1px solid var(--ps-error);
+}
+
+.pipeline-result span {
+  font-weight: 600;
+}
+
+.pipeline-result.correct span {
+  color: var(--ps-success);
+}
+
+.pipeline-result.incorrect span {
+  color: var(--ps-error);
+}
+
+.pipeline-result p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,29 @@
+.module-card {
+  display: block;
+  background: var(--ps-bg-card);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  padding: 1.25rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+a.module-card:hover {
+  border-color: var(--ps-accent);
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: inherit;
+}
+
+.module-card h3 {
+  margin-top: 0;
+  color: var(--ps-accent);
+  font-size: 1.1rem;
+}
+
+.module-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ps-text-muted);
+}
