@@ -3,8 +3,9 @@ import { assets } from '../data/assets';
 import { Link } from 'react-router-dom';
 import { MermaidDiagram } from '../components/MermaidDiagram';
 import { ModuleCard } from '../components/ModuleCard';
+import { SiteFlowDiagram } from '../components/SiteFlowDiagram';
 import { learningGoals, goalModuleMap } from '../data/learningGoals';
-import { overviewFlow, siteFlow } from '../data/diagrams';
+import { overviewFlow } from '../data/diagrams';
 import './Home.css';
 
 export function Home() {
@@ -38,11 +39,6 @@ export function Home() {
               <Link to="/lokalt" className="btn btn-secondary">
                 Lokale opgaver
               </Link>
-            </div>
-            <div className="hero-pills">
-              <span className="hero-pill">Interaktive øvelser</span>
-              <span className="hero-pill">AI-feedback</span>
-              <span className="hero-pill">Monaco editor</span>
             </div>
           </div>
         </div>
@@ -78,6 +74,12 @@ export function Home() {
             accent="yellow"
           />
           <ModuleCard
+            title="Video-pensum"
+            description="11 indlejrede YouTube-videoer fra Beginner PowerShell 7 Tutorials — supplerende pensum til Dag 1 og 2."
+            to="/videoer"
+            accent="purple"
+          />
+          <ModuleCard
             title="Lokale opgaver"
             description="Øvelser på jeres PC eller i driftsetup — terminal, VS Code og Git-anbefaling."
             to="/lokalt"
@@ -96,19 +98,27 @@ export function Home() {
         <h2 className="tools-strip-title">Værktøjer I møder i praksis</h2>
         <div className="tools-strip-logos">
           <div className="tools-strip-item">
-            <img src={assets.powershell} alt="PowerShell" />
+            <div className="tools-strip-logo">
+              <img src={assets.powershell} alt="PowerShell" />
+            </div>
             <span>Terminal</span>
           </div>
           <div className="tools-strip-item">
-            <img src={assets.vscode} alt="VS Code" />
+            <div className="tools-strip-logo tools-strip-logo--dark">
+              <img src={assets.vscode} alt="VS Code" />
+            </div>
             <span>VS Code</span>
           </div>
           <div className="tools-strip-item">
-            <img src={assets.git} alt="Git" />
+            <div className="tools-strip-logo tools-strip-logo--dark">
+              <img src={assets.git} alt="Git" />
+            </div>
             <span>Git</span>
           </div>
           <div className="tools-strip-item">
-            <img src={assets.intune} alt="Microsoft Intune" />
+            <div className="tools-strip-logo">
+              <img src={assets.intune} alt="Microsoft Intune" />
+            </div>
             <span>Intune</span>
           </div>
         </div>
@@ -130,7 +140,7 @@ export function Home() {
         </ul>
       </section>
 
-      <MermaidDiagram chart={siteFlow} title="Fra teori til projekt" />
+      <SiteFlowDiagram />
 
       <div className="cta-box">
         <h3>Klar til at koble PowerShell på jeres projekt?</h3>

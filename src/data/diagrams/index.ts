@@ -48,28 +48,6 @@ export const projectWorkflow = `flowchart LR
     F --> G["Dokumenter i rapport"]
     G --> H["Præsenter i projektfremlæggelse"]`;
 
-export const siteFlow = `flowchart TB
-    subgraph dag1mod [Dag 1 Moduler]
-        M1[Intro]
-        M2[Cmdlets]
-        M3[Pipeline]
-        M4[Variabler]
-    end
-    subgraph dag2mod [Dag 2 Moduler]
-        M5[Sikkerhed]
-        M6[Fjernadmin]
-        M7[WBEM]
-        M8[Data]
-    end
-    subgraph projektpage [Projektkobling]
-        P1[Helhedsdiagram]
-        P2["Use cases"]
-        P3["GUI vs Script"]
-    end
-    dag1mod --> dag2mod
-    dag2mod --> projektpage
-    projektpage --> Rapport["Projektrapport og fremlæggelse"]`;
-
 export const pipelineExample = `flowchart LR
     Input["Get-Service"] --> Pipe["|"]
     Pipe --> Filter["Where-Object Status -eq Stopped"]

@@ -17,7 +17,7 @@ export function Projekt() {
         </p>
       </header>
 
-      <section className="module-section">
+      <section id="helhedsdiagram" className="module-section">
         <h2>Helhedsdiagram</h2>
         <p>
           PowerShell er bindeleddet mellem jeres tekniske infrastruktur og
@@ -35,7 +35,7 @@ export function Projekt() {
         <MermaidDiagram chart={projectWorkflow} title="Fra krav til fremlæggelse" />
       </section>
 
-      <section className="module-section">
+      <section id="gui-vs-script" className="module-section">
         <h2>Hvornår GUI vs. script?</h2>
         <table className="comparison-table">
           <thead>
@@ -57,7 +57,7 @@ export function Projekt() {
         </table>
       </section>
 
-      <section className="module-section">
+      <section id="use-cases" className="module-section">
         <h2>Konkrete use cases</h2>
         <p>
           Her er eksempler på hvordan PowerShell bruges i hver del af jeres
