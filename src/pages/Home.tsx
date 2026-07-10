@@ -94,36 +94,6 @@ export function Home() {
         </div>
       </section>
 
-      <section className="tools-strip card">
-        <h2 className="tools-strip-title">Værktøjer I møder i praksis</h2>
-        <div className="tools-strip-logos">
-          <div className="tools-strip-item">
-            <div className="tools-strip-logo">
-              <img src={assets.powershell} alt="PowerShell" />
-            </div>
-            <span>Terminal</span>
-          </div>
-          <div className="tools-strip-item">
-            <div className="tools-strip-logo">
-              <img src={assets.vscode} alt="VS Code" />
-            </div>
-            <span>VS Code</span>
-          </div>
-          <div className="tools-strip-item">
-            <div className="tools-strip-logo">
-              <img src={assets.git} alt="Git" />
-            </div>
-            <span>Git</span>
-          </div>
-          <div className="tools-strip-item">
-            <div className="tools-strip-logo">
-              <img src={assets.intune} alt="Microsoft Intune" />
-            </div>
-            <span>Intune</span>
-          </div>
-        </div>
-      </section>
-
       <section>
         <h2>Læringsmål</h2>
         <p>Alle mål fra pensum — og hvilke moduler der dækker dem:</p>

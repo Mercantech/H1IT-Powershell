@@ -92,60 +92,6 @@
   flex-wrap: wrap;
 }
 
-.tools-strip {
-  text-align: center;
-  margin: 2rem 0;
-}
-
-.tools-strip-title {
-  margin-top: 0;
-  font-size: 1rem;
-  color: var(--ps-text-muted);
-  font-weight: 500;
-}
-
-.tools-strip-logos {
-  display: flex;
-  justify-content: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-}
-
-.tools-strip-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  transition: transform 0.2s;
-}
-
-.tools-strip-item:hover {
-  transform: scale(1.05);
-}
-
-.tools-strip-logo {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-}
-
-.tools-strip-item img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
-}
-
-.tools-strip-item span {
-  font-size: 0.8rem;
-  color: var(--ps-text-muted);
-  font-weight: 500;
-}
-
 .goal-modules {
   font-size: 0.85rem;
   color: var(--ps-accent);
