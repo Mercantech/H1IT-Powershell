@@ -1,4 +1,4 @@
-import { course } from '../data/course';
+import { course } from '../../data/course';
 import { NavLink, Outlet } from 'react-router-dom';
 import './Layout.css';
 
