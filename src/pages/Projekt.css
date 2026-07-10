@@ -1,0 +1,39 @@
+.deployment-methods {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.deployment-card h3 {
+  margin-top: 0;
+  color: var(--ps-accent);
+}
+
+.deployment-card-subtitle {
+  font-size: 0.9rem;
+  color: var(--ps-text-muted);
+  margin-top: -0.35rem;
+}
+
+.deployment-card-when {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.deployment-checklist li {
+  margin-bottom: 0.65rem;
+}
+
+.deployment-links {
+  margin-top: 1.5rem;
+}
+
+.deployment-links p {
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  .deployment-methods {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

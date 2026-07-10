@@ -1,10 +1,18 @@
 import { Link } from 'react-router-dom';
+import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
 import { MermaidDiagram } from '../components/MermaidDiagram';
 import { UseCaseRunner } from '../components/UseCaseRunner';
+import {
+  cronExample,
+  deploymentBestPractices,
+  deploymentMethods,
+  taskSchedulerCode,
+} from '../data/deploymentGuide';
 import { projectOverview, projectWorkflow } from '../data/diagrams';
 import { guiVsScript, projectUseCases } from '../data/projectUseCases';
 import { projectExercise } from '../data/exercises';
+import './Projekt.css';
 
 export function Projekt() {
   return (
@@ -91,6 +99,71 @@ export function Projekt() {
           Prøv denne opgave der direkte relaterer til jeres infrastrukturprojekt:
         </p>
         <CodeExercise exercise={projectExercise} />
+      </section>
+
+      <section id="deployment" className="module-section">
+        <h2>Fra script til drift — planlægning og deployment</h2>
+        <p>
+          Et script i VS Code er ikke færdigt, før det kører pålideligt i jeres
+          miljø. I infrastrukturprojektet handler deployment typisk om at{' '}
+          <strong>planlægge</strong> kørslen, <strong>sikre</strong> rettigheder
+          og <strong>logge</strong> resultater — ikke om at klikke Run manuelt hver
+          gang.
+        </p>
+
+        <div className="deployment-methods">
+          {deploymentMethods.map((method) => (
+            <article key={method.title} className="deployment-card card">
+              <h3>{method.title}</h3>
+              <p className="deployment-card-subtitle">{method.subtitle}</p>
+              <p>{method.text}</p>
+              <p className="deployment-card-when">
+                <strong>Brug når:</strong> {method.when}
+              </p>
+            </article>
+          ))}
+        </div>
+
+        <h3>Windows: Opgaveplanlægning (Task Scheduler)</h3>
+        <p>
+          På Windows-servere i jeres projekt er Task Scheduler det mest brugte
+          værktøj — tilsvarende <em>cron</em> på Linux. Scriptet ligger som
+          <code>.ps1</code>-fil på disk; opgaven angiver tidspunkt, konto og
+          eventuelle genstart ved fejl.
+        </p>
+        <CodeBlock
+          code={taskSchedulerCode}
+          title="Register-ScheduledTask"
+          showPrompt={false}
+        />
+
+        <h3>Linux: cron (hvis I har Linux-servere)</h3>
+        <p>
+          Har I Linux i netværks- eller serverdelen, planlægges scripts med{' '}
+          <code>crontab</code>. PowerShell 7 (<code>pwsh</code>) kan installeres
+          på Linux — samme scripts, anden scheduler.
+        </p>
+        <CodeBlock code={cronExample} title="crontab" showPrompt={false} />
+
+        <h3>Best practice før produktion</h3>
+        <ul className="deployment-checklist">
+          {deploymentBestPractices.map((item) => (
+            <li key={item.title}>
+              <strong>{item.title}:</strong> {item.text}
+            </li>
+          ))}
+        </ul>
+
+        <div className="deployment-links card">
+          <p>
+            <strong>Relateret pensum:</strong>{' '}
+            <Link to="/dag-2#sikkerhed">Sikker scripting</Link> (-WhatIf,
+            transcript) · <Link to="/dag-2#fjernadmin">Fjernadministration</Link>{' '}
+            (Invoke-Command) · <Link to="/lokalt">Lokale opgaver</Link> (Git og
+            VS Code) · <Link to="/intune">Intune</Link> (script deployment på
+            enheder)
+          </p>
+        </div>
       </section>
 
       <div className="cta-box">
