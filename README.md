@@ -89,3 +89,18 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 - `/projekt` — Projektkobling med use cases, deployment og projektopgaver
 - `/ordbog` — Opslagsguide til PowerShell-begreber
 - `/intune` — PowerShell og Microsoft Intune (bro til praktik/job)
+
+## Præsentationstilstand
+
+Underviseren kan starte et slide-show direkte fra sitet (PowerPoint-lignende):
+
+| Genvej | Handling |
+|--------|----------|
+| `F5` | Start præsentation fra første slide |
+| `Shift+F5` | Start fra aktuel side (Dag 1, Dag 2, Projektkobling osv.) |
+| `→` / `Space` | Næste slide |
+| `←` | Forrige slide |
+| `Home` / `End` | Første / sidste slide |
+| `Esc` | Afslut præsentation |
+
+Slides defineres i `src/data/presentationSlides.ts`.

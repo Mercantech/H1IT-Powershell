@@ -1,0 +1,330 @@
+.presentation-mode {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  color: var(--ps-text);
+  overflow: hidden;
+}
+
+.presentation-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(94, 168, 255, 0.2), transparent 60%),
+    linear-gradient(165deg, #012456 0%, #001b36 45%, #000d1f 100%);
+}
+
+.presentation-stage {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 4rem 6rem;
+  animation: presSlideIn 0.28s ease-out;
+}
+
+@keyframes presSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.pres-slide {
+  width: min(960px, 100%);
+}
+
+.pres-slide--title {
+  text-align: center;
+}
+
+.pres-logo {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 8px 24px rgba(94, 168, 255, 0.35));
+}
+
+.pres-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  margin-bottom: 0.75rem;
+  color: var(--ps-prompt);
+  text-shadow: 0 0 32px rgba(255, 255, 0, 0.15);
+}
+
+.pres-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--ps-accent);
+  margin-bottom: 1rem;
+}
+
+.pres-highlight {
+  font-size: 1.05rem;
+  color: var(--ps-text-muted);
+  margin: 0;
+}
+
+.pres-slide--section {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.pres-section-eyebrow {
+  font-family: var(--ps-font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ps-accent);
+  margin-bottom: 1rem;
+}
+
+.pres-section-title {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  margin: 0;
+  background: linear-gradient(135deg, #fff 0%, var(--ps-accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pres-section-subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+  color: var(--ps-text-muted);
+  margin-top: 1rem;
+}
+
+.pres-heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin: 0 0 1.25rem;
+  color: var(--ps-accent);
+  border-bottom: 2px solid rgba(94, 168, 255, 0.25);
+  padding-bottom: 0.5rem;
+}
+
+.pres-lead {
+  font-size: 1.1rem;
+  color: var(--ps-text-muted);
+  margin-bottom: 1rem;
+}
+
+.pres-callout {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.5;
+  margin: 1rem 0 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--ps-prompt);
+  background: rgba(255, 229, 102, 0.08);
+  border-radius: 0 var(--ps-radius) var(--ps-radius) 0;
+}
+
+.pres-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pres-bullets li {
+  position: relative;
+  padding: 0.65rem 0 0.65rem 1.75rem;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.45;
+  border-bottom: 1px solid rgba(94, 168, 255, 0.12);
+}
+
+.pres-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--ps-prompt);
+  font-weight: bold;
+}
+
+.pres-bullets--compact li {
+  font-size: 1rem;
+  padding: 0.4rem 0 0.4rem 1.5rem;
+}
+
+.pres-code {
+  margin: 0 0 1rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  overflow-x: auto;
+  font-family: var(--ps-font-mono);
+  font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+  line-height: 1.5;
+  color: var(--ps-cmdlet);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.presentation-nav {
+  position: absolute;
+  top: 0;
+  bottom: 5.5rem;
+  width: 18%;
+  z-index: 2;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.presentation-mode:hover .presentation-nav:not(:disabled) {
+  opacity: 1;
+}
+
+.presentation-nav--prev {
+  left: 0;
+}
+
+.presentation-nav--next {
+  right: 0;
+}
+
+.presentation-nav:disabled {
+  cursor: default;
+}
+
+.presentation-footer {
+  position: relative;
+  z-index: 3;
+  background: rgba(0, 13, 31, 0.92);
+  border-top: 1px solid var(--ps-border);
+  backdrop-filter: blur(8px);
+}
+
+.presentation-progress {
+  height: 3px;
+  background: rgba(94, 168, 255, 0.15);
+}
+
+.presentation-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ps-accent), var(--ps-prompt));
+  transition: width 0.25s ease-out;
+}
+
+.presentation-footer-inner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.65rem 1.25rem;
+}
+
+.presentation-section {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ps-text-muted);
+  min-width: 7rem;
+}
+
+.presentation-counter {
+  font-family: var(--ps-font-mono);
+  font-size: 0.9rem;
+  color: var(--ps-accent);
+  flex: 1;
+  text-align: center;
+}
+
+.presentation-controls {
+  display: flex;
+  gap: 0.35rem;
+  margin-left: auto;
+}
+
+.presentation-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-family: var(--ps-font-sans);
+  background: rgba(94, 168, 255, 0.12);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  color: var(--ps-text);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.presentation-btn:hover:not(:disabled) {
+  background: rgba(94, 168, 255, 0.22);
+  border-color: rgba(94, 168, 255, 0.45);
+}
+
+.presentation-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.presentation-btn--exit {
+  color: var(--ps-prompt);
+}
+
+.presentation-hint {
+  margin: 0;
+  padding: 0 1.25rem 0.55rem;
+  font-size: 0.72rem;
+  color: var(--ps-text-muted);
+  text-align: center;
+}
+
+.presentation-dots {
+  position: absolute;
+  bottom: 5.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.35rem;
+  max-width: 70%;
+  overflow-x: auto;
+  padding: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.presentation-mode:hover .presentation-dots {
+  opacity: 1;
+}
+
+.presentation-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  background: rgba(94, 168, 255, 0.25);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.presentation-dot.active {
+  background: var(--ps-prompt);
+  box-shadow: 0 0 8px rgba(255, 229, 102, 0.5);
+}
+
+@media (max-width: 700px) {
+  .presentation-stage {
+    padding: 2rem 1.25rem 5.5rem;
+  }
+
+  .presentation-nav {
+    display: none;
+  }
+
+  .presentation-hint {
+    display: none;
+  }
+
+  .presentation-dots {
+    opacity: 1;
+  }
+}

@@ -107,6 +107,29 @@
   font-size: 0.85rem;
 }
 
+.ps-footer p {
+  margin-bottom: 0.35rem;
+}
+
+.ps-footer p:last-child {
+  margin-bottom: 0;
+}
+
+.ps-footer-hint {
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.ps-footer kbd {
+  font-family: var(--ps-font-mono);
+  font-size: 0.7rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  border: 1px solid var(--ps-border);
+  background: rgba(94, 168, 255, 0.1);
+  color: var(--ps-accent);
+}
+
 .ps-main {
   flex: 1;
   animation: fadeIn 0.4s ease-out;
