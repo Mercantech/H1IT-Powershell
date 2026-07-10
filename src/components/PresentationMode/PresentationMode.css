@@ -386,6 +386,12 @@
   padding: 0.25rem;
   opacity: 0;
   transition: opacity 0.2s;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.presentation-dots::-webkit-scrollbar {
+  display: none;
 }
 
 .presentation-mode:hover .presentation-dots {
