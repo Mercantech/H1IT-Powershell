@@ -49,6 +49,11 @@ export function Home() {
             description="Øvelser på jeres PC eller i driftsetup — terminal, VS Code og Git-anbefaling."
             to="/lokalt"
           />
+          <ModuleCard
+            title="Intune og PowerShell"
+            description="Hvad Intune er, og hvorfor PowerShell stadig bruges i moderne endpoint-styring."
+            to="/intune"
+          />
         </div>
       </section>
 

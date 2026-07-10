@@ -9,6 +9,7 @@ const navItems = [
   { to: '/projekt', label: 'Projektkobling', end: false },
   { to: '/ordbog', label: 'Ordbog', end: false },
   { to: '/lokalt', label: 'Lokale opgaver', end: false },
+  { to: '/intune', label: 'Intune', end: false },
 ];
 
 export function Layout() {

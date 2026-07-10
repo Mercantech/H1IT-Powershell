@@ -89,3 +89,4 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 - `/projekt` — Projektkobling med use cases og Mermaid-diagrammer
 - `/ordbog` — Opslagsguide til PowerShell-begreber
 - `/lokalt` — Lokale opgaver (PC / driftsetup, terminal, VS Code, Git)
+- `/intune` — PowerShell og Microsoft Intune (bro til praktik/job)

@@ -75,3 +75,26 @@ export const pipelineExample = `flowchart LR
     Pipe --> Filter["Where-Object Status -eq Stopped"]
     Filter --> Pipe2["|"]
     Pipe2 --> Output["Select-Object Name"]`;
+
+export const intuneOverview = `flowchart TB
+    subgraph cloud [Microsoft Intune - cloud]
+        Portal[Intune admin center]
+        Policies[Policies og compliance]
+        Apps[App distribution]
+        Devices[Enhedsstyring]
+    end
+    subgraph automation [PowerShell automatisering]
+        Graph[Microsoft Graph PowerShell]
+        Scripts[Bulk scripts og rapporter]
+        Deploy[Script deployment til enheder]
+    end
+    subgraph onprem [Traditionel infrastruktur]
+        AD[Active Directory / Entra ID]
+        GPO[Gruppepolitik - on-prem]
+    end
+    AD --> Devices
+    Portal --> Policies
+    Graph --> Portal
+    Scripts --> Graph
+    Deploy --> Devices
+    GPO -.->|"supplerer / erstatter delvist"| Policies`;
