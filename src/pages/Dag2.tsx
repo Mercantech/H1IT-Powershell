@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
+import { ModuleVideos } from '../components/ModuleVideos';
 import { Quiz } from '../components/Quiz';
+import { beginnerPlaylistUrl } from '../data/videos';
 import { dag2Exercises } from '../data/exercises';
 import { dag2Quiz } from '../data/quizzes/dag2';
 
@@ -12,7 +14,8 @@ export function Dag2() {
         <h1>Dag 2 — Sikkerhed og anvendelse</h1>
         <p>
           Uge 38 · 17. september. Sikker scripting, fjernadministration,
-          WBEM/CIM og datahåndtering.
+          WBEM/CIM og datahåndtering. Supplerende videoer er indlejret under
+          relevante moduler.
         </p>
       </header>
 
@@ -45,6 +48,7 @@ Stop-Transcript`}
             <code>Start-Transcript</code> — log session til fil
           </li>
         </ul>
+        <ModuleVideos module="sikkerhed" />
         <Link to="/projekt#backup" className="project-link">
           → Se projektkobling: Backup
         </Link>
@@ -116,6 +120,13 @@ Get-Service | Select-Object Name, Status, StartType | Export-Csv .\\services.csv
 # Select-Object = SELECT kolonner
 # Sort-Object = ORDER BY`}
         />
+        <ModuleVideos module="data" />
+        <p className="module-video-playlist">
+          Hele playlisten:{' '}
+          <a href={beginnerPlaylistUrl} target="_blank" rel="noreferrer">
+            Beginner PowerShell 7 Tutorials på YouTube
+          </a>
+        </p>
         <Link to="/projekt#ad" className="project-link">
           → Se projektkobling: Active Directory
         </Link>

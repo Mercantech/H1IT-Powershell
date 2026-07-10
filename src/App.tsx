@@ -7,7 +7,6 @@ import { Projekt } from './pages/Projekt';
 import { Ordbog } from './pages/Ordbog';
 import { LokaleOpgaver } from './pages/LokaleOpgaver';
 import { Intune } from './pages/Intune';
-import { Videoer } from './pages/Videoer';
 
 export function App() {
   return (
@@ -19,7 +18,6 @@ export function App() {
           <Route path="dag-2" element={<Dag2 />} />
           <Route path="projekt" element={<Projekt />} />
           <Route path="ordbog" element={<Ordbog />} />
-          <Route path="videoer" element={<Videoer />} />
           <Route path="lokalt" element={<LokaleOpgaver />} />
           <Route path="intune" element={<Intune />} />
         </Route>

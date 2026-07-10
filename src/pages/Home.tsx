@@ -74,12 +74,6 @@ export function Home() {
             accent="yellow"
           />
           <ModuleCard
-            title="Video-pensum"
-            description="11 indlejrede YouTube-videoer fra Beginner PowerShell 7 Tutorials — supplerende pensum til Dag 1 og 2."
-            to="/videoer"
-            accent="purple"
-          />
-          <ModuleCard
             title="Lokale opgaver"
             description="Øvelser på jeres PC eller i driftsetup — terminal, VS Code og Git-anbefaling."
             to="/lokalt"

@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
 import { MermaidDiagram } from '../components/MermaidDiagram';
+import { ModuleVideos } from '../components/ModuleVideos';
 import { PipelineVisualizer } from '../components/PipelineVisualizer';
 import { Quiz } from '../components/Quiz';
+import { beginnerPlaylistUrl } from '../data/videos';
 import { dag1Exercises } from '../data/exercises';
 import { pipelineExample } from '../data/diagrams';
 import { dag1Quiz } from '../data/quizzes/dag1';
@@ -15,6 +17,7 @@ export function Dag1() {
         <h1>Dag 1 — Grundlæggende</h1>
         <p>
           Uge 37 · 10. september. Cmdlets, pipeline, variabler og aliases.
+          Supplerende videoer er indlejret under de relevante moduler.
         </p>
       </header>
 
@@ -32,6 +35,7 @@ export function Dag1() {
           dokumenteres eller køres på mange servere.
         </p>
         <CodeBlock code="Get-ComputerInfo | Select-Object WindowsProductName, OsArchitecture" />
+        <ModuleVideos module="intro" />
         <Link to="/projekt#serverdrift" className="project-link">
           → Se projektkobling: Serverdrift
         </Link>
@@ -73,6 +77,7 @@ Get-Command -Verb Get | Select-Object -First 10`}
           code={`Get-Service | Where-Object { $_.Status -eq "Stopped" } | Select-Object Name, Status`}
         />
         <PipelineVisualizer />
+        <ModuleVideos module="pipeline" />
         <Link to="/projekt#dns-dhcp" className="project-link">
           → Se projektkobling: DNS og DHCP
         </Link>
@@ -97,6 +102,22 @@ svc`}
           <strong>Vigtigt:</strong> Et alias er kun et alternativt navn — det
           indeholder ingen logik. Brug funktioner når du har brug for
           genbrugelig kode.
+        </p>
+        <ModuleVideos module="variabler" />
+      </section>
+
+      <section id="scriptlogik" className="module-section">
+        <h2>Betingelser og løkker</h2>
+        <p>
+          Supplerende pensum til scripts der skal træffe valg eller gentage
+          handlinger — nyttigt når I bygger automatisering til projektet.
+        </p>
+        <ModuleVideos module="scriptlogik" />
+        <p className="module-video-playlist">
+          Hele playlisten:{' '}
+          <a href={beginnerPlaylistUrl} target="_blank" rel="noreferrer">
+            Beginner PowerShell 7 Tutorials på YouTube
+          </a>
         </p>
       </section>
 

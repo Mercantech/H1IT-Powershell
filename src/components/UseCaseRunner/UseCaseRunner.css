@@ -1,0 +1,96 @@
+.use-case-runner {
+  margin: 1rem 0;
+}
+
+.use-case-runner-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+
+.use-case-runner-hint {
+  font-size: 0.85rem;
+  color: var(--ps-text-muted);
+}
+
+.use-case-output {
+  margin-top: 1rem;
+  border-radius: var(--ps-radius);
+  overflow: hidden;
+  border: 1px solid var(--ps-border);
+  animation: useCaseFadeIn 0.25s ease-out;
+}
+
+.use-case-output--loading .use-case-output-body {
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.use-case-output-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--ps-bg-secondary);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--ps-border);
+}
+
+.use-case-output-title {
+  font-family: var(--ps-font-mono);
+  font-size: 0.75rem;
+  color: var(--ps-text-muted);
+}
+
+.use-case-output-path {
+  margin-left: auto;
+  font-family: var(--ps-font-mono);
+  font-size: 0.75rem;
+  color: var(--ps-prompt);
+}
+
+.use-case-output-body {
+  margin: 0;
+  padding: 1rem;
+  background: var(--ps-bg-input);
+  font-family: var(--ps-font-mono);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ps-text);
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.use-case-output-cursor {
+  color: var(--ps-prompt);
+  animation: useCaseBlink 0.9s step-end infinite;
+}
+
+.use-case-output-note {
+  margin: 0;
+  padding: 0.65rem 1rem;
+  font-size: 0.8rem;
+  color: var(--ps-text-muted);
+  background: rgba(0, 0, 0, 0.15);
+  border-top: 1px solid var(--ps-border);
+}
+
+@keyframes useCaseFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes useCaseBlink {
+  50% {
+    opacity: 0;
+  }
+}

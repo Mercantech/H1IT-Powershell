@@ -4,6 +4,7 @@ export interface ProjectUseCase {
   component: string;
   description: string;
   code: string;
+  sampleOutput: string;
   relatedModule: string;
 }
 
@@ -22,6 +23,24 @@ foreach ($b in $brugere) {
 
 # Tjek GPO-status
 Get-GPO -All | Select-Object DisplayName, GpoStatus`,
+    sampleOutput: `PS C:\\Serverauto> $brugere = Import-Csv .\\brugere.csv
+PS C:\\Serverauto> foreach ($b in $brugere) {
+>>     New-ADUser -Name $b.Navn -SamAccountName $b.Brugernavn -Path "OU=Brugere,DC=firma,DC=local"
+>> }
+
+DisplayName    SamAccountName Path
+-----------    -------------- ----
+Anna Jensen    ajensen        OU=Brugere,DC=firma,DC=local
+Bo Nielsen     bnielsen       OU=Brugere,DC=firma,DC=local
+Mia Larsen     mlarsen        OU=Brugere,DC=firma,DC=local
+
+PS C:\\Serverauto> Get-GPO -All | Select-Object DisplayName, GpoStatus
+
+DisplayName              GpoStatus
+-----------              ---------
+Default Domain Policy    AllSettingsEnabled
+Windows Firewall Policy  AllSettingsEnabled
+USB-blokering            UserSettingsDisabled`,
     relatedModule: '/dag-2#data',
   },
   {
@@ -35,6 +54,18 @@ Get-Service -Name DNS, DHCPServer | Select-Object Name, Status, StartType
 
 # Eksportér DNS-zoner til rapport
 Get-DnsServerZone | Export-Csv .\\dns-zoner.csv`,
+    sampleOutput: `PS C:\\Serverauto> Get-Service -Name DNS, DHCPServer | Select-Object Name, Status, StartType
+
+Name        Status  StartType
+----        ------  ---------
+DNS         Running Automatic
+DHCPServer  Running Automatic
+
+PS C:\\Serverauto> Get-DnsServerZone | Export-Csv .\\dns-zoner.csv
+PS C:\\Serverauto> Get-Content .\\dns-zoner.csv
+"ZoneName","ZoneType","IsReverseLookupZone"
+"firma.local","Primary","False"
+"10.in-addr.arpa","Primary","True"`,
     relatedModule: '/dag-1#pipeline',
   },
   {
@@ -50,6 +81,24 @@ Get-WBJob | Select-Object JobType, State, ErrorDescription
 Start-Transcript -Path .\\backup-tjek.log
 Get-WBJob
 Stop-Transcript`,
+    sampleOutput: `PS C:\\Serverauto> Get-WBJob | Select-Object JobType, State, ErrorDescription
+
+JobType  State      ErrorDescription
+-------  -----      ----------------
+Backup   Completed
+Restore  Completed
+
+PS C:\\Serverauto> Start-Transcript -Path .\\backup-tjek.log
+Transcript started, output file is C:\\Serverauto\\backup-tjek.log
+PS C:\\Serverauto> Get-WBJob
+
+JobType  State
+-------  -----
+Backup   Completed
+Restore  Completed
+
+PS C:\\Serverauto> Stop-Transcript
+Transcript stopped, output file is C:\\Serverauto\\backup-tjek.log`,
     relatedModule: '/dag-2#sikkerhed',
   },
   {
@@ -64,6 +113,21 @@ Get-NetIPAddress -AddressFamily IPv4 |
 
 # Tjek VLAN-konfiguration (Windows NIC teaming)
 Get-NetLbfoTeam | Select-Object Name, Status`,
+    sampleOutput: `PS C:\\Serverauto> Get-NetIPAddress -AddressFamily IPv4 |
+>>     Select-Object InterfaceAlias, IPAddress, PrefixLength
+
+InterfaceAlias IPAddress    PrefixLength
+-------------- ---------    ------------
+Ethernet0      192.168.1.10           24
+vEthernet-VLAN 10.0.10.5              24
+Loopback       127.0.0.1               8
+
+PS C:\\Serverauto> Get-NetLbfoTeam | Select-Object Name, Status
+
+Name          Status
+----          ------
+Team-VLAN01   Up
+Team-Uplink   Up`,
     relatedModule: '/dag-2#wbem',
   },
   {
@@ -78,6 +142,20 @@ Get-ADDefaultDomainPasswordPolicy |
 
 # Find inaktive brugere (sikkerhedsrisiko)
 Search-ADAccount -AccountInactive -TimeSpan 90.00:00:00 -UsersOnly`,
+    sampleOutput: `PS C:\\Serverauto> Get-ADDefaultDomainPasswordPolicy |
+>>     Select-Object MinPasswordLength, LockoutThreshold, ComplexityEnabled
+
+MinPasswordLength LockoutThreshold ComplexityEnabled
+----------------- ---------------- -----------------
+                8                5              True
+
+PS C:\\Serverauto> Search-ADAccount -AccountInactive -TimeSpan 90.00:00:00 -UsersOnly
+
+Name          SamAccountName  LastLogonDate
+----          --------------  -------------
+svc_gammel    svc_gammel      12-01-2025
+test_bruger   test_bruger     15-11-2024
+praktikant22  praktikant22    03-09-2024`,
     relatedModule: '/dag-2#sikkerhed',
   },
   {
@@ -94,6 +172,20 @@ Invoke-Command -ComputerName $servere -ScriptBlock {
 
 # Interaktiv session
 Enter-PSSession -ComputerName SRV01`,
+    sampleOutput: `PS C:\\Serverauto> $servere = "SRV01", "SRV02", "SRV03"
+PS C:\\Serverauto> Invoke-Command -ComputerName $servere -ScriptBlock {
+>>     Get-Service | Where-Object Status -eq "Stopped"
+>> }
+
+PSComputerName Name              Status DisplayName
+-------------- ----              ------ -----------
+SRV01          Spooler           Stopped Print Spooler
+SRV01          RemoteRegistry    Stopped Remote Registry
+SRV02          Themes            Stopped Themes
+SRV03          W32Time           Stopped Windows Time
+
+PS C:\\Serverauto> Enter-PSSession -ComputerName SRV01
+[SRV01]: PS C:\\Users\\admin> _`,
     relatedModule: '/dag-2#fjernadmin',
   },
 ];

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { CodeBlock } from '../components/CodeBlock';
 import { CodeExercise } from '../components/CodeExercise';
 import { MermaidDiagram } from '../components/MermaidDiagram';
+import { UseCaseRunner } from '../components/UseCaseRunner';
 import { projectOverview, projectWorkflow } from '../data/diagrams';
 import { guiVsScript, projectUseCases } from '../data/projectUseCases';
 import { projectExercise } from '../data/exercises';
@@ -61,7 +61,8 @@ export function Projekt() {
         <h2>Konkrete use cases</h2>
         <p>
           Her er eksempler på hvordan PowerShell bruges i hver del af jeres
-          infrastruktur — med kode I kan tilpasse til jeres case.
+          infrastruktur — med kode I kan tilpasse til jeres case. Klik{' '}
+          <strong>Kør eksempel</strong> for at se simuleret output.
         </p>
         {projectUseCases.map((uc) => (
           <div key={uc.id} id={uc.id} className="card module-section">
@@ -72,7 +73,11 @@ export function Projekt() {
               </span>
             </h3>
             <p>{uc.description}</p>
-            <CodeBlock code={uc.code} title={uc.title} showPrompt={false} />
+            <UseCaseRunner
+              title={uc.title}
+              code={uc.code}
+              sampleOutput={uc.sampleOutput}
+            />
             <Link to={uc.relatedModule} className="project-link">
               → Gå til relateret modul
             </Link>
