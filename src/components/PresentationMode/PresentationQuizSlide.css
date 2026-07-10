@@ -1,0 +1,108 @@
+.pres-quiz {
+  width: 100%;
+}
+
+.pres-quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 1.25rem 0;
+}
+
+.pres-quiz-option {
+  width: 100%;
+  text-align: left;
+  padding: 0.85rem 1.1rem;
+  font-size: 1.05rem;
+  font-family: var(--ps-font-sans);
+  color: var(--ps-text);
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+
+.pres-quiz-option:hover:not(:disabled) {
+  border-color: rgba(94, 168, 255, 0.5);
+  background: rgba(94, 168, 255, 0.12);
+  transform: translateX(4px);
+}
+
+.pres-quiz-option:disabled {
+  cursor: default;
+}
+
+.pres-quiz-option--correct {
+  border-color: var(--ps-success);
+  background: rgba(78, 201, 176, 0.15);
+  color: var(--ps-success);
+}
+
+.pres-quiz-option--wrong {
+  border-color: var(--ps-error);
+  background: rgba(241, 76, 76, 0.12);
+  color: #ff9a9a;
+}
+
+.pres-quiz-prompt {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ps-text-muted);
+  font-style: italic;
+}
+
+.pres-quiz-feedback {
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--ps-radius);
+  border-left: 4px solid;
+  animation: presQuizFeedbackIn 0.25s ease-out;
+}
+
+.pres-quiz-feedback--correct {
+  border-color: var(--ps-success);
+  background: rgba(78, 201, 176, 0.1);
+}
+
+.pres-quiz-feedback--wrong {
+  border-color: var(--ps-error);
+  background: rgba(241, 76, 76, 0.08);
+}
+
+.pres-quiz-feedback-icon {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.pres-quiz-feedback--correct .pres-quiz-feedback-icon {
+  color: var(--ps-success);
+}
+
+.pres-quiz-feedback--wrong .pres-quiz-feedback-icon {
+  color: var(--ps-error);
+}
+
+.pres-quiz-feedback p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ps-text-muted);
+  line-height: 1.45;
+}
+
+.pres-quiz-correct-answer {
+  margin-top: 0.65rem !important;
+  color: var(--ps-text) !important;
+}
+
+@keyframes presQuizFeedbackIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

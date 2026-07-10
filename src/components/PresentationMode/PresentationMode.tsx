@@ -8,6 +8,7 @@ import {
 } from '../../data/presentationSlides';
 import { usePresentation } from '../../context/PresentationContext';
 import { PresentationSlideRunner } from './PresentationSlideRunner';
+import { PresentationQuizSlide } from './PresentationQuizSlide';
 import './PresentationMode.css';
 
 const scrollLayouts = new Set(['bullets', 'code', 'runnable', 'table', 'quiz', 'local']);
@@ -98,28 +99,7 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
       );
 
     case 'quiz':
-      return wrap(
-        <>
-          <h2 className="pres-heading">{slide.title}</h2>
-          {slide.quizQuestion && <p className="pres-quiz-question">{slide.quizQuestion}</p>}
-          {slide.quizOptions && (
-            <ul className="pres-bullets pres-bullets--quiz">
-              {slide.quizOptions.map((opt) => (
-                <li
-                  key={opt}
-                  className={opt === slide.quizAnswer ? 'pres-quiz-correct' : undefined}
-                >
-                  {opt}
-                  {opt === slide.quizAnswer && ' ✓'}
-                </li>
-              ))}
-            </ul>
-          )}
-          {slide.quizExplanation && (
-            <p className="pres-quiz-explanation">{slide.quizExplanation}</p>
-          )}
-        </>
-      );
+      return wrap(<PresentationQuizSlide slide={slide} />);
 
     case 'local':
       return wrap(
@@ -244,7 +224,7 @@ export function PresentationMode() {
         </div>
 
         <p className="presentation-hint">
-          F5 fra start · Shift+F5 fra sektion · Kør eksempel på slides med ▶ · Esc afslut
+          F5 fra start · Shift+F5 fra sektion · Kør eksempel med ▶ · Quiz: vælg svar · Esc afslut
         </p>
       </footer>
 
