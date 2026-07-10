@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import Editor, { type OnMount } from '@monaco-editor/react';
 import type { CodeExerciseData } from '../../data/exercises/types';
 import { validateAnswer, validatePattern } from '../../utils/validateAnswer';
+import { editorOptions, powershellEditorTheme } from './powershellTheme';
 import './CodeExercise.css';
 
 interface CodeExerciseProps {
@@ -11,6 +13,11 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
   const [input, setInput] = useState(exercise.starterCode ?? '');
   const [showHint, setShowHint] = useState(false);
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null);
+
+  const handleMount: OnMount = (_editor, monaco) => {
+    monaco.editor.defineTheme('ps-dark', powershellEditorTheme);
+    monaco.editor.setTheme('ps-dark');
+  };
 
   const checkAnswer = () => {
     let correct = false;
@@ -34,19 +41,23 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
             <span className="dot yellow" />
             <span className="dot green" />
           </span>
-          <span>Skriv din kommando</span>
+          <span className="code-exercise-prompt-label">PowerShell</span>
+          <span className="code-exercise-path">PS C:\H1IT&gt;</span>
         </div>
-        <div className="code-exercise-input-line">
-          <span className="code-prompt">PS C:\H1IT&gt; </span>
-          <textarea
-            className="code-exercise-input"
+        <div className="code-exercise-editor">
+          <Editor
+            height="120px"
+            defaultLanguage="powershell"
             value={input}
-            onChange={(e) => {
-              setInput(e.target.value);
+            onChange={(value) => {
+              setInput(value ?? '');
               setResult(null);
             }}
-            rows={3}
-            spellCheck={false}
+            onMount={handleMount}
+            options={editorOptions}
+            loading={
+              <div className="code-exercise-editor-loading">Indlæser editor…</div>
+            }
           />
         </div>
       </div>
