@@ -72,3 +72,4 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 - `/dag-1` — Grundlæggende (cmdlets, pipeline, variabler)
 - `/dag-2` — Sikkerhed, fjernadmin, WBEM, data
 - `/projekt` — Projektkobling med use cases og Mermaid-diagrammer
+- `/ordbog` — Opslagsguide til PowerShell-begreber

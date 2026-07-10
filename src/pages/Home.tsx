@@ -37,6 +37,11 @@ export function Home() {
             description="Se hvordan PowerShell integreres i jeres infrastrukturprojekt med konkrete use cases."
             to="/projekt"
           />
+          <ModuleCard
+            title="Ordbog"
+            description="Hurtig opslagsguide til PowerShell-begreber som -WhatIf, pipeline, cmdlets og mere."
+            to="/ordbog"
+          />
         </div>
       </section>
 
