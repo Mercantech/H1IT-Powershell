@@ -9,9 +9,18 @@ import {
 import { usePresentation } from '../../context/PresentationContext';
 import { PresentationSlideRunner } from './PresentationSlideRunner';
 import { PresentationQuizSlide } from './PresentationQuizSlide';
+import { PresentationLearningGoalsSlide } from './PresentationLearningGoalsSlide';
 import './PresentationMode.css';
 
-const scrollLayouts = new Set(['bullets', 'code', 'runnable', 'table', 'quiz', 'local']);
+const scrollLayouts = new Set([
+  'bullets',
+  'code',
+  'runnable',
+  'table',
+  'quiz',
+  'local',
+  'learning-goals',
+]);
 
 function SlideContent({ slide }: { slide: PresentationSlide }) {
   const scrollable = scrollLayouts.has(slide.layout);
@@ -100,6 +109,9 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
 
     case 'quiz':
       return wrap(<PresentationQuizSlide slide={slide} />);
+
+    case 'learning-goals':
+      return wrap(<PresentationLearningGoalsSlide />);
 
     case 'local':
       return wrap(

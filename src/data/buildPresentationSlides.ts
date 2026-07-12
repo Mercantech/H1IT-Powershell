@@ -1,4 +1,3 @@
-import { learningGoals, goalModuleMap } from './learningGoals';
 import { getLocalExercisesForPhase } from './localExercises';
 import { dag1Exercises, dag2Exercises, projectExercise } from './exercises';
 import { dag1Quiz } from './quizzes/dag1';
@@ -12,6 +11,15 @@ import {
 } from './deploymentGuide';
 import { beginnerVideos } from './videos';
 import type { PresentationSlide, SlideSection } from './presentationSlides';
+
+function learningGoalsSlide(): PresentationSlide {
+  return {
+    id: 'intro-mal',
+    layout: 'learning-goals',
+    section: 'intro',
+    title: 'Læringsmål',
+  };
+}
 
 function sectionSlide(
   id: string,
@@ -74,20 +82,6 @@ export function buildPresentationSlides(): PresentationSlide[] {
   });
 
   slides.push(
-    bulletsSlide('intro-mal', 'intro', 'Læringsmål', [
-      ...learningGoals.map((g) => `Mål ${g.id}: ${g.text}`),
-    ])
-  );
-
-  slides.push(
-    bulletsSlide('intro-mal-moduler', 'intro', 'Læringsmål — modulkobling', [
-      ...learningGoals.map(
-        (g) => `Mål ${g.id}: ${goalModuleMap[g.id]?.join(' · ') ?? ''}`
-      ),
-    ])
-  );
-
-  slides.push(
     bulletsSlide('intro-forlob', 'intro', 'Undervisningsforløb', [
       'Dag 1 (uge 37, 10. sep.): Cmdlets, pipeline, variabler, aliases',
       'Dag 2 (uge 38, 17. sep.): Sikkerhed, fjernadmin, WBEM/CIM, data',
@@ -95,6 +89,8 @@ export function buildPresentationSlides(): PresentationSlide[] {
       'Lokale opgaver, quizzer og kodeøvelser på hver side',
     ])
   );
+
+  slides.push(learningGoalsSlide());
 
   slides.push({
     id: 'intro-gui',

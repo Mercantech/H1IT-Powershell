@@ -9,7 +9,8 @@ export type SlideLayout =
   | 'runnable'
   | 'table'
   | 'quiz'
-  | 'local';
+  | 'local'
+  | 'learning-goals';
 
 export type SlideSection = 'intro' | 'dag-1' | 'dag-2' | 'projekt' | 'afslutning';
 

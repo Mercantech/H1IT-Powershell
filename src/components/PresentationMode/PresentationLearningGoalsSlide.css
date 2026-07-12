@@ -1,0 +1,127 @@
+.pres-learning-goals {
+  width: min(1000px, 100%);
+}
+
+.pres-learning-goals-lead {
+  font-size: 1rem;
+  color: var(--ps-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.pres-learning-goals-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.pres-learning-goal {
+  padding: 1rem 1.15rem;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid var(--ps-border);
+  border-radius: var(--ps-radius);
+  border-left: 4px solid var(--ps-accent);
+}
+
+.pres-learning-goal:nth-child(1) {
+  border-left-color: #5ea8ff;
+}
+
+.pres-learning-goal:nth-child(2) {
+  border-left-color: #4ec9b0;
+}
+
+.pres-learning-goal:nth-child(3) {
+  border-left-color: #ffe566;
+}
+
+.pres-learning-goal-num {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ps-accent);
+}
+
+.pres-learning-goal h3 {
+  margin: 0.25rem 0 0.5rem;
+  font-size: 1.15rem;
+  color: var(--ps-text);
+}
+
+.pres-learning-goal-summary {
+  margin: 0 0 0.65rem;
+  font-size: 0.92rem;
+  color: var(--ps-text-muted);
+  line-height: 1.45;
+}
+
+.pres-learning-goal > ul {
+  margin: 0 0 0.75rem;
+  padding-left: 1.2rem;
+}
+
+.pres-learning-goal > ul li {
+  font-size: 0.88rem;
+  margin-bottom: 0.3rem;
+  color: var(--ps-text);
+}
+
+.pres-learning-pins-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ps-text-muted);
+}
+
+.pres-learning-pins {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pres-learning-pins li {
+  font-size: 0.75rem;
+  color: var(--ps-text-muted);
+  line-height: 1.4;
+  margin-bottom: 0.25rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.pres-pin-id {
+  position: absolute;
+  left: 0;
+  font-family: var(--ps-font-mono);
+  font-size: 0.68rem;
+  color: var(--ps-prompt);
+  font-weight: 600;
+}
+
+.pres-learning-pins-empty {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--ps-text-muted);
+  font-style: italic;
+}
+
+@media (min-width: 900px) {
+  .pres-learning-goals-grid {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+
+  .pres-learning-goal h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 899px) {
+  .pres-learning-goals-grid {
+    max-height: 55vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .pres-learning-goals-grid::-webkit-scrollbar {
+    display: none;
+  }
+}

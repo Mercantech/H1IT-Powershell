@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { MermaidDiagram } from '../components/MermaidDiagram';
 import { ModuleCard } from '../components/ModuleCard';
 import { SiteFlowDiagram } from '../components/SiteFlowDiagram';
-import { learningGoals, goalModuleMap } from '../data/learningGoals';
+import { coreLearningGoals, getPinsForCoreGoal, goalModuleMap } from '../data/learningGoals';
 import { overviewFlow } from '../data/diagrams';
 import './Home.css';
 
@@ -84,18 +84,50 @@ export function Home() {
 
       <section>
         <h2>Læringsmål</h2>
-        <p>Alle mål fra pensum — og hvilke moduler der dækker dem:</p>
-        <ul className="goal-list">
-          {learningGoals.map((goal) => (
-            <li key={goal.id}>
-              <strong>Mål {goal.id}:</strong> {goal.text}
-              <br />
-              <span className="goal-modules">
-                {goalModuleMap[goal.id]?.join(' · ')}
-              </span>
-            </li>
+        <p>Det I skal kunne efter to dage — bygget på 9 målpinde fra pensum.</p>
+        <div className="core-goals-grid">
+          {coreLearningGoals.map((goal) => (
+            <article key={goal.id} className="core-goal card">
+              <span className="core-goal-num">Mål {goal.id}</span>
+              <h3>{goal.title}</h3>
+              <p className="core-goal-summary">{goal.summary}</p>
+              <ul className="core-goal-bullets">
+                {goal.bullets.map((bullet) => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            </article>
           ))}
-        </ul>
+        </div>
+
+        <details className="goal-pins-details card">
+          <summary>Målpinde fra pensum (9 stk.)</summary>
+          <ul className="goal-pins-list">
+            {coreLearningGoals.map((goal) => (
+              <li key={goal.id} className="goal-pins-group">
+                <strong>
+                  Mål {goal.id}: {goal.title}
+                </strong>
+                <ul>
+                  {getPinsForCoreGoal(goal.id).length > 0 ? (
+                    getPinsForCoreGoal(goal.id).map((pin) => (
+                      <li key={pin.id}>
+                        <span className="goal-pin-id">Målpind {pin.id}</span> {pin.text}
+                        <span className="goal-modules">
+                          {goalModuleMap[pin.id]?.join(' · ')}
+                        </span>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="goal-pins-empty">
+                      Projektfokus — kobles på hele forløbet (ikke en officiel målpind)
+                    </li>
+                  )}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </details>
       </section>
 
       <SiteFlowDiagram />
