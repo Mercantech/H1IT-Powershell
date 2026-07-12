@@ -22,6 +22,9 @@ function ExerciseCard({ exercise }: { exercise: LocalExercise }) {
       <div className="lokal-opgave-meta">
         <span className="lokal-badge">{environmentLabels[exercise.environment]}</span>
         <span className="lokal-badge lokal-badge-tool">{toolLabels[exercise.tool]}</span>
+        {exercise.locked && (
+          <span className="lokal-badge lokal-badge-locked">Låst lab</span>
+        )}
       </div>
       <h3>{exercise.title}</h3>
       <p>{exercise.description}</p>
@@ -93,22 +96,24 @@ export function LocalExercisesSection({
         <div className="lokal-git card">
           <div className="lokal-git-header">
             <img src={assets.git} alt="" className="lokal-git-logo" />
-            <h3>Git — ikke pensum, men stærkt anbefalet</h3>
+            <h3>Git — forventet i projektaflevering</h3>
           </div>
           <p>
-            Det står ikke i pensum at I <em>skal</em> bruge Git — men vi anbefaler på det
-            kraftigste at I lægger <strong>al jeres kode i et Git-repo</strong> (GitHub,
-            GitLab eller jeres skoles løsning).
+            Jeres scripts skal ligge i et <strong>Git-repo</strong> (GitHub,
+            GitLab eller skolens løsning) — ikke spredt i Downloads eller på
+            én persons USB-stick.
           </p>
           <ul>
-            <li>Scripts og noter samles ét sted — ikke spredt i Downloads</li>
-            <li>I kan se historik: hvad ændrede I, og hvorfor?</li>
-            <li>Projektgruppen kan dele og reviewe kode</li>
-            <li>På <strong>H2</strong> genbruger mange det samme — scripts, snippets og erfaringer fra H1</li>
+            <li>Mappe <code>scripts/</code> med ét script per opgave</li>
+            <li>README der beskriver hvad hvert script gør og hvordan det testes</li>
+            <li>Regelmæssige commits — historik viser jeres arbejdsproces</li>
+            <li>Projektgruppen kan reviewe og sammenligne løsninger før fremlæggelse</li>
+            <li>På <strong>H2</strong> genbruger mange scripts og erfaringer fra H1</li>
           </ul>
           <p className="lokal-git-foot">
-            Minimum: en mappe med <code>scripts/</code>, README og regelmæssige commits.
-            Det gør jer klar til praktik og H2 uden at starte forfra.
+            Minimum til fremlæggelse: repo-link i rapporten + scripts med
+            kommentarer der opfylder vurderingskriterierne på{' '}
+            <Link to="/projekt#script-krav">Projektkobling</Link>.
           </p>
         </div>
       )}

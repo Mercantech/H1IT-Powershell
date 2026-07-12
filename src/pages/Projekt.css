@@ -32,6 +32,25 @@
   margin: 0;
 }
 
+.chef-brief {
+  margin: 0.75rem 0 1rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--ps-accent);
+  background: rgba(94, 168, 255, 0.08);
+  color: var(--ps-text-muted);
+  font-style: italic;
+  border-radius: 0 var(--ps-radius) var(--ps-radius) 0;
+}
+
+.use-case-card h3 {
+  margin-top: 0;
+}
+
+.script-rubric-table td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 @media (min-width: 720px) {
   .deployment-methods {
     grid-template-columns: repeat(2, 1fr);

@@ -55,6 +55,55 @@ Stop-Transcript`}
         </Link>
       </section>
 
+      <section id="execution-policy" className="module-section">
+        <h2>Execution Policy og script signing</h2>
+        <p>
+          Execution Policy beskytter mod at scripts kører ved et uheld. Det er
+          en <strong>intentionssignal</strong> — ikke en sikkerhedsgrænse der
+          ikke kan omgås.
+        </p>
+        <table className="comparison-table">
+          <thead>
+            <tr>
+              <th>Policy</th>
+              <th>Betydning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>Restricted</code></td>
+              <td>Ingen scripts tilladt (typisk default)</td>
+            </tr>
+            <tr>
+              <td><code>RemoteSigned</code></td>
+              <td>Lokale scripts kører; scripts fra netværk skal signeres</td>
+            </tr>
+            <tr>
+              <td><code>Unrestricted</code></td>
+              <td>Alt kører — frarådes i produktion</td>
+            </tr>
+            <tr>
+              <td><code>Bypass</code></td>
+              <td>Ingen begrænsninger — kun til kontrollerede deployments</td>
+            </tr>
+          </tbody>
+        </table>
+        <CodeBlock
+          code={`Get-ExecutionPolicy
+Get-ExecutionPolicy -List
+
+# Typisk på egen PC til udvikling:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`}
+        />
+        <p>
+          <strong>Script signing:</strong> Scripts kan signeres digitalt med et
+          certifikat, så I kan se om de er ændret siden signering. Kræver PKI
+          i enterprise-miljøer — relevant når RemoteSigned er politikken.
+        </p>
+        <Link to="/ordbog" className="project-link">
+          → Se også i ordbogen: Execution Policy
+        </Link>
+
       <section id="fjernadmin" className="module-section">
         <h2>Fjernadministration</h2>
         <p>

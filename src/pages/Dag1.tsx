@@ -35,6 +35,15 @@ export function Dag1() {
           visuel oversigt. PowerShell er stærkt når opgaver gentages, skal
           dokumenteres eller køres på mange servere.
         </p>
+        <div className="module-note card">
+          <p>
+            <strong>Windows PowerShell 5.1 vs. PowerShell 7:</strong> I lab og
+            på Windows Server møder I typisk <strong>5.1</strong> (indbygget).
+            PowerShell 7 er cross-platform og aktivt udviklet — fint på egen PC.
+            <strong> ISE</strong> er forældet; brug <strong>Windows Terminal</strong>{' '}
+            til kommandoer og <strong>VS Code</strong> til scripts.
+          </p>
+        </div>
         <CodeBlock code="Get-ComputerInfo | Select-Object WindowsProductName, OsArchitecture" />
         <ModuleVideos module="intro" />
         <Link to="/projekt#serverdrift" className="project-link">
@@ -78,6 +87,37 @@ Get-Command -Verb Get | Select-Object -First 10`}
           code={`Get-Service | Where-Object { $_.Status -eq "Stopped" } | Select-Object Name, Status`}
         />
         <PipelineVisualizer />
+        <h3>Formatering af output</h3>
+        <p>
+          Pipeline returnerer objekter — formaterings-cmdlets styrer hvordan de
+          vises. Brug dem til rapporter og overblik, ikke som del af en ny
+          pipeline (output stopper her).
+        </p>
+        <CodeBlock
+          code={`Get-Process | Sort-Object CPU -Descending | Select-Object -First 5 |
+    Format-Table Name, CPU, WorkingSet -AutoSize
+
+Get-Service DNS | Format-List *
+
+Get-Process | Out-GridView   # grafisk filter (kun Windows)
+
+Get-ChildItem C:\\Windows\\System32 -File -ErrorAction SilentlyContinue |
+    Measure-Object -Property Length -Sum`}
+        />
+        <ul>
+          <li>
+            <code>Format-Table</code> — kompakt tabel, god til overblik
+          </li>
+          <li>
+            <code>Format-List</code> — én egenskab per linje, god til detaljer
+          </li>
+          <li>
+            <code>Out-GridView</code> — søgbar GUI-tabel (Windows)
+          </li>
+          <li>
+            <code>Measure-Object</code> — summer, tæller, gennemsnit
+          </li>
+        </ul>
         <ModuleVideos module="pipeline" />
         <Link to="/projekt#dns-dhcp" className="project-link">
           → Se projektkobling: DNS og DHCP
@@ -113,6 +153,27 @@ svc`}
           Supplerende pensum til scripts der skal træffe valg eller gentage
           handlinger — nyttigt når I bygger automatisering til projektet.
         </p>
+        <CodeBlock
+          code={`# Betingelse
+$tal = 42
+if ($tal -gt 10) { "Stor" } else { "Lille" }
+
+# foreach — når du kender listen
+$liste = @("Alpha", "Beta", "Gamma")
+foreach ($item in $liste) {
+    Write-Host "Element: $item"
+}
+
+# ForEach-Object — direkte i pipeline
+1..5 | ForEach-Object { Write-Host "Nummer: $_" }
+
+# Funktion med parametre
+function Hilsen {
+    param($Navn)
+    Write-Host "Hej, $Navn!"
+}
+Hilsen -Navn "Elev01"`}
+        />
         <ModuleVideos module="scriptlogik" />
         <p className="module-video-playlist">
           Hele playlisten:{' '}

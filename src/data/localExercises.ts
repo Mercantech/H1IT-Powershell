@@ -7,6 +7,8 @@ export interface LocalExercise {
   title: string;
   environment: LocalEnvironment;
   tool: 'terminal' | 'vscode' | 'begge';
+  /** Låst lab med præcis forventet deliverable — som sidste års formelle øvelser */
+  locked?: boolean;
   description: string;
   steps: string[];
   deliverable: string;
@@ -59,6 +61,65 @@ export const localExercises: LocalExercise[] = [
     ],
     deliverable: 'Gem kommandoerne du brugte — du skal bruge pipelinen igen i projektet.',
     relatedLink: '/dag-1#pipeline',
+  },
+  {
+    id: 'lok-2b',
+    phase: 'dag-1',
+    title: 'Låst lab: Kun terminal — ingen File Explorer',
+    locked: true,
+    environment: 'pc',
+    tool: 'terminal',
+    description:
+      'Navigér filsystemet udelukkende via PowerShell. File Explorer er ikke tilladt i denne øvelse.',
+    steps: [
+      'Start i din brugermappe: Get-Location.',
+      'List indhold: Get-ChildItem (eller alias ls).',
+      'Opret mappen C:\\Serverauto\\lab med New-Item -ItemType Directory -Force.',
+      'Skift til mappen med Set-Location C:\\Serverauto\\lab.',
+      'Opret filen noter.txt med "Hej fra pipeline" | Out-File noter.txt.',
+      'Bekræft med Get-Content noter.txt.',
+      'Brug Get-Help og Get-Command hvis du er i tvivl — ikke Google som første valg.',
+    ],
+    deliverable:
+      'Screenshot eller transcript der viser hele sekvensen — fra Get-Location til Get-Content.',
+    relatedLink: '/dag-1#cmdlets',
+  },
+  {
+    id: 'lok-2c',
+    phase: 'dag-1',
+    title: 'Låst lab: 10 største filer i System32',
+    locked: true,
+    environment: 'pc',
+    tool: 'terminal',
+    description:
+      'Brug pipeline til at finde de 10 største filer i C:\\Windows\\System32. Skriv -WhatIf er ikke relevant her — det er kun læsning.',
+    steps: [
+      'Kør: Get-ChildItem C:\\Windows\\System32 -File -ErrorAction SilentlyContinue.',
+      'Pipe videre: Sort-Object Length -Descending.',
+      'Vælg top 10: Select-Object -First 10 Name, @{N="MB";E={[math]::Round($_.Length/1MB,2)}}.',
+      'Prøv Format-Table og Out-GridView for at sammenligne visning.',
+      'Gem resultatet: ... | Export-Csv .\\top10-system32.csv -NoTypeInformation.',
+    ],
+    deliverable: 'top10-system32.csv med præcis 10 rækker + kommandoen du brugte.',
+    relatedLink: '/dag-1#pipeline',
+  },
+  {
+    id: 'lok-2d',
+    phase: 'dag-1',
+    title: 'Låst lab: Stoppede services til fil',
+    locked: true,
+    environment: 'pc',
+    tool: 'vscode',
+    description:
+      'Kombinér Where-Object, Select-Object og Out-File — som i sidste års script-øvelse.',
+    steps: [
+      'Kør: Get-Service | Where-Object {$_.Status -eq "Stopped"} | Select-Object Name, DisplayName.',
+      'Gem til fil: ... | Out-File C:\\Serverauto\\stoppede-services.txt.',
+      'Gem samme som script stoppede-services.ps1 og kør det.',
+      'Tjek Execution Policy med Get-ExecutionPolicy hvis scriptet blokeres.',
+    ],
+    deliverable: 'stoppede-services.ps1 + stoppede-services.txt der kører uden fejl.',
+    relatedLink: '/dag-1#scriptlogik',
   },
   {
     id: 'lok-3',
@@ -156,13 +217,14 @@ export const localExercises: LocalExercise[] = [
     description:
       'Lav et script der løser en konkret opgave i jeres infrastrukturprojekt.',
     steps: [
-      'Vælg én opgave fra Projektkobling (fx tjek DNS/DHCP, eksportér service-status).',
+      'Vælg én use case fra Projektkobling (fx serverrapport, DHCP-leases eller AD-grupper).',
       'Opret scripts\\<navn>.ps1 i jeres projektmappe / Git-repo.',
-      'Skriv scriptet med kommentarer der forklarer hvert trin.',
+      'Skriv scriptet med kommentarer der forklarer cmdlets, flags og pipeline-valg.',
       'Test med -WhatIf først hvis scriptet ændrer noget.',
-      'Kør i lab og gem output til rapporten.',
+      'Kør i lab, gem output til rapporten og tjek mod vurderingskriterierne på Projektkobling.',
     ],
-    deliverable: 'Et .ps1-script i Git med README eller kommentarer — klar til fremlæggelse.',
+    deliverable:
+      'Et .ps1-script i Git med kommentarer — klar til klassens gennemgang og fremlæggelse.',
     relatedLink: '/projekt',
   },
   {

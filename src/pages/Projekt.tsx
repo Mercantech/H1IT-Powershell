@@ -12,6 +12,7 @@ import {
 } from '../data/deploymentGuide';
 import { projectOverview, projectWorkflow } from '../data/diagrams';
 import { guiVsScript, projectUseCases } from '../data/projectUseCases';
+import { scriptDeliverableChecklist, scriptRubric } from '../data/scriptRubric';
 import { projectExercise } from '../data/exercises';
 import './Projekt.css';
 
@@ -66,21 +67,57 @@ export function Projekt() {
         </table>
       </section>
 
+      <section id="script-krav" className="module-section">
+        <h2>Krav til jeres projektscripts</h2>
+        <p>
+          Inspireret af sidste års script-opgave: vælg én eller flere use cases
+          nedenfor, tilpas til jeres infrastrukturprojekt, og lever scripts der
+          kan gennemgås i klassen.
+        </p>
+        <h3>Afleverings-tjekliste</h3>
+        <ul className="deployment-checklist">
+          {scriptDeliverableChecklist.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+        <h3>Vurderingskriterier</h3>
+        <p>Brug tabellen ved peer review og fremlæggelse:</p>
+        <table className="comparison-table script-rubric-table">
+          <thead>
+            <tr>
+              <th>Kriterium</th>
+              <th>God</th>
+              <th>Mangelfuld</th>
+            </tr>
+          </thead>
+          <tbody>
+            {scriptRubric.map((row) => (
+              <tr key={row.criterion}>
+                <td>{row.criterion}</td>
+                <td>{row.good}</td>
+                <td>{row.poor}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
       <section id="use-cases" className="module-section">
         <h2>Konkrete use cases</h2>
         <p>
-          Her er eksempler på hvordan PowerShell bruges i hver del af jeres
-          infrastruktur — med kode I kan tilpasse til jeres case. Klik{' '}
-          <strong>Kør eksempel</strong> for at se simuleret output.
+          Hvert eksempel starter med et realistisk bestillingsbehov — som når en
+          driftschef beder om en rapport. Klik <strong>Kør eksempel</strong> for
+          simuleret output, og tilpas koden til jeres lab.
         </p>
         {projectUseCases.map((uc) => (
-          <div key={uc.id} id={uc.id} className="card module-section">
+          <div key={uc.id} id={uc.id} className="card module-section use-case-card">
             <h3>
               {uc.title}{' '}
               <span style={{ color: 'var(--ps-text-muted)', fontWeight: 400 }}>
                 ({uc.component})
               </span>
             </h3>
+            <blockquote className="chef-brief">«{uc.chefBrief}»</blockquote>
             <p>{uc.description}</p>
             <UseCaseRunner
               title={uc.title}
@@ -102,7 +139,7 @@ export function Projekt() {
         <CodeExercise exercise={projectExercise} />
       </section>
 
-      <LocalExercisesSection phase="projekt" />
+      <LocalExercisesSection phase="projekt" showGitSection />
 
       <section id="deployment" className="module-section">
         <h2>Fra script til drift — planlægning og deployment</h2>

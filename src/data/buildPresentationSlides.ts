@@ -3,6 +3,7 @@ import { dag1Exercises, dag2Exercises, projectExercise } from './exercises';
 import { dag1Quiz } from './quizzes/dag1';
 import { dag2Quiz } from './quizzes/dag2';
 import { projectUseCases, guiVsScript } from './projectUseCases';
+import { scriptRubric } from './scriptRubric';
 import {
   cronExample,
   deploymentBestPractices,
@@ -521,13 +522,24 @@ PS C:\\Serverauto> Get-Service | Select-Object Name, Status |
     rows: guiVsScript.map((r) => [r.situation, r.gui, r.script]),
   });
 
-  projectUseCases.forEach((uc) => {
+  slides.push({
+    id: 'projekt-script-rubric',
+    layout: 'table',
+    section: 'projekt',
+    title: 'Vurderingskriterier for scripts',
+    tableHeaders: ['Kriterium', 'God', 'Mangelfuld'],
+    rows: scriptRubric.map((r) => [r.criterion, r.good, r.poor]),
+  });
+
+  projectUseCases
+    .filter((uc) => uc.featuredInPresentation)
+    .forEach((uc) => {
     slides.push({
       id: `projekt-uc-${uc.id}-intro`,
       layout: 'bullets',
       section: 'projekt',
       title: `${uc.title} (${uc.component})`,
-      bullets: [uc.description],
+      bullets: [`«${uc.chefBrief}»`, uc.description],
     });
     slides.push(
       runnableSlide(
