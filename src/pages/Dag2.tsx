@@ -103,6 +103,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`}
         <Link to="/ordbog" className="project-link">
           → Se også i ordbogen: Execution Policy
         </Link>
+      </section>
 
       <section id="fjernadmin" className="module-section">
         <h2>Fjernadministration</h2>
