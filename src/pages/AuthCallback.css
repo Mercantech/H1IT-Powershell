@@ -1,0 +1,21 @@
+.auth-callback {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.auth-callback-card {
+  max-width: 420px;
+  text-align: center;
+}
+
+.auth-callback-card h1 {
+  color: var(--ps-error);
+  font-size: 1.25rem;
+}
+
+.auth-callback-card p {
+  color: var(--ps-text-muted);
+}

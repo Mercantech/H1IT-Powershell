@@ -1,6 +1,7 @@
 import { course } from '../../data/course';
 import { assets } from '../../data/assets';
 import { NavLink, Outlet } from 'react-router-dom';
+import { AuthBar } from '../AuthBar';
 import './Layout.css';
 
 const navItems = [
@@ -19,15 +20,18 @@ export function Layout() {
         <div className="ps-header-glow" aria-hidden />
         <div className="ps-header-inner">
           <div className="ps-titlebar">
-            <span className="ps-window-dots">
-              <span className="dot red" />
-              <span className="dot yellow" />
-              <span className="dot green" />
-            </span>
-            <img src={assets.powershell} alt="" className="ps-header-logo" />
-            <span className="ps-title">
-              {course.fullName} · {course.topic}
-            </span>
+            <div className="ps-titlebar-start">
+              <span className="ps-window-dots">
+                <span className="dot red" />
+                <span className="dot yellow" />
+                <span className="dot green" />
+              </span>
+              <img src={assets.powershell} alt="" className="ps-header-logo" />
+              <span className="ps-title">
+                {course.fullName} · {course.topic}
+              </span>
+            </div>
+            <AuthBar />
           </div>
           <nav className="ps-nav">
             {navItems.map((item) => (

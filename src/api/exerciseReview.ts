@@ -13,10 +13,12 @@ export interface ExerciseReviewResponse {
   source: 'ai' | 'local';
 }
 
+import { authFetch } from '../auth/authFetch';
+
 export async function reviewExerciseWithAi(
   payload: ExerciseReviewRequest
 ): Promise<ExerciseReviewResponse> {
-  const response = await fetch('/api/exercise/review', {
+  const response = await authFetch('/api/exercise/review', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
