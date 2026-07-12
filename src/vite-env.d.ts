@@ -11,6 +11,11 @@ interface ImportMeta {
 }
 
 interface Window {
+  __AUTH_CONFIG__?: {
+    baseUrl?: string;
+    clientId?: string;
+    redirectUri?: string;
+  };
   MonacoEnvironment?: {
     getWorker: () => Worker;
   };
