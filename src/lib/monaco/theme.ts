@@ -1,5 +1,6 @@
 import type { editor } from 'monaco-editor';
 import type { Monaco } from '@monaco-editor/react';
+import { setupPowerShellLanguage } from './powershellLanguage';
 
 export const powershellEditorTheme: editor.IStandaloneThemeData = {
   base: 'vs-dark',
@@ -7,12 +8,19 @@ export const powershellEditorTheme: editor.IStandaloneThemeData = {
   rules: [
     { token: 'comment', foreground: '6A9955' },
     { token: 'keyword', foreground: '569CD6' },
+    { token: 'keyword.cmdlet', foreground: '4EC9B0', fontStyle: 'bold' },
+    { token: 'keyword.alias', foreground: 'DCDCAA' },
+    { token: 'keyword.operator', foreground: 'C586C0' },
     { token: 'string', foreground: 'CE9178' },
+    { token: 'string.escape', foreground: 'D7BA7D' },
     { token: 'number', foreground: 'B5CEA8' },
     { token: 'type', foreground: '4EC9B0' },
     { token: 'variable', foreground: '9CDCFE' },
+    { token: 'variable.predefined', foreground: '4FC1FF' },
+    { token: 'variable.property', foreground: 'DCDCAA' },
+    { token: 'type.identifier', foreground: 'DCDCAA' },
     { token: 'operator', foreground: 'C586C0' },
-    { token: 'attribute.name', foreground: '9CDCFE' },
+    { token: 'attribute.name', foreground: 'C586C0' },
     { token: 'delimiter', foreground: 'C586C0' },
   ],
   colors: {
@@ -58,6 +66,20 @@ export const exerciseEditorOptions: editor.IStandaloneEditorConstructionOptions 
   ...sharedOptions,
   lineNumbers: 'on',
   renderLineHighlight: 'line',
+  quickSuggestions: {
+    other: true,
+    comments: false,
+    strings: false,
+  },
+  quickSuggestionsDelay: 75,
+  suggestOnTriggerCharacters: true,
+  snippetSuggestions: 'top',
+  tabCompletion: 'on',
+  wordBasedSuggestions: 'off',
+  parameterHints: { enabled: true },
+  fixedOverflowWidgets: true,
+  bracketPairColorization: { enabled: true },
+  guides: { bracketPairs: true },
 };
 
 export const readOnlyBlockOptions: editor.IStandaloneEditorConstructionOptions = {
@@ -79,6 +101,7 @@ export function setupPowerShellTheme(monaco: Monaco): void {
     monaco.editor.defineTheme('ps-dark', powershellEditorTheme);
     themeRegistered = true;
   }
+  setupPowerShellLanguage(monaco);
   monaco.editor.setTheme('ps-dark');
 }
 

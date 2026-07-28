@@ -98,6 +98,12 @@ export function CodeExercise({
             <span className="dot green" />
           </span>
           <span className="code-exercise-prompt-label">øvelse.ps1</span>
+          <span
+            className="code-exercise-shortcut"
+            title="Åbn PowerShell-forslag"
+          >
+            Ctrl+Space · forslag
+          </span>
           <span className="code-exercise-path">{course.promptPath}</span>
         </div>
         <div className="code-exercise-editor">

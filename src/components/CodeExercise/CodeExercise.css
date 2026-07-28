@@ -36,8 +36,14 @@
   font-family: var(--ps-font-mono);
 }
 
-.code-exercise-path {
+.code-exercise-shortcut {
   margin-left: auto;
+  font-family: var(--ps-font-mono);
+  color: var(--ps-accent);
+  opacity: 0.8;
+}
+
+.code-exercise-path {
   font-family: var(--ps-font-mono);
   color: var(--ps-prompt);
 }
@@ -142,4 +148,10 @@
 
 .code-exercise-facit code {
   color: var(--ps-cmdlet);
+}
+
+@media (max-width: 700px) {
+  .code-exercise-shortcut {
+    display: none;
+  }
 }
