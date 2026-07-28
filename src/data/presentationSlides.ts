@@ -1,9 +1,11 @@
 import { buildPresentationSlides } from './buildPresentationSlides';
+import type { CodeExerciseData } from './exercises/types';
 
 export type SlideLayout =
   | 'title'
   | 'section'
   | 'bullets'
+  | 'exercise'
   | 'code'
   | 'highlight'
   | 'runnable'
@@ -32,6 +34,7 @@ export interface PresentationSlide {
   quizOptions?: string[];
   quizAnswer?: string;
   quizExplanation?: string;
+  exercise?: CodeExerciseData;
 }
 
 export const presentationSlides: PresentationSlide[] = buildPresentationSlides();

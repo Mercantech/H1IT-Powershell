@@ -34,6 +34,7 @@ function isTypingTarget(target: EventTarget | null): boolean {
   if (target.closest('.monaco-editor')) return true;
   if (target.closest('.pres-runner')) return true;
   if (target.closest('.pres-quiz')) return true;
+  if (target.closest('.pres-exercise')) return true;
   return false;
 }
 

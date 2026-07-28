@@ -10,10 +10,12 @@ import { usePresentation } from '../../context/PresentationContext';
 import { PresentationSlideRunner } from './PresentationSlideRunner';
 import { PresentationQuizSlide } from './PresentationQuizSlide';
 import { PresentationLearningGoalsSlide } from './PresentationLearningGoalsSlide';
+import { CodeExercise } from '../CodeExercise';
 import './PresentationMode.css';
 
 const scrollLayouts = new Set([
   'bullets',
+  'exercise',
   'code',
   'runnable',
   'table',
@@ -109,6 +111,15 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
 
     case 'quiz':
       return wrap(<PresentationQuizSlide slide={slide} />);
+
+    case 'exercise':
+      return wrap(
+        <>
+          <h2 className="pres-heading">{slide.title}</h2>
+          {slide.exercise && <CodeExercise exercise={slide.exercise} />}
+        </>,
+        'pres-exercise'
+      );
 
     case 'learning-goals':
       return wrap(<PresentationLearningGoalsSlide />);

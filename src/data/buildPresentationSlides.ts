@@ -269,11 +269,10 @@ PS C:\\Serverauto> $stopped.Count
   dag1Exercises.forEach((ex) => {
     slides.push({
       id: `dag1-ex-${ex.id}`,
-      layout: 'bullets',
+      layout: 'exercise',
       section: 'dag-1',
       title: 'Kodeøvelse',
-      subtitle: ex.prompt,
-      bullets: [ex.hint ? `Hint: ${ex.hint}` : '', `Facit: ${ex.explanation}`].filter(Boolean),
+      exercise: ex,
     });
   });
 
@@ -450,11 +449,10 @@ PS C:\\Serverauto> Get-Service | Select-Object Name, Status |
   dag2Exercises.forEach((ex) => {
     slides.push({
       id: `dag2-ex-${ex.id}`,
-      layout: 'bullets',
+      layout: 'exercise',
       section: 'dag-2',
       title: 'Kodeøvelse',
-      subtitle: ex.prompt,
-      bullets: [ex.hint ? `Hint: ${ex.hint}` : '', `Facit: ${ex.explanation}`].filter(Boolean),
+      exercise: ex,
     });
   });
 
@@ -554,14 +552,10 @@ PS C:\\Serverauto> Get-Service | Select-Object Name, Status |
 
   slides.push({
     id: 'projekt-mini-ex',
-    layout: 'bullets',
+    layout: 'exercise',
     section: 'projekt',
     title: 'Mini-opgave — projektrelevans',
-    subtitle: projectExercise.prompt,
-    bullets: [
-      projectExercise.hint ? `Hint: ${projectExercise.hint}` : '',
-      projectExercise.explanation,
-    ].filter(Boolean),
+    exercise: projectExercise,
   });
 
   getLocalExercisesForPhase('projekt').forEach((ex) => {

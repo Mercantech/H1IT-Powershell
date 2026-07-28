@@ -171,6 +171,16 @@
   border-left: 3px solid var(--ps-accent);
 }
 
+.pres-exercise {
+  position: relative;
+  z-index: 3;
+}
+
+.pres-exercise .code-exercise {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
 .pres-table-wrap {
   overflow-x: auto;
   margin-top: 0.5rem;
