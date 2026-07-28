@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { course } from '../../data/course';
 import { assets } from '../../data/assets';
 import {
@@ -24,7 +24,17 @@ const scrollLayouts = new Set([
   'learning-goals',
 ]);
 
-function SlideContent({ slide }: { slide: PresentationSlide }) {
+interface SlideContentProps {
+  slide: PresentationSlide;
+  exerciseDraft?: string;
+  onExerciseDraftChange: (exerciseId: string, input: string) => void;
+}
+
+function SlideContent({
+  slide,
+  exerciseDraft,
+  onExerciseDraftChange,
+}: SlideContentProps) {
   const scrollable = scrollLayouts.has(slide.layout);
 
   const wrap = (children: ReactNode, className = '') => (
@@ -116,7 +126,15 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
       return wrap(
         <>
           <h2 className="pres-heading">{slide.title}</h2>
-          {slide.exercise && <CodeExercise exercise={slide.exercise} />}
+          {slide.exercise && (
+            <CodeExercise
+              exercise={slide.exercise}
+              initialInput={exerciseDraft}
+              onInputChange={(input) =>
+                onExerciseDraftChange(slide.exercise!.id, input)
+              }
+            />
+          )}
         </>,
         'pres-exercise'
       );
@@ -188,11 +206,22 @@ function SlideContent({ slide }: { slide: PresentationSlide }) {
 
 export function PresentationMode() {
   const { isActive, slideIndex, totalSlides, exit, next, prev, goTo } = usePresentation();
+  const [exerciseDrafts, setExerciseDrafts] = useState<Record<string, string>>({});
 
   if (!isActive) return null;
 
   const slide = presentationSlides[slideIndex];
   const progress = ((slideIndex + 1) / totalSlides) * 100;
+  const exerciseDraft = slide.exercise
+    ? exerciseDrafts[slide.exercise.id]
+    : undefined;
+
+  const saveExerciseDraft = (exerciseId: string, input: string) => {
+    setExerciseDrafts((current) => ({
+      ...current,
+      [exerciseId]: input,
+    }));
+  };
 
   return (
     <div className="presentation-mode" role="dialog" aria-modal="true" aria-label="Præsentation">
@@ -215,7 +244,11 @@ export function PresentationMode() {
       />
 
       <div className="presentation-stage" key={slide.id}>
-        <SlideContent slide={slide} />
+        <SlideContent
+          slide={slide}
+          exerciseDraft={exerciseDraft}
+          onExerciseDraftChange={saveExerciseDraft}
+        />
       </div>
 
       <footer className="presentation-footer">

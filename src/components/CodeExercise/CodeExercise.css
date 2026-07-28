@@ -59,13 +59,22 @@
   flex-wrap: wrap;
 }
 
-.code-exercise-hint {
+.code-exercise-hints {
+  list-style: none;
   margin-top: 1rem;
   padding: 0.75rem;
   background: rgba(94, 168, 255, 0.1);
   border-radius: var(--ps-radius);
   font-size: 0.9rem;
   color: var(--ps-text-muted);
+}
+
+.code-exercise-hints li + li {
+  margin-top: 0.5rem;
+}
+
+.code-exercise-hints strong {
+  color: var(--ps-accent);
 }
 
 .code-exercise-result {

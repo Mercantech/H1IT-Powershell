@@ -1,7 +1,7 @@
 export interface CodeExerciseData {
   id: string;
   prompt: string;
-  hint?: string;
+  hints?: string[];
   acceptedAnswers: string[];
   usePattern?: boolean;
   patterns?: RegExp[];

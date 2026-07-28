@@ -9,6 +9,8 @@ import './CodeExercise.css';
 
 interface CodeExerciseProps {
   exercise: CodeExerciseData;
+  initialInput?: string;
+  onInputChange?: (input: string) => void;
 }
 
 function checkLocally(exercise: CodeExerciseData, input: string): boolean {
@@ -18,9 +20,13 @@ function checkLocally(exercise: CodeExerciseData, input: string): boolean {
   return validateAnswer(input, exercise.acceptedAnswers);
 }
 
-export function CodeExercise({ exercise }: CodeExerciseProps) {
-  const [input, setInput] = useState(exercise.starterCode ?? '');
-  const [showHint, setShowHint] = useState(false);
+export function CodeExercise({
+  exercise,
+  initialInput,
+  onInputChange,
+}: CodeExerciseProps) {
+  const [input, setInput] = useState(initialInput ?? exercise.starterCode ?? '');
+  const [visibleHintCount, setVisibleHintCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<'correct' | 'incorrect' | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
@@ -30,6 +36,9 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
   const handleMount: OnMount = (_editor, monaco) => {
     setupPowerShellTheme(monaco);
   };
+
+  const hints = exercise.hints ?? [];
+  const allHintsVisible = visibleHintCount === hints.length;
 
   const resetFeedback = () => {
     setResult(null);
@@ -54,7 +63,7 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
         studentAnswer: input,
         acceptedAnswers: exercise.acceptedAnswers,
         explanation: exercise.explanation,
-        hint: exercise.hint,
+        hint: hints.join(' '),
       });
 
       setResult(aiResult.correct ? 'correct' : 'incorrect');
@@ -97,7 +106,9 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
             defaultLanguage="powershell"
             value={input}
             onChange={(value) => {
-              setInput(value ?? '');
+              const nextInput = value ?? '';
+              setInput(nextInput);
+              onInputChange?.(nextInput);
               resetFeedback();
             }}
             onMount={handleMount}
@@ -110,14 +121,18 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
       </div>
 
       <div className="code-exercise-actions">
-        {exercise.hint && (
+        {hints.length > 0 && (
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={() => setShowHint(!showHint)}
+            onClick={() =>
+              setVisibleHintCount(allHintsVisible ? 0 : visibleHintCount + 1)
+            }
             disabled={loading}
           >
-            {showHint ? 'Skjul hint' : 'Vis hint'}
+            {allHintsVisible
+              ? 'Skjul hints'
+              : `Vis hint ${visibleHintCount + 1}`}
           </button>
         )}
         <button
@@ -130,8 +145,14 @@ export function CodeExercise({ exercise }: CodeExerciseProps) {
         </button>
       </div>
 
-      {showHint && exercise.hint && (
-        <p className="code-exercise-hint">💡 {exercise.hint}</p>
+      {visibleHintCount > 0 && (
+        <ol className="code-exercise-hints">
+          {hints.slice(0, visibleHintCount).map((hint, index) => (
+            <li key={hint}>
+              <strong>Hint {index + 1}:</strong> {hint}
+            </li>
+          ))}
+        </ol>
       )}
 
       {error && <p className="code-exercise-error">{error}</p>}

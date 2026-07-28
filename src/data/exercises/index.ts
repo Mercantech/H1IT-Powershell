@@ -4,7 +4,11 @@ export const dag1Exercises: CodeExerciseData[] = [
   {
     id: 'd1-e1',
     prompt: 'Skriv en kommando der viser alle processer hvis navn starter med "s".',
-    hint: 'Brug Get-Process med -Name og wildcard (*)',
+    hints: [
+      'Find den cmdlet, der henter processer.',
+      'Brug parameteren, der filtrerer på procesnavn.',
+      'Et wildcard efter bogstavet s matcher alle navne, der begynder med s.',
+    ],
     acceptedAnswers: ['Get-Process -Name s*', 'Get-Process s*'],
     usePattern: true,
     patterns: [/^Get-Process\s+(-Name\s+)?s\*$/i],
@@ -13,7 +17,11 @@ export const dag1Exercises: CodeExerciseData[] = [
   {
     id: 'd1-e2',
     prompt: 'Skriv en pipeline der henter alle services og viser kun dem med status "Running".',
-    hint: 'Get-Service | Where-Object { $_.Status -eq "Running" }',
+    hints: [
+      'Hent først alle services, og send dem videre gennem pipelinen.',
+      'Brug Where-Object til at filtrere objekterne på deres Status-egenskab.',
+      'Sammenlign Status med værdien "Running" inde i filterblokken.',
+    ],
     acceptedAnswers: [
       'Get-Service | Where-Object { $_.Status -eq "Running" }',
       'Get-Service | Where-Object Status -eq Running',
@@ -27,7 +35,11 @@ export const dag1Exercises: CodeExerciseData[] = [
   {
     id: 'd1-e3',
     prompt: 'Opret en variabel $server der indeholder teksten "DC01" og vis den.',
-    hint: 'Tildel med = og skriv variabelnavnet for at vise indholdet',
+    hints: [
+      'Variabler i PowerShell starter med $.',
+      'Tildel tekstværdien med = og sæt DC01 i anførselstegn.',
+      'Skriv variabelnavnet igen på næste linje for at vise værdien.',
+    ],
     acceptedAnswers: ['$server = "DC01"; $server', '$server = "DC01"\n$server'],
     usePattern: true,
     patterns: [/\$server\s*=\s*["']DC01["']/i],
@@ -39,6 +51,10 @@ export const dag2Exercises: CodeExerciseData[] = [
   {
     id: 'd2-e1',
     prompt: 'Tilføj -WhatIf til denne kommando: Remove-Item C:\\Temp\\old.log',
+    hints: [
+      'Behold den eksisterende Remove-Item-kommando uændret.',
+      'Tilføj sikkerhedsparameteren fra opgaveteksten til sidst i kommandoen.',
+    ],
     acceptedAnswers: ['Remove-Item C:\\Temp\\old.log -WhatIf', 'Remove-Item -Path C:\\Temp\\old.log -WhatIf'],
     usePattern: true,
     patterns: [/Remove-Item.*-WhatIf/i],
@@ -47,7 +63,11 @@ export const dag2Exercises: CodeExerciseData[] = [
   {
     id: 'd2-e2',
     prompt: 'Skriv en kommando der eksporterer alle services til en CSV-fil kaldet services.csv',
-    hint: 'Get-Service | Export-Csv',
+    hints: [
+      'Hent services først, og send objekterne videre gennem pipelinen.',
+      'Vælg den cmdlet, der eksporterer PowerShell-objekter som CSV.',
+      'Angiv services.csv som filsti, eventuelt med parameteren -Path.',
+    ],
     acceptedAnswers: [
       'Get-Service | Export-Csv services.csv',
       'Get-Service | Export-Csv -Path services.csv',
@@ -59,7 +79,11 @@ export const dag2Exercises: CodeExerciseData[] = [
   {
     id: 'd2-e3',
     prompt: 'Skriv en kommando der henter information om det lokale operativsystem via CIM.',
-    hint: 'Get-CimInstance med Win32_OperatingSystem',
+    hints: [
+      'Brug den moderne CIM-cmdlet til at hente en instans.',
+      'Operativsystemets CIM-klasse hedder Win32_OperatingSystem.',
+      'Klassen kan angives direkte eller via parameteren -ClassName.',
+    ],
     acceptedAnswers: [
       'Get-CimInstance Win32_OperatingSystem',
       'Get-CimInstance -ClassName Win32_OperatingSystem',
@@ -71,6 +95,11 @@ export const dag2Exercises: CodeExerciseData[] = [
   {
     id: 'd2-e4',
     prompt: 'Skriv en kommando der importerer brugere fra brugere.csv',
+    hints: [
+      'Du skal importere filen som objekter, ikke hente dens rå tekst.',
+      'Vælg den cmdlet, der er modstykket til Export-Csv.',
+      'Angiv brugere.csv som filsti, eventuelt med parameteren -Path.',
+    ],
     acceptedAnswers: [
       'Import-Csv brugere.csv',
       'Import-Csv -Path brugere.csv',
@@ -84,7 +113,11 @@ export const dag2Exercises: CodeExerciseData[] = [
 export const projectExercise: CodeExerciseData = {
   id: 'proj-e1',
   prompt: 'Skriv en pipeline der tjekker om DNS- og DHCP-services kører (vis Name og Status).',
-  hint: 'Get-Service med -Name og filtrer på DNS og DHCP',
+  hints: [
+    'Hent begge services i det samme Get-Service-kald.',
+    'Parameteren -Name kan modtage flere navne adskilt af komma.',
+    'Send resultatet videre, og vælg kun egenskaberne Name og Status.',
+  ],
   acceptedAnswers: [
     'Get-Service -Name DNS,DHCP | Select-Object Name, Status',
     'Get-Service DNS,DHCP | Select-Object Name, Status',
