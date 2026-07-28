@@ -57,9 +57,6 @@ export function Layout() {
           {course.fullName} · {course.program} · {course.teachingPeriod} ·
           Infrastrukturprojekt
         </p>
-        <p className="ps-footer-hint">
-          <kbd>F5</kbd> præsentation · <kbd>Shift+F5</kbd> fra aktuel sektion · <kbd>Esc</kbd> afslut
-        </p>
       </footer>
     </div>
   );
