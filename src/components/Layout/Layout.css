@@ -59,17 +59,6 @@
   filter: drop-shadow(0 0 6px rgba(94, 168, 255, 0.4));
 }
 
-.ps-window-dots {
-  display: flex;
-  gap: 5px;
-}
-
-.ps-window-dots .dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-
 .ps-title {
   font-family: var(--ps-font-mono);
   font-size: 0.85rem;

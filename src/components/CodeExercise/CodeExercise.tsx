@@ -92,11 +92,6 @@ export function CodeExercise({
 
       <div className="code-exercise-input-wrapper">
         <div className="code-exercise-chrome">
-          <span className="code-block-dots">
-            <span className="dot red" />
-            <span className="dot yellow" />
-            <span className="dot green" />
-          </span>
           <span className="code-exercise-prompt-label">øvelse.ps1</span>
           <span
             className="code-exercise-shortcut"

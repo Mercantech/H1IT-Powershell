@@ -247,14 +247,6 @@ code:not(pre code) {
   outline-offset: 2px;
 }
 
-.dot {
-  display: inline-block;
-}
-
-.dot.red { background: #ff5f57; }
-.dot.yellow { background: #febc2e; }
-.dot.green { background: #28c840; }
-
 @media (max-width: 600px) {
   h1 { font-size: 1.5rem; }
   .container { padding: 1.5rem 1rem 3rem; }

@@ -38,11 +38,6 @@ export function UseCaseRunner({ title, code, sampleOutput }: UseCaseRunnerProps)
       {status === 'running' && (
         <div className="use-case-output use-case-output--loading" aria-live="polite">
           <div className="use-case-output-chrome">
-            <span className="code-block-dots">
-              <span className="dot red" />
-              <span className="dot yellow" />
-              <span className="dot green" />
-            </span>
             <span className="use-case-output-title">Output</span>
             <span className="use-case-output-path">{course.promptPath}</span>
           </div>
@@ -55,11 +50,6 @@ export function UseCaseRunner({ title, code, sampleOutput }: UseCaseRunnerProps)
       {status === 'done' && (
         <div className="use-case-output" aria-live="polite">
           <div className="use-case-output-chrome">
-            <span className="code-block-dots">
-              <span className="dot red" />
-              <span className="dot yellow" />
-              <span className="dot green" />
-            </span>
             <span className="use-case-output-title">Output</span>
             <span className="use-case-output-path">{course.promptPath}</span>
           </div>

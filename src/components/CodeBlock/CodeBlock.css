@@ -14,17 +14,6 @@
   border-bottom: 1px solid var(--ps-border);
 }
 
-.code-block-dots {
-  display: flex;
-  gap: 5px;
-}
-
-.code-block-dots .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
 .code-block-title {
   font-family: var(--ps-font-mono);
   font-size: 0.75rem;

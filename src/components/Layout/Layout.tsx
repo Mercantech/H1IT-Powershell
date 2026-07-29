@@ -21,11 +21,6 @@ export function Layout() {
         <div className="ps-header-inner">
           <div className="ps-titlebar">
             <div className="ps-titlebar-start">
-              <span className="ps-window-dots">
-                <span className="dot red" />
-                <span className="dot yellow" />
-                <span className="dot green" />
-              </span>
               <img src={assets.powershell} alt="" className="ps-header-logo" />
               <span className="ps-title">
                 {course.fullName} · {course.topic}
