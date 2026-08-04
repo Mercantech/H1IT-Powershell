@@ -4,6 +4,7 @@ import { dag1Quiz } from './quizzes/dag1';
 import { dag2Quiz } from './quizzes/dag2';
 import { projectUseCases, guiVsScript } from './projectUseCases';
 import { scriptRubric } from './scriptRubric';
+import { majorAssignment } from './majorAssignment';
 import {
   cronExample,
   deploymentBestPractices,
@@ -528,6 +529,29 @@ PS C:\\Serverauto> Get-Service | Select-Object Name, Status |
     tableHeaders: ['Kriterium', 'God', 'Mangelfuld'],
     rows: scriptRubric.map((r) => [r.criterion, r.good, r.poor]),
   });
+
+  slides.push(
+    bulletsSlide(
+      'projekt-store-opgave',
+      'projekt',
+      majorAssignment.title,
+      [
+        majorAssignment.subtitle,
+        `«${majorAssignment.chefBrief}»`,
+        ...majorAssignment.goals.slice(0, 4),
+      ],
+      'Clean WS 2022 → roller, AD og GPO'
+    )
+  );
+
+  slides.push(
+    bulletsSlide(
+      'projekt-store-opgave-faser',
+      'projekt',
+      'Store opgave — faser',
+      majorAssignment.phases.map((p) => `${p.title}: ${p.summary}`)
+    )
+  );
 
   projectUseCases
     .filter((uc) => uc.featuredInPresentation)

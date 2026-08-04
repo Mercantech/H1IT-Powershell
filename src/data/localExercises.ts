@@ -217,15 +217,16 @@ export const localExercises: LocalExercise[] = [
     description:
       'Lav et script der løser en konkret opgave i jeres infrastrukturprojekt.',
     steps: [
-      'Vælg én use case fra Projektkobling (fx serverrapport, DHCP-leases eller AD-grupper).',
+      'Læs den store opgave på Projektkobling (#store-opgave).',
+      'Vælg én eller flere faser / use cases (fx server-roller, AD eller GPO).',
       'Opret scripts\\<navn>.ps1 i jeres projektmappe / Git-repo.',
       'Skriv scriptet med kommentarer der forklarer cmdlets, flags og pipeline-valg.',
       'Test med -WhatIf først hvis scriptet ændrer noget.',
-      'Kør i lab, gem output til rapporten og tjek mod vurderingskriterierne på Projektkobling.',
+      'Kør i lab (WS 2022), gem output til rapporten og tjek mod vurderingskriterierne.',
     ],
     deliverable:
       'Et .ps1-script i Git med kommentarer — klar til klassens gennemgang og fremlæggelse.',
-    relatedLink: '/projekt',
+    relatedLink: '/projekt#store-opgave',
   },
   {
     id: 'lok-9',

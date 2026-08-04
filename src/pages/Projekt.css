@@ -51,6 +51,28 @@
   white-space: nowrap;
 }
 
+.major-assignment-subtitle {
+  margin-top: -0.35rem;
+  color: var(--ps-text-muted);
+}
+
+.major-assignment-phases {
+  margin: 0.75rem 0 1.25rem;
+  padding-left: 1.25rem;
+}
+
+.major-assignment-phases li {
+  margin-bottom: 0.65rem;
+}
+
+.major-assignment-deliverable {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--ps-radius);
+  background: rgba(94, 168, 255, 0.08);
+  border: 1px solid rgba(94, 168, 255, 0.2);
+}
+
 @media (min-width: 720px) {
   .deployment-methods {
     grid-template-columns: repeat(2, 1fr);

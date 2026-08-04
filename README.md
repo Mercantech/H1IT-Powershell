@@ -86,9 +86,11 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 - `/` — Forside med læringsmål og oversigt
 - `/dag-1` — Grundlæggende (cmdlets, pipeline, variabler) + lokale opgaver
 - `/dag-2` — Sikkerhed, fjernadmin, WBEM, data + lokale opgaver
-- `/projekt` — Projektkobling med use cases, deployment og projektopgaver
+- `/projekt` — Projektkobling med use cases, den store opgave (WS 2022 → roller/AD/GPO), deployment og projektopgaver
 - `/ordbog` — Opslagsguide til PowerShell-begreber
 - `/intune` — PowerShell og Microsoft Intune (bro til praktik/job)
+
+Internt lab-demoscript (ikke på sitet): `scripts/ws2022-bootstrap/` — modulært bootstrap fra clean Windows Server 2022.
 
 ## Præsentationstilstand
 

@@ -11,6 +11,7 @@ import {
   taskSchedulerCode,
 } from '../data/deploymentGuide';
 import { projectOverview, projectWorkflow } from '../data/diagrams';
+import { majorAssignment } from '../data/majorAssignment';
 import { guiVsScript, projectUseCases } from '../data/projectUseCases';
 import { scriptDeliverableChecklist, scriptRubric } from '../data/scriptRubric';
 import { projectExercise } from '../data/exercises';
@@ -100,6 +101,61 @@ export function Projekt() {
             ))}
           </tbody>
         </table>
+      </section>
+
+      <section id="store-opgave" className="module-section">
+        <h2>{majorAssignment.title}</h2>
+        <p className="major-assignment-subtitle">{majorAssignment.subtitle}</p>
+        <blockquote className="chef-brief">«{majorAssignment.chefBrief}»</blockquote>
+
+        <h3>Scenario</h3>
+        <ul className="deployment-checklist">
+          {majorAssignment.scenario.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h3>Mål</h3>
+        <ul className="deployment-checklist">
+          {majorAssignment.goals.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h3>Krav til jeres scripts</h3>
+        <ul className="deployment-checklist">
+          {majorAssignment.requirements.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+
+        <h3>Faser</h3>
+        <p>
+          Opdel arbejdet — gerne i flere <code>.ps1</code>-filer. Genstart efter
+          domain controller-promotion er forventet.
+        </p>
+        <ol className="major-assignment-phases">
+          {majorAssignment.phases.map((phase) => (
+            <li key={phase.id}>
+              <strong>{phase.title}</strong> — {phase.summary}
+            </li>
+          ))}
+        </ol>
+
+        <h3>Inspiration (ikke facit)</h3>
+        <p>
+          Brug use cases nedenfor som byggeklodser. Tilpas til jeres lab og
+          projektcase.
+        </p>
+        <ul className="deployment-checklist">
+          {majorAssignment.inspiration.map((item) => (
+            <li key={item.href}>
+              <Link to={item.href}>{item.label}</Link>
+            </li>
+          ))}
+        </ul>
+
+        <p className="major-assignment-deliverable">{majorAssignment.deliverableNote}</p>
       </section>
 
       <section id="use-cases" className="module-section">
