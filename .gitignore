@@ -4,3 +4,8 @@ dist-ssr
 *.local
 .DS_Store
 scripts/ws2022-bootstrap/logs/
+scripts/ws2022-bootstrap/_run_lab.py
+scripts/ws2022-bootstrap/_resume_lab.py
+scripts/ws2022-bootstrap/_fix_encoding.py
+scripts/ws2022-bootstrap/_status*.py
+scripts/ws2022-bootstrap/_tmp_*.py

@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-  Fase 4 — OU'er, sikkerhedsgrupper og eksempelbrugere (efter DC-reboot).
+  Fase 4 - OU'er, sikkerhedsgrupper og eksempelbrugere (efter DC-reboot).
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -15,7 +15,7 @@ $ErrorActionPreference = 'Stop'
 Assert-Administrator
 $config = Get-BootstrapConfig -ConfigPath $ConfigPath
 
-Write-BootstrapStep 'Fase 04 — AD-struktur'
+Write-BootstrapStep 'Fase 04 - AD-struktur'
 
 Import-Module ActiveDirectory -ErrorAction Stop
 

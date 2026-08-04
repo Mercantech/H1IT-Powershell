@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-  Fase 3 — promote server til ny AD DS forest (kræver genstart).
+  Fase 3 - promote server til ny AD DS forest (kræver genstart).
 
 .DESCRIPTION
   Install-ADDSForest. DSRM-password indtastes interaktivt (SecureString).
@@ -27,13 +27,13 @@ $ErrorActionPreference = 'Stop'
 Assert-Administrator
 $config = Get-BootstrapConfig -ConfigPath $ConfigPath
 
-Write-BootstrapStep "Fase 03 — Promote til DC ($($config.DomainName))"
+Write-BootstrapStep "Fase 03 - Promote til DC ($($config.DomainName))"
 
 # Allerede domænemedlem / DC?
 $cs = Get-CimInstance Win32_ComputerSystem
 if ($cs.PartOfDomain -or $cs.DomainRole -ge 4) {
     Write-BootstrapStep "Server er allerede i domæne/rolle ($($cs.Domain), DomainRole=$($cs.DomainRole))" -Level Skip
-    Write-BootstrapStep 'Springer promotion over — kør fase 04 efter reboot hvis nødvendigt' -Level Warn
+    Write-BootstrapStep 'Springer promotion over - kør fase 04 efter reboot hvis nødvendigt' -Level Warn
     return
 }
 
@@ -64,7 +64,7 @@ $params = @{
 }
 
 if ($PSCmdlet.ShouldProcess($config.DomainName, 'Install-ADDSForest')) {
-    Write-BootstrapStep 'Starter Install-ADDSForest — server genstarter typisk bagefter' -Level Warn
+    Write-BootstrapStep 'Starter Install-ADDSForest - server genstarter typisk bagefter' -Level Warn
     Install-ADDSForest @params
     Write-BootstrapStep 'Promotion anmodet. Efter reboot: kør fase 04 og 05.' -Level Ok
 }

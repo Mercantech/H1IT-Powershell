@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-  Fase 1 — forbered host (hostname, timezone, valgfrit netværk).
+  Fase 1 - forbered host (hostname, timezone, valgfrit netværk).
 
 .PARAMETER WhatIf
   Vis hvad der ville ske uden at ændre systemet.
@@ -16,7 +16,7 @@ $ErrorActionPreference = 'Stop'
 Assert-Administrator
 $config = Get-BootstrapConfig -ConfigPath $ConfigPath
 
-Write-BootstrapStep "Fase 01 — Prepare host ($($config.ComputerName))"
+Write-BootstrapStep "Fase 01 - Prepare host ($($config.ComputerName))"
 
 # Timezone
 $tz = Get-TimeZone
@@ -35,17 +35,17 @@ if ($currentName -ieq $config.ComputerName) {
 }
 elseif ($PSCmdlet.ShouldProcess($config.ComputerName, 'Rename-Computer')) {
     Rename-Computer -NewName $config.ComputerName -Force
-    Write-BootstrapStep "Hostname sat til $($config.ComputerName) — genstart anbefales før næste fase" -Level Warn
+    Write-BootstrapStep "Hostname sat til $($config.ComputerName) - genstart anbefales før næste fase" -Level Warn
 }
 
 # Netværk (valgfrit)
 if (-not $config.ConfigureNetwork) {
-    Write-BootstrapStep 'ConfigureNetwork = $false — springer netværk over' -Level Skip
+    Write-BootstrapStep 'ConfigureNetwork = $false - springer netværk over' -Level Skip
 }
 else {
     $adapter = Get-NetAdapter -Name $config.InterfaceAlias -ErrorAction SilentlyContinue
     if (-not $adapter) {
-        Write-BootstrapStep "Adapter '$($config.InterfaceAlias)' findes ikke — tjek Config.psd1" -Level Error
+        Write-BootstrapStep "Adapter '$($config.InterfaceAlias)' findes ikke - tjek Config.psd1" -Level Error
         throw "Netværksadapter ikke fundet: $($config.InterfaceAlias)"
     }
 

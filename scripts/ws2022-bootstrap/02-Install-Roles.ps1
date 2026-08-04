@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-  Fase 2 — installer Windows-roller (idempotent).
+  Fase 2 - installer Windows-roller (idempotent).
 
 .PARAMETER WhatIf
   Vis hvad der ville ske uden at installere.
@@ -16,7 +16,7 @@ $ErrorActionPreference = 'Stop'
 Assert-Administrator
 $config = Get-BootstrapConfig -ConfigPath $ConfigPath
 
-Write-BootstrapStep 'Fase 02 — Installér roller'
+Write-BootstrapStep 'Fase 02 - Installér roller'
 
 $restartNeeded = $false
 

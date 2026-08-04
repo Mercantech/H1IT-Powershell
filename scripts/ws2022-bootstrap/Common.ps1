@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Fælles hjælpefunktioner til ws2022-bootstrap.
 #>

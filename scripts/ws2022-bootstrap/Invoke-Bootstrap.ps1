@@ -1,13 +1,13 @@
-<#
+﻿<#
 .SYNOPSIS
   Orchestrator for modulært WS 2022-bootstrap (lab).
 
 .DESCRIPTION
-  Kører faser 01–05. Efter fase 03 (AD DS promotion) genstarter serveren typisk —
+  Kører faser 01-05. Efter fase 03 (AD DS promotion) genstarter serveren typisk -
   kør derefter igen med -Phase 4 (eller -FromPhase 4 -All).
 
 .PARAMETER Phase
-  Kør én fase: 1–5.
+  Kør én fase: 1-5.
 
 .PARAMETER All
   Kør alle faser i rækkefølge (stopper før 04 hvis server ikke er DC endnu).
@@ -113,7 +113,7 @@ try {
     else {
         for ($n = $FromPhase; $n -le 5; $n++) {
             if ($n -eq 4 -and -not (Test-IsDomainController)) {
-                Write-BootstrapStep 'Server er endnu ikke DC — stopper før fase 04.' -Level Warn
+                Write-BootstrapStep 'Server er endnu ikke DC - stopper før fase 04.' -Level Warn
                 Write-BootstrapStep 'Efter Install-ADDSForest og reboot: .\Invoke-Bootstrap.ps1 -FromPhase 4 -All' -Level Warn
                 break
             }

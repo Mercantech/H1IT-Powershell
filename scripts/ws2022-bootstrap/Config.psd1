@@ -1,17 +1,17 @@
-@{
-    # Lab-defaults — tilpas før kørsel på clean Windows Server 2022
+﻿@{
+    # Lab-defaults - tilpas før kørsel på clean Windows Server 2022
     ComputerName     = 'DC01'
     TimeZoneId       = 'Romance Standard Time'   # (UTC+01:00) Brussels, Copenhagen, Madrid, Paris
 
-    # Statisk IP (sæt ConfigureNetwork = $false for at springe netværk over)
-    ConfigureNetwork = $true
+    # Statisk IP - behold eksisterende lab-IP via SSH (10.133.71.101)
+    ConfigureNetwork = $false
     InterfaceAlias   = 'Ethernet'
-    IPv4Address      = '10.10.0.10'
+    IPv4Address      = '10.133.71.101'
     PrefixLength     = 24
-    DefaultGateway   = '10.10.0.1'
+    DefaultGateway   = '10.133.71.1'
     DnsServers       = @('127.0.0.1')
 
-    # AD DS forest — MAGS lab
+    # AD DS forest - MAGS lab
     DomainName       = 'mags.local'
     DomainNetbiosName = 'MAGS'
     ForestMode       = 'WinThreshold'   # Windows Server 2016+

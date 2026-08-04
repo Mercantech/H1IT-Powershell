@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-  Fase 5 — opret eksempel-GPO, link til OU og sæt én registry-policy.
+  Fase 5 - opret eksempel-GPO, link til OU og sæt én registry-policy.
 #>
 [CmdletBinding(SupportsShouldProcess = $true)]
 param(
@@ -13,7 +13,7 @@ $ErrorActionPreference = 'Stop'
 Assert-Administrator
 $config = Get-BootstrapConfig -ConfigPath $ConfigPath
 
-Write-BootstrapStep "Fase 05 — GPO ($($config.GpoName))"
+Write-BootstrapStep "Fase 05 - GPO ($($config.GpoName))"
 
 Import-Module GroupPolicy -ErrorAction Stop
 Import-Module ActiveDirectory -ErrorAction Stop
@@ -54,4 +54,4 @@ if ($PSCmdlet.ShouldProcess($config.GpoRegistryValueName, 'Set-GPRegistryValue')
 }
 
 Get-GPO -Name $config.GpoName | Select-Object DisplayName, Id, ModificationTime | Format-List
-Write-BootstrapStep 'Fase 05 færdig — bootstrap komplet' -Level Ok
+Write-BootstrapStep 'Fase 05 færdig - bootstrap komplet' -Level Ok
