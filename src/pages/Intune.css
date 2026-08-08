@@ -108,6 +108,24 @@
   flex-wrap: wrap;
 }
 
+.intune-external-links {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.intune-external-links li {
+  margin-bottom: 0.65rem;
+}
+
+.intune-external-links a {
+  color: var(--ps-accent);
+  text-decoration: none;
+}
+
+.intune-external-links a:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 700px) {
   .intune-hero-content {
     flex-direction: column;

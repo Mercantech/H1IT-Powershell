@@ -36,6 +36,22 @@ const h1Parallels = [
   { h1: 'Git og scripts', intune: 'Versionsstyring af Intune-relaterede scripts og rapporter' },
 ];
 
+/** Anbefalet materiale fra Mikkel Damgaard */
+const mikkelLinks = [
+  {
+    title: 'Part 1 — Autopilot, enrollment og konfiguration',
+    href: 'https://mikkeldamgaard.dk/knowledge-base/microsoft-intune/part-1-modern-deployent-autopilot-enrollment-and-configuration/',
+  },
+  {
+    title: 'Part 2 — Configuration- og compliance-politikker',
+    href: 'https://mikkeldamgaard.dk/knowledge-base/microsoft-intune/part-2-modern-deployent-deploying-intune-configuration-and-compliance-policies/',
+  },
+  {
+    title: 'Deploy printere med PowerShell-script i Intune',
+    href: 'https://mikkeldamgaard.dk/knowledge-base/microsoft-intune/intune-script-deploy-printers-powershell-script/',
+  },
+];
+
 export function Intune() {
   return (
     <div className="container">
@@ -186,6 +202,40 @@ Write-Output "Mappe oprettet: $path"`}
           Det er samme beslutning som med AD og servere — se også{' '}
           <Link to="/projekt">Projektkobling</Link> om GUI vs. script.
         </p>
+      </section>
+
+      <section id="videre-laesning" className="module-section">
+        <h2>Videre læsning — Mikkel Damgaard</h2>
+        <p>
+          Praktiske guides til moderne deployment med Intune (Autopilot, politikker og
+          PowerShell-scripts):
+        </p>
+        <ul className="intune-external-links">
+          {mikkelLinks.map((item) => (
+            <li key={item.href}>
+              <a href={item.href} target="_blank" rel="noopener noreferrer">
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <h3>Eksempel: Intune Remediations</h3>
+        <p>
+          Samling af detection- og remediation-scripts til Intune — god inspiration til
+          egne scripts (AntoPorter, ikke Mikkel):
+        </p>
+        <ul className="intune-external-links">
+          <li>
+            <a
+              href="https://github.com/AntoPorter/Intune-Remediations"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              AntoPorter / Intune-Remediations på GitHub
+            </a>
+          </li>
+        </ul>
       </section>
 
       <div className="cta-box">
