@@ -10,10 +10,12 @@ import {
 import { useLocation } from 'react-router-dom';
 import {
   getSlideIndexForPath,
-  presentationSlides,
+  getPresentationSlidesForPath,
+  type PresentationSlide,
 } from '../data/presentationSlides';
 
 interface PresentationContextValue {
+  slides: PresentationSlide[];
   isActive: boolean;
   slideIndex: number;
   totalSlides: number;
@@ -40,10 +42,11 @@ function isTypingTarget(target: EventTarget | null): boolean {
 
 export function PresentationProvider({ children }: { children: ReactNode }) {
   const location = useLocation();
+  const slides = getPresentationSlidesForPath(location.pathname);
   const [isActive, setIsActive] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  const totalSlides = presentationSlides.length;
+  const totalSlides = slides.length;
 
   const exit = useCallback(() => {
     setIsActive(false);
@@ -53,24 +56,24 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const start = useCallback((fromIndex = 0) => {
-    setSlideIndex(Math.max(0, Math.min(fromIndex, presentationSlides.length - 1)));
+    setSlideIndex(Math.max(0, Math.min(fromIndex, slides.length - 1)));
     setIsActive(true);
     void document.documentElement.requestFullscreen().catch(() => {
       /* Fuldskærm kan blokeres — præsentation virker stadig */
     });
-  }, []);
+  }, [slides]);
 
   const next = useCallback(() => {
-    setSlideIndex((current) => Math.min(current + 1, presentationSlides.length - 1));
-  }, []);
+    setSlideIndex((current) => Math.min(current + 1, slides.length - 1));
+  }, [slides]);
 
   const prev = useCallback(() => {
     setSlideIndex((current) => Math.max(current - 1, 0));
   }, []);
 
   const goTo = useCallback((index: number) => {
-    setSlideIndex(Math.max(0, Math.min(index, presentationSlides.length - 1)));
-  }, []);
+    setSlideIndex(Math.max(0, Math.min(index, slides.length - 1)));
+  }, [slides]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -110,7 +113,7 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
           break;
         case 'End':
           event.preventDefault();
-          goTo(presentationSlides.length - 1);
+          goTo(slides.length - 1);
           break;
         default:
           break;
@@ -119,7 +122,7 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [exit, goTo, isActive, location.pathname, next, prev, start]);
+  }, [exit, goTo, isActive, location.pathname, next, prev, start, slides]);
 
   useEffect(() => {
     if (!isActive) return;
@@ -136,6 +139,7 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({
+      slides,
       isActive,
       slideIndex,
       totalSlides,
@@ -145,7 +149,7 @@ export function PresentationProvider({ children }: { children: ReactNode }) {
       prev,
       goTo,
     }),
-    [exit, goTo, isActive, next, prev, slideIndex, start, totalSlides]
+    [exit, goTo, isActive, next, prev, slideIndex, start, totalSlides, slides]
   );
 
   return (

@@ -96,6 +96,8 @@ Lab-demoscript: `scripts/ws2022-bootstrap/` — modulært bootstrap fra clean Wi
 
 ## Præsentationstilstand
 
+På `/ws2022` starter **Vis som slides**, `F5` eller `Shift+F5` et separat forløb med 21 slides: scriptstruktur, de fem faser med manuel sammenligning og kode, AD-resultat og afprøvning. Brug piletasterne til at skifte slide og `Esc` til at afslutte. Siden og slides bruger samme fasedata i `src/data/ws2022.ts`; det almindelige undervisningsforløb indeholder ikke WS2022-slides.
+
 Underviseren kan starte et slide-show direkte fra sitet (PowerPoint-lignende):
 
 | Genvej | Handling |

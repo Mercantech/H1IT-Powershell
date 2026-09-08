@@ -2,7 +2,6 @@ import { useState, type ReactNode } from 'react';
 import { course } from '../../data/course';
 import { assets } from '../../data/assets';
 import {
-  presentationSlides,
   sectionLabels,
   type PresentationSlide,
 } from '../../data/presentationSlides';
@@ -205,12 +204,12 @@ function SlideContent({
 }
 
 export function PresentationMode() {
-  const { isActive, slideIndex, totalSlides, exit, next, prev, goTo } = usePresentation();
+  const { slides, isActive, slideIndex, totalSlides, exit, next, prev, goTo } = usePresentation();
   const [exerciseDrafts, setExerciseDrafts] = useState<Record<string, string>>({});
 
   if (!isActive) return null;
 
-  const slide = presentationSlides[slideIndex];
+  const slide = slides[Math.min(slideIndex, slides.length - 1)];
   const progress = ((slideIndex + 1) / totalSlides) * 100;
   const exerciseDraft = slide.exercise
     ? exerciseDrafts[slide.exercise.id]
@@ -285,7 +284,7 @@ export function PresentationMode() {
       </footer>
 
       <div className="presentation-dots" aria-hidden>
-        {presentationSlides.map((item, index) => (
+        {slides.map((item, index) => (
           <button
             key={item.id}
             type="button"
