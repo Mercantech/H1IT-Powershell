@@ -10,6 +10,7 @@ import { Projekt } from './pages/Projekt';
 import { Ordbog } from './pages/Ordbog';
 import { Intune } from './pages/Intune';
 import { AuthCallback } from './pages/AuthCallback';
+import { Ws2022 } from './pages/Ws2022';
 
 export function App() {
   return (
@@ -25,6 +26,7 @@ export function App() {
               <Route path="projekt" element={<Projekt />} />
               <Route path="ordbog" element={<Ordbog />} />
               <Route path="intune" element={<Intune />} />
+              <Route path="ws2022" element={<Ws2022 />} />
             </Route>
           </Routes>
           <PresentationMode />

@@ -2,7 +2,7 @@
 
 Modulært PowerShell-sæt der tager en **clean Windows Server 2022** til en MAGS lab-DC (`mags.local`) med roller, AD-struktur og en eksempel-GPO.
 
-**Ikke elevmateriale på sitet** — intern demo/reference til underviser og lab-test. Elevernes egne scripts ligger i deres projekt-repo.
+**Demo/reference til underviser og lab-test.** En visuel showcase findes på hjemmesidens direkte rute `/ws2022` (uden link i navigationen). Den viser faser, PowerShell-kode, AD-struktur og et demoforløb. Elevernes egne scripts ligger i deres projekt-repo.
 
 ## Krav
 

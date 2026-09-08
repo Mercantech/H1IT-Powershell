@@ -90,7 +90,9 @@ Sæt domæne via miljøvariabel `FRONTEND_DOMAIN` i Dokploy (standard: `powershe
 - `/ordbog` — Opslagsguide til PowerShell-begreber
 - `/intune` — PowerShell og Microsoft Intune (bro til praktik/job)
 
-Internt lab-demoscript (ikke på sitet): `scripts/ws2022-bootstrap/` — modulært bootstrap fra clean Windows Server 2022.
+- `/ws2022` — visuel showcase af det modulære Windows Server 2022-bootstrap med fem klikbare faser, kodevisninger, AD-oversigt og demoforløb. Ruten er tilgængelig direkte og vises ikke i navigationen (ingen adgangskontrol).
+
+Lab-demoscript: `scripts/ws2022-bootstrap/` — modulært bootstrap fra clean Windows Server 2022. Showcasesiden importerer de fem fasescripts samt orchestrator og fælles hjælpere som tekst ved build; lokale SSH-hjælpere, adgangskoder og logs indgår ikke.
 
 ## Præsentationstilstand
 
