@@ -1,12 +1,18 @@
+import { practicalGlossaryEntries } from './glossaryPractical';
+
 export interface GlossaryEntry {
   id: string;
   term: string;
-  category: 'grundlæggende' | 'sikkerhed' | 'fjernadministration' | 'data' | 'wbem';
+  category: 'grundlæggende' | 'sikkerhed' | 'fjernadministration' | 'data' | 'wbem' | 'scripts' | 'filer' | 'server';
   summary: string;
   detail: string;
   example?: string;
   relatedLink?: string;
   keywords?: string[];
+  advanced?: boolean;
+  pitfall?: string;
+  requires?: string;
+  docsUrl?: string;
 }
 
 export const glossaryCategories: Record<GlossaryEntry['category'], string> = {
@@ -15,6 +21,9 @@ export const glossaryCategories: Record<GlossaryEntry['category'], string> = {
   fjernadministration: 'Fjernadministration',
   data: 'Datahåndtering',
   wbem: 'WBEM / CIM',
+  scripts: 'Scriptlogik',
+  filer: 'Filer og stier',
+  server: 'Server og AD',
 };
 
 export const glossaryEntries: GlossaryEntry[] = [
@@ -25,7 +34,8 @@ export const glossaryEntries: GlossaryEntry[] = [
     summary: 'En indbygget PowerShell-kommando med verb-substantiv-navngivning.',
     detail:
       'Cmdlets er de grundlæggende byggeklodser i PowerShell. De følger mønsteret Verb-Substantiv, f.eks. Get-Service, Set-Location eller New-ADUser. De er designet til at arbejde sammen via pipelinen.',
-    example: 'Get-Service -Name DNS',
+    example: 'Get-Service -Name Spooler',
+    requires: 'Windows med Print Spooler-servicen.',
     relatedLink: '/dag-1#cmdlets',
     keywords: ['kommando', 'command'],
   },
@@ -121,9 +131,10 @@ export const glossaryEntries: GlossaryEntry[] = [
     id: 'whatif',
     term: '-WhatIf',
     category: 'sikkerhed',
-    summary: 'Simulerer en handling uden at udføre den.',
+    summary: 'Viser planlagte ændringer i kommandoer, der understøtter ShouldProcess.',
     detail:
-      'WhatIf viser hvad der VILLE ske, uden at ændre noget. Essentielt i produktionsmiljøer og i jeres infrastrukturprojekt — test altid farlige kommandoer med -WhatIf først.',
+      'WhatIf springer de ændringer over, som kommandoen har beskyttet med ShouldProcess. Brug det til at kontrollere mål og handling før kørsel. Det er ikke en fuld simulering af resultatet eller en garanti for, at et helt script er uden sideeffekter.',
+    docsUrl: 'https://learn.microsoft.com/en-us/powershell/scripting/learn/deep-dives/everything-about-shouldprocess',
     example: 'Remove-Item C:\\Temp\\old.log -WhatIf',
     relatedLink: '/dag-2#sikkerhed',
     keywords: ['what-if', 'what if', 'simulering', 'test'],
@@ -132,10 +143,11 @@ export const glossaryEntries: GlossaryEntry[] = [
     id: 'confirm',
     term: '-Confirm',
     category: 'sikkerhed',
-    summary: 'Bedder om bekræftelse før en handling udføres.',
+    summary: 'Beder om bekræftelse før en understøttet handling udføres.',
     detail:
       'Confirm pauser kommandoen og spørger "Er du sikker?" før den kører. Godt til destruktive handlinger som sletning af filer eller AD-objekter.',
     example: 'Remove-ADUser -Identity "testbruger" -Confirm',
+    requires: 'ActiveDirectory-modulet og rettighed til at slette den angivne lab-bruger. Bekræfter du, slettes brugeren.',
     relatedLink: '/dag-2#sikkerhed',
     keywords: ['bekræftelse', 'confirmation'],
   },
@@ -143,10 +155,11 @@ export const glossaryEntries: GlossaryEntry[] = [
     id: 'transcript',
     term: 'Start-Transcript',
     category: 'sikkerhed',
-    summary: 'Logger al konsol-output til en tekstfil.',
+    summary: 'Gemmer en tekstregistrering af sessionens kommandoer og konsoloutput.',
     detail:
       'Transcripts dokumenterer hvad du har kørt — vigtigt til audit, fejlfinding og jeres projektrapport. Husk Stop-Transcript når du er færdig.',
-    example: 'Start-Transcript -Path C:\\Logs\\session.log\nGet-Service\nStop-Transcript',
+    example: "$log = Join-Path $env:TEMP ('lab-session-{0}.log' -f (Get-Date -Format 'yyyyMMdd-HHmmss'))\nStart-Transcript -Path $log\ntry {\n    Get-Service\n} finally {\n    Stop-Transcript\n}",
+    pitfall: 'Skriv ikke adgangskoder eller andre hemmeligheder til konsollen, mens der logges.',
     relatedLink: '/dag-2#sikkerhed',
     keywords: ['log', 'dokumentation', 'transcript'],
   },
@@ -156,8 +169,9 @@ export const glossaryEntries: GlossaryEntry[] = [
     category: 'sikkerhed',
     summary: 'Styrer om scripts må køres på computeren.',
     detail:
-      'Execution Policy er en sikkerhedsmekanisme — ikke en forhindring. RemoteSigned tillader lokale scripts og signerede scripts fra internettet. Tjek med Get-ExecutionPolicy.',
-    example: 'Get-ExecutionPolicy\nSet-ExecutionPolicy RemoteSigned -Scope CurrentUser',
+      'Execution Policy hjælper med at undgå utilsigtet scriptkørsel på Windows, men er ikke en sikkerhedsgrænse eller adgangskontrol. RemoteSigned kræver normalt signatur på scripts markeret som hentet fra internettet. Get-ExecutionPolicy -List viser scopes; en gruppepolitik kan have højere prioritet end dine lokale valg.',
+    example: 'Get-ExecutionPolicy -List',
+    docsUrl: 'https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies',
     relatedLink: '/dag-2#sikkerhed',
     keywords: ['script policy', 'sikkerhedspolitik'],
   },
@@ -169,6 +183,7 @@ export const glossaryEntries: GlossaryEntry[] = [
     detail:
       'Invoke-Command er standardmetoden til at køre scriptblocks på andre servere uden RDP. Kan køre på flere servere samtidig — ideelt til jeres member servers.',
     example: 'Invoke-Command -ComputerName SRV01 -ScriptBlock { Get-Service }',
+    requires: 'Fjernserveren SRV01 med WinRM og en konto med fjernadgang.',
     relatedLink: '/dag-2#fjernadmin',
     keywords: ['fjern', 'remote', 'icm'],
   },
@@ -180,6 +195,7 @@ export const glossaryEntries: GlossaryEntry[] = [
     detail:
       'Enter-PSSession (alias: etsn) giver dig en prompt på fjernserveren — som om du sad lokalt. Afslut med Exit-PSSession. Kræver WinRM konfigureret.',
     example: 'Enter-PSSession -ComputerName SRV01',
+    requires: 'Fjernserveren SRV01 med WinRM og en konto med fjernadgang.',
     relatedLink: '/dag-2#fjernadmin',
     keywords: ['pssession', 'winrm', 'interaktiv'],
   },
@@ -191,6 +207,7 @@ export const glossaryEntries: GlossaryEntry[] = [
     detail:
       'Import-Csv behandler CSV som en databasetabel med rækker og kolonner. Perfekt til brugerlister, inventar og rapporter i infrastrukturprojektet.',
     example: '$brugere = Import-Csv .\\brugere.csv',
+    requires: 'En brugere.csv-fil med kolonneoverskrifter i den aktuelle mappe.',
     relatedLink: '/dag-2#data',
     keywords: ['csv', 'import', 'database'],
   },
@@ -211,8 +228,9 @@ export const glossaryEntries: GlossaryEntry[] = [
     category: 'wbem',
     summary: 'Standard til at hente systeminformation fra Windows.',
     detail:
-      'CIM (Common Information Model) er den moderne erstatning for WMI. Get-CimInstance henter data om OS, diske, services m.m. WBEM er den overordnede standard.',
+      'CIM er en model til at beskrive blandt andet operativsystem, diske og services. WMI er Microsofts implementering af administrationsinfrastrukturen på Windows; CIM-cmdlets som Get-CimInstance kan hente data fra den. WBEM er en samling standarder til denne type administration.',
     example: 'Get-CimInstance Win32_OperatingSystem',
+    requires: 'Windows med den viste Win32-klasse.',
     relatedLink: '/dag-2#wbem',
     keywords: ['wmi', 'wbem', 'get-ciminstance', 'systeminfo'],
   },
@@ -222,7 +240,7 @@ export const glossaryEntries: GlossaryEntry[] = [
     category: 'grundlæggende',
     summary: 'En blok af PowerShell-kode omgivet af { }.',
     detail:
-      'Scriptblocks bruges i Where-Object, Invoke-Command og funktioner. $_ repræsenterer det aktuelle objekt i pipelinen inden i blokken.',
+      'Scriptblocks bruges i Where-Object, Invoke-Command og funktioner. En scriptblock gemmer kode; den køres ikke alene ved at blive oprettet. I pipeline-behandling med fx Where-Object er $_ det aktuelle objekt, men ikke enhver scriptblock har et aktuelt pipeline-objekt.',
     example: 'Where-Object { $_.Status -eq "Stopped" }',
     relatedLink: '/dag-1#pipeline',
     keywords: ['{ }', 'blok', '$_'],
@@ -238,27 +256,31 @@ export const glossaryEntries: GlossaryEntry[] = [
     relatedLink: '/dag-1#cmdlets',
     keywords: ['*', '?', 'jokertegn'],
   },
+  ...practicalGlossaryEntries,
 ];
 
 export function filterGlossaryEntries(
   entries: GlossaryEntry[],
   query: string
 ): GlossaryEntry[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return entries;
+  const words = query.trim().toLocaleLowerCase('da').split(/\s+/).filter(Boolean);
+  if (!words.length) return entries;
 
   return entries.filter((entry) => {
     const haystack = [
       entry.term,
       entry.summary,
       entry.detail,
+      entry.example ?? '',
+      entry.pitfall ?? '',
+      entry.requires ?? '',
       entry.category,
       glossaryCategories[entry.category],
       ...(entry.keywords ?? []),
     ]
       .join(' ')
-      .toLowerCase();
+      .toLocaleLowerCase('da');
 
-    return haystack.includes(q);
+    return words.every((word) => haystack.includes(word));
   });
 }

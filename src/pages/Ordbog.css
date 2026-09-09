@@ -68,8 +68,19 @@
 }
 
 .ordbog-entry {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: 11rem;
 }
+
+.ordbog-shortcuts { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: baseline; margin-bottom: 1.3rem; font-size: .85rem; color: var(--ps-text-muted); }
+.ordbog-shortcuts button { border: 0; padding: .2rem 0; background: transparent; color: var(--ps-accent); font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.ordbog-level { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: 1.2rem; font-size: .85rem; }
+.ordbog-level select { color: var(--ps-text); background: var(--ps-bg-input); border: 1px solid var(--ps-border); padding: .5rem; border-radius: 4px; font: inherit; }
+.ordbog-level button { margin-left: auto; background: transparent; border: 0; padding: .5rem 0; color: var(--ps-accent); cursor: pointer; font: inherit; }
+.ordbog-level button:disabled { color: var(--ps-text-muted); opacity: .6; cursor: default; }
+.ordbog-requires, .ordbog-pitfall { font-size: .9rem; line-height: 1.7; color: var(--ps-text-muted); }
+.ordbog-pitfall strong { color: var(--ps-cmdlet); }
+.ordbog-example summary { cursor: pointer; padding: .6rem 0; font-size: .9rem; color: var(--ps-accent); }
+.ordbog-docs { display: block; width: fit-content; margin-top: .7rem; font-size: .85rem; }
 
 .ordbog-entry-header {
   display: flex;
