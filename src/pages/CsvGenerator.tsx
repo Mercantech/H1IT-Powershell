@@ -63,7 +63,7 @@ export function CsvGenerator() {
       <aside className="card csv-story" aria-label="Opgavens fortælling">
         <span className="csv-eyebrow">INTERN BESKED · OPERATION: NYE KOLLEGER</span>
         <h2>Handlen er lukket. Kan de logge ind på mandag?</h2>
-        <p><strong>{config.company || 'Din virksomhed'}</strong> har købt det store firma <strong>{config.acquiredCompany || 'OnlyMAGS'}</strong>: en abonnementsplatform for digitale magasiner, tastaturtests og overraskende populære guides til kabelstyring. Deres kunder elsker eksklusivt indhold. Deres medarbejdere vil mest bare have adgang til fællesdrevet.</p>
+        <p>I har købt det store firma <strong>{config.acquiredCompany || 'OnlyMAGS'}</strong>: en abonnementsplatform for digitale magasiner, tastaturtests og overraskende populære guides til kabelstyring. Deres kunder elsker eksklusivt indhold. Deres medarbejdere vil mest bare have adgang til fællesdrevet.</p>
         <p>Med opkøbet følger <strong>{Number.isFinite(config.count) ? config.count : 0} medarbejdere</strong>, som I nu skal have over i jeres AD. Konti skal oprettes fra <strong>{config.sourceDomain || 'kildedomænet'}</strong> i <strong>{config.targetDomain || 'jeres domæne'}</strong>, placeres i de rigtige OU’er og have grupper og GPO’er, der passer til deres arbejde.</p>
         <p>HR leverer en medarbejderliste. Ledelsen forventer, at alle kan arbejde <strong>mandag kl. 08.00</strong>. Salg skal kunne sælge abonnementer, Finance skal kunne sende fakturaer, og Support skal kunne hjælpe, når nogen har glemt deres password igen. “Giv alle administratorrettigheder” er allerede blevet afvist på det første møde.</p>
         <p><em>“OnlyMAGS — premium content, proper permissions.”</em></p>

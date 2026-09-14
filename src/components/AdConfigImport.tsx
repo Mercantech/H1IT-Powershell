@@ -144,7 +144,7 @@ export function AdConfigImport({ config, onApply }: Props) {
       <p className="csv-note">{selected.length} valgt · Viser {Math.min(matchingGroups.length, 100)} af {matchingGroups.length} match. Brug søgningen til at finde flere grupper.</p>
       <p className="csv-note">Rolleforslag er udledt fra aktive konti med samme titel, afdeling og OU. Kun deres fælles direkte sikkerhedsgrupper foreslås. Indlejrede grupper og primærgruppen udledes ikke. Standardgrupper og grupper markeret som beskyttede indsættes ikke automatisk; det er ikke en fuld rettighedsvurdering.</p>
       <p className="csv-note">GPO-kandidater tager højde for OU-links og nedarvning. Sikkerhedsfiltrering, WMI-filtre og bruger-/computerindstillinger kan ændre det faktiske resultat. Kontrollér forventningerne efter import.</p>
-      <p className="csv-spaced">“Brug AD-oplysninger” erstatter måldomæne, roller, adgangspulje og reserverede brugernavne. Virksomhedsnavnet udfyldes, hvis eksporten har præcis ét. Opkøbsscenariet og medarbejderantallet bevares.</p>
+      <p className="csv-spaced">“Brug AD-oplysninger” erstatter måldomæne, roller, adgangspulje og reserverede brugernavne. I udfylder selv jeres virksomhedsnavn; importerede navne vises som forslag i feltet. Opkøbsscenariet og medarbejderantallet bevares.</p>
       <button type="button" className="btn btn-primary" onClick={apply}>Brug AD-oplysninger</button>
     </div>}
     {status && <p className="csv-note" role="status">{status}</p>}

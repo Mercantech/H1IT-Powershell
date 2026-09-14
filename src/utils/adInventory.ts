@@ -83,6 +83,6 @@ export function configFromInventory(current: GeneratorConfig, inventory: AdInven
       groups: role.groups.filter((group) => usableGroups.has(group.toLowerCase())).join('\n'),
       gpos: (ou?.gpos ?? []).filter(canUseAdValue).join('\n') };
   });
-  return { ...current, company: inventory.companies.length === 1 ? inventory.companies[0] : current.company,
+  return { ...current,
     targetDomain: inventory.domain, roles, reservedUsernames: inventory.reservedUsernames.join('\n'), accessPool: '' };
 }

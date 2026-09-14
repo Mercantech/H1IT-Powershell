@@ -11,7 +11,8 @@ async function loadModule(path) {
   const { outputText } = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2020 } });
   return import(`data:text/javascript;base64,${Buffer.from(outputText).toString('base64')}`);
 }
-const { initialConfig, generateEmployees, employeesToCsv, validateConfig, csvColumns } = await loadModule('../src/utils/employeeGenerator.ts');
+const { initialConfig: defaultConfig, generateEmployees, employeesToCsv, validateConfig, csvColumns } = await loadModule('../src/utils/employeeGenerator.ts');
+const initialConfig = { ...defaultConfig, company: 'Test Company Ltd' };
 const { parseAdInventory, configFromInventory, canUseAdValue, formatAdInventory } = await loadModule('../src/utils/adInventory.ts');
 const seeded = (seed = 42) => () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
 const snapshot = () => ({ schemaVersion: 1, domain: 'skole.local', companies: ['Skole A/S'], ous: [{ name: 'Salg', dn: 'OU=Salg,DC=skole,DC=local', gpos: ['GPO_Basis'] }], groups: [{ name: 'GG_Salg', description: 'Salg', reviewOnly: false }, { name: 'Domain Admins', description: '', reviewOnly: true }], roles: [{ title: 'Sælger', department: 'Salg', ou: 'OU=Salg,DC=skole,DC=local', groups: ['GG_Salg', 'Domain Admins'] }], reservedUsernames: ['anna.jensen'], warnings: [] });
@@ -19,7 +20,9 @@ const snapshot = () => ({ schemaVersion: 1, domain: 'skole.local', companies: ['
 test('AD JSON import fills coherent configuration and preserves the scenario and existing AD names', () => {
   const config = configFromInventory(initialConfig, parseAdInventory('\uFEFF' + JSON.stringify(snapshot())));
   assert.equal(config.targetDomain, 'skole.local');
-  assert.equal(config.company, 'Skole A/S');
+  assert.equal(config.company, initialConfig.company);
+  assert.equal(defaultConfig.company, '');
+  assert.equal(configFromInventory(defaultConfig, parseAdInventory(JSON.stringify(snapshot()))).company, '');
   assert.equal(config.sourceDomain, initialConfig.sourceDomain);
   assert.equal(config.acquiredCompany, initialConfig.acquiredCompany);
   assert.equal(config.count, 100);
@@ -96,7 +99,8 @@ test('Windows PowerShell exporter -> JSON importer -> 100 employees (mocked AD)'
         assert.ok(inventory.warnings.some((warning) => warning.includes('OU=IT')));
       } else assert.ok(inventory.ous.every((ou) => ou.gpos.join() === 'GPO_Basis'));
       const config = configFromInventory(initialConfig, inventory);
-      assert.equal(config.company, 'Æble A/S');
+      assert.deepEqual(inventory.companies, ['Æble A/S']);
+      assert.equal(config.company, initialConfig.company);
       assert.equal(generateEmployees(config, seeded()).length, 100);
     }
   } finally {
@@ -152,6 +156,7 @@ test('fresh random draws produce different employee lists', () => {
 
 test('invalid counts, domains, OU mappings, roles and pools are rejected', () => {
   for (const change of [
+    { company: '' },
     { count: 0 }, { count: 1001 }, { count: 1.5 }, { count: NaN },
     { sourceDomain: 'https://example.com' }, { sourceDomain: initialConfig.targetDomain },
     { targetDomain: 'elsewhere.local' }, { roles: [] },

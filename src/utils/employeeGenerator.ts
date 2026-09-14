@@ -20,7 +20,7 @@ export interface GeneratorConfig {
 }
 
 export const initialConfig: GeneratorConfig = {
-  company: 'Northstar IT Ltd',
+  company: '',
   acquiredCompany: 'OnlyMAGS',
   sourceDomain: 'onlymags.local',
   targetDomain: 'northstar.local',
