@@ -12,7 +12,7 @@ async function loadModule(path) {
   return import(`data:text/javascript;base64,${Buffer.from(outputText).toString('base64')}`);
 }
 const { initialConfig: defaultConfig, generateEmployees, employeesToCsv, validateConfig, csvColumns } = await loadModule('../src/utils/employeeGenerator.ts');
-const initialConfig = { ...defaultConfig, company: 'Test Company Ltd' };
+const initialConfig = { ...defaultConfig, company: 'Test Company Ltd', targetDomain: 'northstar.local', roles: defaultConfig.roles.map(role => ({ ...role, ou: `OU=${role.department},OU=Users,DC=northstar,DC=local` })) };
 const { parseAdInventory, configFromInventory, canUseAdValue, formatAdInventory } = await loadModule('../src/utils/adInventory.ts');
 const seeded = (seed = 42) => () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
 const snapshot = () => ({ schemaVersion: 1, domain: 'skole.local', companies: ['Skole A/S'], ous: [{ name: 'Salg', dn: 'OU=Salg,DC=skole,DC=local', gpos: ['GPO_Basis'] }], groups: [{ name: 'GG_Salg', description: 'Salg', reviewOnly: false }, { name: 'Domain Admins', description: '', reviewOnly: true }], roles: [{ title: 'Sælger', department: 'Salg', ou: 'OU=Salg,DC=skole,DC=local', groups: ['GG_Salg', 'Domain Admins'] }], reservedUsernames: ['anna.jensen'], warnings: [] });
@@ -116,7 +116,7 @@ test('100 unique fictional employees with valid accounts, ASCII defaults and coh
   for (const employee of employees) {
     assert.ok(Object.values(employee).every((value) => /^[\x20-\x7E]*$/.test(value)));
     assert.match(employee.SamAccountName, /^[a-z0-9.]{1,20}$/);
-    assert.equal(employee.UserPrincipalName, `${employee.SamAccountName}@JeresDomæne.local`);
+    assert.equal(employee.UserPrincipalName, `${employee.SamAccountName}@${initialConfig.targetDomain}`);
     const role = initialConfig.roles.find((role) => role.title === employee.Title);
     assert.equal(employee.TargetOU, role.ou);
     assert.equal(employee.Department, role.department);
@@ -161,7 +161,7 @@ test('invalid counts, domains, OU mappings, roles and pools are rejected', () =>
     { sourceDomain: 'https://example.com' }, { sourceDomain: initialConfig.targetDomain },
     { targetDomain: 'elsewhere.local' }, { roles: [] },
     { roles: [initialConfig.roles[0], { ...initialConfig.roles[0], id: 'duplicate' }] },
-    { roles: [{ ...initialConfig.roles[0], ou: 'OU=,DC=JeresDomæne,DC=local' }] },
+    { roles: [{ ...initialConfig.roles[0], ou: 'OU=,DC=northstar,DC=local' }] },
     { maxExtraAccess: -1 }, { maxExtraAccess: 11 },
     { accessPool: 'GG_Test' }, { accessPool: 'GG_Test | read | write' },
     { accessPool: 'GG_Test | read\ngg_test | write' },

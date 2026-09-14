@@ -99,6 +99,8 @@ Lab-demoscript: `scripts/ws2022-bootstrap/` — modulært bootstrap fra clean Wi
 
 Feltet for elevernes eget virksomhedsnavn starter tomt og udfyldes af eleverne. AD-import bevarer feltets aktuelle værdi og viser kun importerede virksomhedsnavne som valgbare forslag. Historien bruger “I har købt …”.
 
+Måldomæne og OU-stier starter også tomme. Eleverne udfylder deres egne værdier eller anvender en AD-eksport. Ved gruppevalg kan også standardgrupper og beskyttede grupper vælges manuelt til øvelsen; de er tydeligt markeret og vælges aldrig automatisk. Klik på gruppen eller afkrydsningsfeltet, og tryk **Brug AD-oplysninger** for at overføre valgene til adgangspuljen.
+
 Standardscenariet er opkøbet af **OnlyMAGS**, en fiktiv abonnementsplatform for digitale magasiner og tech-guides. 100 medarbejdere skal flyttes fra `onlymags.local` til elevernes AD og kunne arbejde mandag kl. 08.00. Historien bruger kontor- og IT-humor med sloganet “OnlyMAGS — premium content, proper permissions.” Virksomhedsnavn, domæner og medarbejderantal kan stadig tilpasses; fortællingen følger formularens værdier.
 
 Eleverne indtaster kilde- og måldomæne samt rolleprofiler med afdeling, fuld OU-sti, faste sikkerhedsgrupper og forventede GPO’er. Hver medarbejder får en tilfældig rolle med lige sandsynlighed. Ekstra rettigheder trækkes uden gentagelse fra en fælles pulje skrevet som `Gruppenavn | Beskrivelse`; hver medarbejder får mellem 0 og det valgte maksimum. GPO-forventninger følger rollen og skal kontrolleres via OU-links og filtrering i AD.

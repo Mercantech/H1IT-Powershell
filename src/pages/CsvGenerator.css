@@ -38,7 +38,9 @@
 .csv-import .code-block-copy:disabled { opacity: .45; cursor: not-allowed; }
 .csv-import details pre { max-height: 420px; margin-top: .75rem; }
 .csv-inventory-list { max-height: 320px; overflow-y: auto; border: 1px solid var(--ps-border); border-radius: var(--ps-radius); padding: .75rem; }
-.csv-generator .csv-group-choice { flex-direction: row; align-items: flex-start; gap: .75rem; padding: .6rem; border-bottom: 1px solid var(--ps-border); }
+.csv-generator .csv-group-choice { flex-direction: row; align-items: flex-start; gap: .75rem; padding: .6rem; border-bottom: 1px solid var(--ps-border); cursor: pointer; }
+.csv-group-choice:has(input:checked) { background: rgba(94, 168, 255, .15); }
+.csv-group-choice:has(input:disabled) { cursor: not-allowed; opacity: .6; }
 .csv-generator .csv-group-choice input { width: 18px; height: 18px; flex-shrink: 0; margin-top: .25rem; }
 .csv-group-choice span { overflow-wrap: anywhere; }
 @media (max-width: 650px) { .csv-grid { grid-template-columns: 1fr; } .csv-generator .card { padding: 1.1rem; } .csv-actions > .btn-primary { width: 100%; } .csv-pagination { justify-content: space-between; } }

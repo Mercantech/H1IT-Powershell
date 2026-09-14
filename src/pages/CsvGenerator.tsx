@@ -86,7 +86,7 @@ export function CsvGenerator() {
           <div className="csv-grid">
             <label>Jeres virksomhed<input list="csv-ad-companies" value={config.company} onChange={(e) => update('company', e.target.value)} /></label>
             <label>Opkøbt virksomhed<input value={config.acquiredCompany} onChange={(e) => update('acquiredCompany', e.target.value)} /></label>
-            <label>Jeres måldomæne<input value={config.targetDomain} onChange={(e) => update('targetDomain', e.target.value)} spellCheck={false} /><small>Bruges også som UPN-suffiks. Tilpas OU-stierne nedenfor.</small></label>
+            <label>Jeres måldomæne<input value={config.targetDomain} onChange={(e) => update('targetDomain', e.target.value)} spellCheck={false} placeholder="fx firma.local" /><small>Udfyld jeres eget AD-domæne, eller indlæs det fra AD-eksporten. Tilpas OU-stierne nedenfor.</small></label>
             <label>Virksomhedens gamle domæne<input value={config.sourceDomain} onChange={(e) => update('sourceDomain', e.target.value)} spellCheck={false} /></label>
             <label>Antal medarbejdere<input type="number" min="1" max="1000" step="1" value={Number.isNaN(config.count) ? '' : config.count} onChange={(e) => update('count', e.target.valueAsNumber)} /><small>1–1.000. Hver generering giver en ny tilfældig fordeling.</small></label>
           </div>
@@ -110,7 +110,7 @@ export function CsvGenerator() {
               </fieldset>
             ))}
           </div>
-          <button type="button" className="btn btn-secondary" onClick={() => update('roles', [...config.roles, { id: crypto.randomUUID(), title: '', department: '', ou: `OU=Users,${config.targetDomain.trim().split('.').map((part) => `DC=${part}`).join(',')}`, groups: '', gpos: '' }])}>+ Tilføj rolle</button>
+          <button type="button" className="btn btn-secondary" onClick={() => update('roles', [...config.roles, { id: crypto.randomUUID(), title: '', department: '', ou: config.targetDomain.trim() ? `OU=Users,${config.targetDomain.trim().split('.').map((part) => `DC=${part}`).join(',')}` : '', groups: '', gpos: '' }])}>+ Tilføj rolle</button>
           <p className="csv-note">GPO’er tildeles ikke direkte gennem CSV’en. I skal kontrollere links, nedarvning og filtrering i AD. <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-scope" target="_blank" rel="noreferrer">Læs om GPO-anvendelse hos Microsoft</a>.</p>
         </section>
 

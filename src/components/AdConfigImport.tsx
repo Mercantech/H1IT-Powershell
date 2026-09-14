@@ -20,9 +20,15 @@ export function AdConfigImport({ config, onApply }: Props) {
   const [search, setSearch] = useState('');
   const [showScript, setShowScript] = useState(false);
   const [jsonText, setJsonText] = useState('');
+  const jsonTextRef = useRef('');
   const request = useRef(0);
   const command = '.\\Export-AdGeneratorConfig.ps1 -OutputPath .\\ad-config.json';
   const matchingGroups = inventory?.groups.filter((group) => `${group.name} ${group.description}`.toLocaleLowerCase('da').includes(search.toLocaleLowerCase('da'))) ?? [];
+
+  function updateJsonText(text: string) {
+    jsonTextRef.current = text;
+    setJsonText(text);
+  }
 
   function resetPreview() {
     const id = ++request.current;
@@ -44,7 +50,7 @@ export function AdConfigImport({ config, onApply }: Props) {
       const text = typeof source === 'string' ? source : await source.text();
       const parsed = parseAdInventory(text);
       if (id === request.current) {
-        setJsonText(formatAdInventory(text));
+        updateJsonText(formatAdInventory(text));
         setInventory(parsed);
       }
     } catch (cause) {
@@ -68,7 +74,7 @@ export function AdConfigImport({ config, onApply }: Props) {
   function apply() {
     if (!inventory) return;
     const next = configFromInventory(config, inventory);
-    next.accessPool = inventory.groups.filter((group) => selected.includes(group.name) && !group.reviewOnly && canUseAdValue(group.name)).map((group) => {
+    next.accessPool = inventory.groups.filter((group) => selected.includes(group.name) && canUseAdValue(group.name)).map((group) => {
       const description = group.description.replace(/[|\r\n\t]/g, ' ').trim();
       return `${group.name} | ${canUseAdValue(description) ? description : 'Access through group membership (review required)'}`;
     }).join('\n');
@@ -104,7 +110,7 @@ export function AdConfigImport({ config, onApply }: Props) {
     <div className="code-block csv-spaced">
       <div className="code-block-chrome"><span className="code-block-title">ad-config.json · Indsæt eller redigér JSON</span>
         <button type="button" className="code-block-copy" disabled={!jsonText.trim()} onClick={() => {
-          try { setJsonText(formatAdInventory(jsonText)); setError(''); setStatus('JSON er formateret med to mellemrum pr. niveau.'); }
+          try { updateJsonText(formatAdInventory(jsonTextRef.current)); setError(''); setStatus('JSON er formateret med to mellemrum pr. niveau.'); }
           catch (cause) { setError(cause instanceof Error ? cause.message : 'JSON kunne ikke formateres.'); }
         }}>Formatér JSON</button>
         <button type="button" className="code-block-copy" disabled={!jsonText.trim()} onClick={async () => {
@@ -114,13 +120,13 @@ export function AdConfigImport({ config, onApply }: Props) {
       </div>
       <Editor height="340px" language="json" value={jsonText}
         onMount={(_editor, monaco) => setupPowerShellTheme(monaco)}
-        onChange={(value) => { const next = value ?? ''; if (next !== jsonText) { setJsonText(next); resetPreview(); } }}
+        onChange={(value) => { const next = value ?? ''; if (next !== jsonTextRef.current) { updateJsonText(next); resetPreview(); } }}
         options={{ ...readOnlyBlockOptions, language: 'json', readOnly: false, domReadOnly: false, lineNumbers: 'on', tabSize: 2, insertSpaces: true, ariaLabel: 'AD-opsætning som JSON-tekst' }}
         loading={<div className="code-block-loading">Indlæser JSON-kodefelt…</div>} />
     </div>
     <p className="csv-note">Indsæt hele JSON-indholdet her, eller vælg en fil ovenfor. Begge vises med to mellemrum pr. niveau, når de indlæses. Højst 5 MB. Tryk “Indlæs JSON-tekst” efter ændringer.</p>
     <div className="csv-actions">
-      <button type="button" className="btn btn-secondary" disabled={!jsonText.trim()} onClick={() => { void readInventory(jsonText); }}>Indlæs JSON-tekst</button>
+      <button type="button" className="btn btn-secondary" disabled={!jsonText.trim()} onClick={() => { void readInventory(jsonTextRef.current); }}>Indlæs JSON-tekst</button>
     </div>
     {loading && <p role="status">Læser AD-opsætningen…</p>}
     {error && <p className="csv-errors csv-spaced" role="alert">{error} Den nuværende opsætning er bevaret.</p>}
@@ -138,10 +144,14 @@ export function AdConfigImport({ config, onApply }: Props) {
       <p className="csv-muted">Alle valg starter tomme. Beskrivelsen fra AD bruges som tekst til permission; faktiske NTFS-, share- og applikationsrettigheder skal I kontrollere separat.</p>
       <label>Søg i eksporterede grupper<input type="search" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Gruppenavn eller beskrivelse" /></label>
       <div className="csv-inventory-list csv-spaced">{matchingGroups.slice(0, 100).map((group) => <label className="csv-group-choice" key={group.name}>
-        <input type="checkbox" disabled={group.reviewOnly || !canUseAdValue(group.name)} checked={selected.includes(group.name)} onChange={(event) => setSelected((current) => event.target.checked ? [...current, group.name] : current.filter((name) => name !== group.name))} />
-        <span>{group.name}<small>{group.description || 'Ingen beskrivelse i AD'}</small>{group.reviewOnly && <small>Standardgruppe eller beskyttet gruppe — til manuel vurdering.</small>}{!canUseAdValue(group.name) && <small>Gruppenavnet kan ikke repræsenteres i generatorens listeformat.</small>}</span>
+        <input type="checkbox" disabled={!canUseAdValue(group.name)} checked={selected.includes(group.name)} onChange={(event) => {
+          const checked = event.currentTarget.checked;
+          setSelected((current) => checked ? [...new Set([...current, group.name])] : current.filter((name) => name !== group.name));
+        }} />
+        <span>{group.name}<small>{group.description || 'Ingen beskrivelse i AD'}</small>{group.reviewOnly && <small>Standardgruppe eller beskyttet gruppe — vælg kun, hvis adgangen er relevant for øvelsen.</small>}{!canUseAdValue(group.name) && <small>Gruppenavnet kan ikke repræsenteres i generatorens listeformat.</small>}</span>
       </label>)}{!matchingGroups.length && <p>Ingen grupper matcher søgningen.</p>}</div>
-      <p className="csv-note">{selected.length} valgt · Viser {Math.min(matchingGroups.length, 100)} af {matchingGroups.length} match. Brug søgningen til at finde flere grupper.</p>
+      <p className="csv-note" role="status">{selected.length} valgt · Viser {Math.min(matchingGroups.length, 100)} af {matchingGroups.length} match. Brug søgningen til at finde flere grupper.</p>
+      <p className="csv-note">Klik på gruppens navn eller afkrydsningsfelt. Valgene overføres til adgangspuljen, når I trykker “Brug AD-oplysninger”.</p>
       <p className="csv-note">Rolleforslag er udledt fra aktive konti med samme titel, afdeling og OU. Kun deres fælles direkte sikkerhedsgrupper foreslås. Indlejrede grupper og primærgruppen udledes ikke. Standardgrupper og grupper markeret som beskyttede indsættes ikke automatisk; det er ikke en fuld rettighedsvurdering.</p>
       <p className="csv-note">GPO-kandidater tager højde for OU-links og nedarvning. Sikkerhedsfiltrering, WMI-filtre og bruger-/computerindstillinger kan ændre det faktiske resultat. Kontrollér forventningerne efter import.</p>
       <p className="csv-spaced">“Brug AD-oplysninger” erstatter måldomæne, roller, adgangspulje og reserverede brugernavne. I udfylder selv jeres virksomhedsnavn; importerede navne vises som forslag i feltet. Opkøbsscenariet og medarbejderantallet bevares.</p>
