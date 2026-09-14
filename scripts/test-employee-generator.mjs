@@ -13,16 +13,22 @@ async function loadModule(path) {
 }
 const { initialConfig: defaultConfig, generateEmployees, employeesToCsv, validateConfig, csvColumns } = await loadModule('../src/utils/employeeGenerator.ts');
 const initialConfig = { ...defaultConfig, company: 'Test Company Ltd', targetDomain: 'northstar.local', roles: defaultConfig.roles.map(role => ({ ...role, ou: `OU=${role.department},OU=Users,DC=northstar,DC=local` })) };
-const { parseAdInventory, configFromInventory, canUseAdValue, formatAdInventory } = await loadModule('../src/utils/adInventory.ts');
+const { parseAdInventory, configFromInventory, canUseAdValue, formatAdInventory, companyFromDomain } = await loadModule('../src/utils/adInventory.ts');
 const seeded = (seed = 42) => () => ((seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0) / 4294967296);
+
+test('company name uses the first domain label with an initial capital', () => {
+  for (const [domain, name] of [['mags.local', 'Mags'], [' X.Y ', 'X'], ['ACME.eu.local', 'Acme'], ['my-company.local', 'My-company'], ['', '']]) {
+    assert.equal(companyFromDomain(domain), name);
+  }
+});
 const snapshot = () => ({ schemaVersion: 1, domain: 'skole.local', companies: ['Skole A/S'], ous: [{ name: 'Salg', dn: 'OU=Salg,DC=skole,DC=local', gpos: ['GPO_Basis'] }], groups: [{ name: 'GG_Salg', description: 'Salg', reviewOnly: false }, { name: 'Domain Admins', description: '', reviewOnly: true }], roles: [{ title: 'Sælger', department: 'Salg', ou: 'OU=Salg,DC=skole,DC=local', groups: ['GG_Salg', 'Domain Admins'] }], reservedUsernames: ['anna.jensen'], warnings: [] });
 
 test('AD JSON import fills coherent configuration and preserves the scenario and existing AD names', () => {
   const config = configFromInventory(initialConfig, parseAdInventory('\uFEFF' + JSON.stringify(snapshot())));
   assert.equal(config.targetDomain, 'skole.local');
-  assert.equal(config.company, initialConfig.company);
+  assert.equal(config.company, 'Skole');
   assert.equal(defaultConfig.company, '');
-  assert.equal(configFromInventory(defaultConfig, parseAdInventory(JSON.stringify(snapshot()))).company, '');
+  assert.equal(configFromInventory(defaultConfig, parseAdInventory(JSON.stringify(snapshot()))).company, 'Skole');
   assert.equal(config.sourceDomain, initialConfig.sourceDomain);
   assert.equal(config.acquiredCompany, initialConfig.acquiredCompany);
   assert.equal(config.count, 100);
@@ -42,7 +48,7 @@ test('import handles empty inventories, missing role attributes and repeated job
   value.companies = [];
   const config = configFromInventory(initialConfig, parseAdInventory(JSON.stringify(value)));
   assert.equal(new Set(config.roles.map((role) => role.title)).size, 3);
-  assert.equal(config.company, initialConfig.company);
+  assert.equal(config.company, 'Skole');
   value.roles = [];
   assert.equal(configFromInventory(initialConfig, parseAdInventory(JSON.stringify(value))).roles[0].title, 'Employee');
   value.ous = [];
@@ -100,7 +106,7 @@ test('Windows PowerShell exporter -> JSON importer -> 100 employees (mocked AD)'
       } else assert.ok(inventory.ous.every((ou) => ou.gpos.join() === 'GPO_Basis'));
       const config = configFromInventory(initialConfig, inventory);
       assert.deepEqual(inventory.companies, ['Æble A/S']);
-      assert.equal(config.company, initialConfig.company);
+      assert.equal(config.company, 'Skole');
       assert.equal(generateEmployees(config, seeded()).length, 100);
     }
   } finally {

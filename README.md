@@ -97,7 +97,7 @@ Lab-demoscript: `scripts/ws2022-bootstrap/` — modulært bootstrap fra clean Wi
 
 ## CSV-generator: virksomhedsopkøb
 
-Feltet for elevernes eget virksomhedsnavn starter tomt og udfyldes af eleverne. AD-import bevarer feltets aktuelle værdi og viser kun importerede virksomhedsnavne som valgbare forslag. Historien bruger “I har købt …”.
+Feltet for elevernes eget virksomhedsnavn starter tomt. Når måldomænet indtastes eller anvendes fra AD-import, udfyldes navnet fra første del med stort begyndelsesbogstav: `mags.local` → `Mags`. Resten af navnet skrives med små bogstaver. Navnet kan efterfølgende tilpasses manuelt; en ny domæneændring eller import opdaterer det igen. Historien bruger “I har købt …”.
 
 Måldomæne og OU-stier starter også tomme. Eleverne udfylder deres egne værdier eller anvender en AD-eksport. Ved gruppevalg kan også standardgrupper og beskyttede grupper vælges manuelt til øvelsen; de er tydeligt markeret og vælges aldrig automatisk. Klik på gruppen eller afkrydsningsfeltet, og tryk **Brug AD-oplysninger** for at overføre valgene til adgangspuljen.
 

@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react';
 import { employeesToCsv, generateEmployees, initialConfig, validateConfig, type Employee, type GeneratorConfig, type RoleProfile } from '../utils/employeeGenerator';
 import './CsvGenerator.css';
 import { AdConfigImport } from '../components/AdConfigImport';
-import type { AdInventory } from '../utils/adInventory';
+import { companyFromDomain, type AdInventory } from '../utils/adInventory';
 
 export function CsvGenerator() {
   const [config, setConfig] = useState<GeneratorConfig>(initialConfig);
@@ -18,7 +18,9 @@ export function CsvGenerator() {
   const pages = Math.max(1, Math.ceil(filtered.length / 10));
 
   function update<K extends keyof GeneratorConfig>(key: K, value: GeneratorConfig[K]) {
-    setConfig((current) => ({ ...current, [key]: value }));
+    setConfig((current) => ({ ...current, [key]: value,
+      ...(key === 'targetDomain' && typeof value === 'string' ? { company: companyFromDomain(value) } : {}),
+    }));
     setErrors([]);
     setDownloaded(false);
   }
@@ -84,7 +86,7 @@ export function CsvGenerator() {
           <h2 id="csv-company"><span className="csv-step">01</span> Virksomheder og domæner</h2>
           <p className="csv-muted">Eksemplerne er fiktive. Erstat måldomæne, OU-stier, grupper og GPO’er med jeres egen opsætning.</p>
           <div className="csv-grid">
-            <label>Jeres virksomhed<input list="csv-ad-companies" value={config.company} onChange={(e) => update('company', e.target.value)} /></label>
+            <label>Jeres virksomhed<input list="csv-ad-companies" value={config.company} onChange={(e) => update('company', e.target.value)} /><small>Udfyldes fra måldomænet, fx mags.local → Mags. Kan tilpasses.</small></label>
             <label>Opkøbt virksomhed<input value={config.acquiredCompany} onChange={(e) => update('acquiredCompany', e.target.value)} /></label>
             <label>Jeres måldomæne<input value={config.targetDomain} onChange={(e) => update('targetDomain', e.target.value)} spellCheck={false} placeholder="fx firma.local" /><small>Udfyld jeres eget AD-domæne, eller indlæs det fra AD-eksporten. Tilpas OU-stierne nedenfor.</small></label>
             <label>Virksomhedens gamle domæne<input value={config.sourceDomain} onChange={(e) => update('sourceDomain', e.target.value)} spellCheck={false} /></label>

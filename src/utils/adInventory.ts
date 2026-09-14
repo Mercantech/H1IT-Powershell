@@ -13,6 +13,11 @@ export interface AdInventory {
 
 export const maxInventoryBytes = 5 * 1024 * 1024;
 
+export function companyFromDomain(domain: string): string {
+  const name = domain.trim().split('.')[0].toLowerCase();
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
 export function formatAdInventory(text: string): string {
   parseAdInventory(text);
   // Format the original object so unknown fields and AD values are preserved.
@@ -83,6 +88,6 @@ export function configFromInventory(current: GeneratorConfig, inventory: AdInven
       groups: role.groups.filter((group) => usableGroups.has(group.toLowerCase())).join('\n'),
       gpos: (ou?.gpos ?? []).filter(canUseAdValue).join('\n') };
   });
-  return { ...current,
+  return { ...current, company: companyFromDomain(inventory.domain),
     targetDomain: inventory.domain, roles, reservedUsernames: inventory.reservedUsernames.join('\n'), accessPool: '' };
 }
