@@ -67,15 +67,21 @@ $rows = @(foreach ($number in 1..2) {
 })
 try {
     $rows | Export-Csv -LiteralPath $csvPath -Delimiter ';' -Encoding UTF8 -NoTypeInformation
-    $preview = @(& $solution -CsvPath $csvPath -Server 'dc.lab.local' -WhatIf)
+    $preview = @(& $solution -CsvPath $csvPath -Server 'dc.lab.local' -WhatIf -InformationVariable previewReport)
+    Assert (($previewReport -join "`n") -match 'PREVIEW COMPLETE - NO AD CHANGES') 'Preview summary must clearly identify simulation'
+    Assert (($previewReport -join "`n") -match 'N/A - no successfully provisioned') 'Preview must not report real provisioning throughput'
     Assert ($preview.Count -eq 2 -and $preview[0].Status -eq 'WhatIf') 'WhatIf must report both users'
     Assert ($global:ImportTestCalls.Count -eq 0) 'WhatIf must never call mutation cmdlets'
 
-    $results = @(& $solution -CsvPath $csvPath -Server 'dc.lab.local' -InitialPassword $password | ForEach-Object {
+    $results = @(& $solution -CsvPath $csvPath -Server 'dc.lab.local' -InitialPassword $password -InformationVariable liveReport | ForEach-Object {
         if ($_.Status -eq 'Failed') { Write-Host $_.Details }
         $_
     })
     Assert (@($results | Where-Object Status -eq 'Created').Count -eq 2) 'Both users must be created'
+    Assert ($results.Count -eq 2) 'Console report must not pollute the CSV result stream'
+    Assert (($liveReport -join "`n") -match 'users/s\s+\|\s+Sample: 2') 'Benchmark must include successful sample size'
+    Assert (($liveReport -join "`n") -match 'Group additions\s+4') 'Summary must count successful group operations'
+    Assert (($liveReport -join "`n") -match 'Average / P95') 'Summary must show latency distribution'
     Assert ($global:ImportTestCalls.Count -eq 12) 'Expected create, password, change flag, two groups, enable for each user'
     Assert ($global:ImportTestCalls[5] -like 'Enable:*' -and $global:ImportTestCalls[11] -like 'Enable:*') 'Enable must be last'
     $global:ImportTestCalls.Clear()
@@ -87,9 +93,10 @@ try {
     $rows[1].TargetOU = 'OU=Missing,DC=lab,DC=local'
     $rows | Export-Csv -LiteralPath $csvPath -Delimiter ';' -Encoding UTF8 -NoTypeInformation
     $caught = $false
-    try { & $solution -CsvPath $csvPath -Server 'dc.lab.local' -InitialPassword $password | Out-Null }
+    try { & $solution -CsvPath $csvPath -Server 'dc.lab.local' -InitialPassword $password -InformationVariable invalidReport | Out-Null }
     catch { $caught = $_.Exception.Message -like 'Preflight failed*' }
     Assert ($caught -and $global:ImportTestCalls.Count -eq 0) 'A bad second row must stop ALL mutations'
+    Assert (($invalidReport -join "`n") -match 'Not processed\s+2') 'Preflight failure must report unprocessed rows'
     $rows[1].TargetOU = $rows[0].TargetOU
 
     $rows | Export-Csv -LiteralPath $csvPath -Delimiter ',' -Encoding UTF8 -NoTypeInformation
@@ -103,9 +110,11 @@ try {
     $rows | Export-Csv -LiteralPath $csvPath -Delimiter ';' -Encoding UTF8 -NoTypeInformation
     $global:ImportTestFailGroups = $true
     $caught = $false
-    try { & $solution -CsvPath $csvPath -Server 'dc.lab.local' -InitialPassword $password | Out-Null }
+    try { & $solution -CsvPath $csvPath -Server 'dc.lab.local' -InitialPassword $password -InformationVariable failedReport | Out-Null }
     catch { $caught = $_.Exception.Message -like '*employee(s) failed*' }
     Assert $caught 'Runtime failures must produce a failing result'
+    Assert (($failedReport -join "`n") -match 'STOPPED / ACTION REQUIRED') 'Failed run must show an actionable summary'
+    Assert (($failedReport -join "`n") -match 'Failed\s+2') 'Summary must count failed accounts'
     Assert (@($global:ImportTestCalls | Where-Object { $_ -like 'Enable:*' }).Count -eq 0) 'Failed users must never be enabled'
     Write-Output 'PASS: WhatIf, creation order, group mapping, rerun, full-batch validation, separators and partial failure.'
 } finally {
