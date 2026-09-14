@@ -9,6 +9,7 @@ const navItems = [
   { to: '/dag-1', label: 'Dag 1', end: false },
   { to: '/dag-2', label: 'Dag 2', end: false },
   { to: '/projekt', label: 'Projektkobling', end: false },
+  { to: '/csv-generator', label: 'CSV-generator', end: false },
   { to: '/ordbog', label: 'Ordbog', end: false },
   { to: '/intune', label: 'Intune', end: false },
 ];

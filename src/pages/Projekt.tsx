@@ -28,6 +28,12 @@ export function Projekt() {
         </p>
       </header>
 
+      <section className="card">
+        <h2>OnlyMAGS: 100 nye kolleger til jeres AD</h2>
+        <p>Din virksomhed har købt OnlyMAGS, en abonnementsplatform for digitale magasiner og tech-guides. Deres 100 medarbejdere skal kunne logge ind på mandag. Tilpas roller, OU’er og adgang til jeres AD, og generér medarbejderlisten til jeres PowerShell-script.</p>
+        <Link to="/csv-generator" className="btn btn-primary">Åbn CSV-generatoren</Link>
+      </section>
+
       <section id="helhedsdiagram" className="module-section">
         <h2>Helhedsdiagram</h2>
         <p>

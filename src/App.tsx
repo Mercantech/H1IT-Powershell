@@ -11,6 +11,7 @@ import { Ordbog } from './pages/Ordbog';
 import { Intune } from './pages/Intune';
 import { AuthCallback } from './pages/AuthCallback';
 import { Ws2022 } from './pages/Ws2022';
+import { CsvGenerator } from './pages/CsvGenerator';
 
 export function App() {
   return (
@@ -27,6 +28,7 @@ export function App() {
               <Route path="ordbog" element={<Ordbog />} />
               <Route path="intune" element={<Intune />} />
               <Route path="ws2022" element={<Ws2022 />} />
+              <Route path="csv-generator" element={<CsvGenerator />} />
             </Route>
           </Routes>
           <PresentationMode />

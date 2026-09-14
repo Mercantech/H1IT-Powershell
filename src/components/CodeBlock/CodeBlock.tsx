@@ -1,4 +1,5 @@
 import { course } from '../../data/course';
+import { useState } from 'react';
 import Editor, { type OnMount } from '@monaco-editor/react';
 import {
   codeBlockHeight,
@@ -12,6 +13,8 @@ interface CodeBlockProps {
   title?: string;
   filename?: string;
   showPrompt?: boolean;
+  showCopy?: boolean;
+  maxHeight?: number;
 }
 
 export function CodeBlock({
@@ -19,8 +22,21 @@ export function CodeBlock({
   title,
   filename,
   showPrompt = true,
+  showCopy = false,
+  maxHeight,
 }: CodeBlockProps) {
   const displayName = filename ?? (title ? `${title}.ps1` : 'script.ps1');
+  const [copyStatus, setCopyStatus] = useState<{ code: string; success: boolean } | null>(null);
+  const currentCopyStatus = copyStatus?.code === code ? copyStatus : null;
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopyStatus({ code, success: true });
+    } catch {
+      setCopyStatus({ code, success: false });
+    }
+  }
 
   const handleMount: OnMount = (_editor, monaco) => {
     setupPowerShellTheme(monaco);
@@ -33,10 +49,20 @@ export function CodeBlock({
         {showPrompt && (
           <span className="code-block-path">{course.promptPath}</span>
         )}
+        {showCopy && (
+          <button type="button" className="code-block-copy" onClick={copyCode} aria-label={`Kopiér ${displayName}`}>
+            {currentCopyStatus?.success ? 'Kopieret!' : 'Kopiér kode'}
+          </button>
+        )}
       </div>
+      {showCopy && <div className="code-block-copy-status" role="status">
+        {currentCopyStatus && (currentCopyStatus.success
+          ? 'Koden er kopieret til udklipsholderen.'
+          : 'Kunne ikke kopiere automatisk. Markér koden i feltet, og kopiér med Ctrl+C.')}
+      </div>}
       <div className="code-block-editor">
         <Editor
-          height={`${codeBlockHeight(code)}px`}
+          height={`${Math.min(codeBlockHeight(code), maxHeight ?? Infinity)}px`}
           defaultLanguage="powershell"
           value={code}
           onMount={handleMount}

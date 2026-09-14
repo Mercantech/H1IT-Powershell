@@ -18,6 +18,33 @@
   font-family: var(--ps-font-mono);
   font-size: 0.75rem;
   color: var(--ps-text-muted);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.code-block-copy {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--ps-border);
+  border-radius: 4px;
+  background: var(--ps-bg-input);
+  color: var(--ps-accent);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.code-block-copy:hover {
+  border-color: var(--ps-accent);
+  color: var(--ps-accent-hover);
+}
+
+.code-block-copy-status:not(:empty) {
+  padding: 0.5rem 0.75rem;
+  background: var(--ps-bg-secondary);
+  color: var(--ps-text-muted);
+  font-size: 0.8rem;
 }
 
 .code-block-path {
