@@ -9,3 +9,4 @@ api
 *.md
 .cursor
 .vscode
+scripts/instructor/
