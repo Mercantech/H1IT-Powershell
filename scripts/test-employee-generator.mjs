@@ -116,7 +116,7 @@ test('100 unique fictional employees with valid accounts, ASCII defaults and coh
   for (const employee of employees) {
     assert.ok(Object.values(employee).every((value) => /^[\x20-\x7E]*$/.test(value)));
     assert.match(employee.SamAccountName, /^[a-z0-9.]{1,20}$/);
-    assert.equal(employee.UserPrincipalName, `${employee.SamAccountName}@northstar.local`);
+    assert.equal(employee.UserPrincipalName, `${employee.SamAccountName}@JeresDomæne.local`);
     const role = initialConfig.roles.find((role) => role.title === employee.Title);
     assert.equal(employee.TargetOU, role.ou);
     assert.equal(employee.Department, role.department);
@@ -161,7 +161,7 @@ test('invalid counts, domains, OU mappings, roles and pools are rejected', () =>
     { sourceDomain: 'https://example.com' }, { sourceDomain: initialConfig.targetDomain },
     { targetDomain: 'elsewhere.local' }, { roles: [] },
     { roles: [initialConfig.roles[0], { ...initialConfig.roles[0], id: 'duplicate' }] },
-    { roles: [{ ...initialConfig.roles[0], ou: 'OU=,DC=northstar,DC=local' }] },
+    { roles: [{ ...initialConfig.roles[0], ou: 'OU=,DC=JeresDomæne,DC=local' }] },
     { maxExtraAccess: -1 }, { maxExtraAccess: 11 },
     { accessPool: 'GG_Test' }, { accessPool: 'GG_Test | read | write' },
     { accessPool: 'GG_Test | read\ngg_test | write' },
