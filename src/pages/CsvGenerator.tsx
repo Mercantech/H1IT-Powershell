@@ -59,7 +59,7 @@ export function CsvGenerator() {
         <p className="csv-eyebrow">AD-LAB / VIRKSOMHEDSOPKØB</p>
         <h1>{config.acquiredCompany || 'OnlyMAGS'} flytter ind i jeres AD.</h1>
         <p>Din virksomhed har købt et stort firma. Nu skal I tage imod {Number.isFinite(config.count) ? config.count : 0} nye kolleger med hver deres rolle og adgangsbehov. Ledelsen har underskrevet. Resten er op til IT.</p>
-        <div className="csv-badges"><span>100 medarbejdere som standard</span><span>Kun fiktive persondata</span><span>Genereres i browseren</span></div>
+        <div className="csv-badges"><span>Vælg 1–1.000 medarbejdere</span><span>Kun fiktive persondata</span><span>Genereres i browseren</span></div>
       </header>
 
       <aside className="card csv-story" aria-label="Opgavens fortælling">
@@ -90,7 +90,12 @@ export function CsvGenerator() {
             <label>Opkøbt virksomhed<input value={config.acquiredCompany} onChange={(e) => update('acquiredCompany', e.target.value)} /></label>
             <label>Jeres måldomæne<input value={config.targetDomain} onChange={(e) => update('targetDomain', e.target.value)} spellCheck={false} placeholder="fx firma.local" /><small>Udfyld jeres eget AD-domæne, eller indlæs det fra AD-eksporten. Tilpas OU-stierne nedenfor.</small></label>
             <label>Virksomhedens gamle domæne<input value={config.sourceDomain} onChange={(e) => update('sourceDomain', e.target.value)} spellCheck={false} /></label>
-            <label>Antal medarbejdere<input type="number" min="1" max="1000" step="1" value={Number.isNaN(config.count) ? '' : config.count} onChange={(e) => update('count', e.target.valueAsNumber)} /><small>1–1.000. Hver generering giver en ny tilfældig fordeling.</small></label>
+            <div className="csv-full">
+              <label>Antal medarbejdere<input type="number" min="1" max="1000" step="1" value={Number.isNaN(config.count) ? '' : config.count} onChange={(e) => update('count', e.target.valueAsNumber)} /><small>100 er standard. Skriv selv et antal fra 1 til 1.000, eller vælg nedenfor.</small></label>
+              <div className="csv-actions" role="group" aria-label="Vælg antal medarbejdere">
+                {[100, 200, 500, 1000].map((count) => <button key={count} type="button" className={`btn ${config.count === count ? 'btn-primary' : 'btn-secondary'}`} aria-pressed={config.count === count} onClick={() => update('count', count)}>{count.toLocaleString('da-DK')} medarbejdere</button>)}
+              </div>
+            </div>
           </div>
         </section>
 
