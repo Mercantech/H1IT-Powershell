@@ -10,3 +10,4 @@ api
 .cursor
 .vscode
 scripts/instructor/
+server/

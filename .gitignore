@@ -1,6 +1,9 @@
 node_modules
 dist
 dist-ssr
+server/**/bin/
+server/**/obj/
+server/artifacts/
 *.local
 .DS_Store
 scripts/ws2022-bootstrap/logs/

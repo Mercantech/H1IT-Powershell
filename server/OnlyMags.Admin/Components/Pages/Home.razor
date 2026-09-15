@@ -1,0 +1,155 @@
+@page "/"
+@rendermode InteractiveServer
+@implements IAsyncDisposable
+@using OnlyMags.Admin.Services
+@inject AdminJobs Jobs
+@inject IJSRuntime JS
+
+<PageTitle>OnlyMAGS · AD Console</PageTitle>
+<div class="shell">
+    <aside class="sidebar">
+        <a href="/" class="brand"><span class="brand-icon">M</span> OnlyMAGS<span class="brand-dot">.</span></a>
+        <div class="sidebar-label">ADMINISTRATION</div>
+        <a href="/" class="nav-active"><span>▤</span> Medarbejdere <span class="nav-arrow">↗</span></a>
+        <div class="sidebar-note"><span class="status-dot"></span> Lokal serverapp<br /><small>Windows PowerShell 5.1<br />@Environment.UserDomainName\@Environment.UserName</small></div>
+    </aside>
+    <main>
+        <header><span>Workspace <span class="slash">/</span> AD Console</span><span class="badge">SERVER EDITION</span></header>
+        <div class="page-heading"><div><p class="eyebrow">ONLYMAGS → JERES AD</p><h1>Plads til nye kolleger.</h1><p>Fra CSV til Active Directory. Kontrollér, kør og følg hele overførslen.</p></div><span class="edition">01 <span>/ MIGRATION</span></span></div>
+        <div class="workspace">
+            <section class="panel setup">
+                <div class="panel-title"><span class="step">01</span><div><h2>Klargør din kørsel</h2><p>Vælg filen og den AD-server, vi skal arbejde med.</p></div></div>
+                <fieldset disabled="@state.Running">
+                    <label for="operation">Handling</label>
+                    <select id="operation" @bind="operation"><option value="Import">Importér medarbejdere</option><option value="Revert">Fjern medarbejdere (revert)</option></select>
+                    <label for="server">Domænecontroller</label>
+                    <input id="server" @bind="server" @bind:event="oninput" placeholder="dc01.mags.local" autocomplete="off" />
+                    <div class="field-row"><div><label for="delimiter">CSV-separator</label><select id="delimiter" @bind="delimiter" @bind:after="Reparse"><option value=";">Semikolon (;)</option><option value=",">Komma (,)</option></select></div><div class="file-limit">UTF-8 · op til 5 MB<br />1–1.000 medarbejdere</div></div>
+                    <div class="upload"><span class="upload-icon">↑</span><strong>Vælg medarbejderlisten</strong><span>Den originale CSV fra generatoren</span><InputFile OnChange="Upload" accept=".csv,text/csv" aria-label="Vælg medarbejder-CSV" /></div>
+                    @if (batch is not null)
+                    {
+                        <div class="file-summary"><strong>@batch.Name</strong><span>@batch.Count medarbejdere</span></div>
+                        <p class="sample">@string.Join(" · ", batch.Accounts)@(batch.Count > 8 ? " …" : "")</p>
+                    }
+                    <button class="button secondary" disabled="@(batch is null || string.IsNullOrWhiteSpace(server))" @onclick="Preview">Kontrollér med en prøvekørsel <span>→</span></button>
+                    <p class="hint">Prøvekørslen læser AD uden at ændre konti.</p>
+                    @if (Ready)
+                    {
+                        <div class="approval"><strong>✓ Prøvekørslen er godkendt</strong><p>Kontrollér resultatlisten, før du fortsætter.</p>
+                            @if (operation == "Import")
+                            {
+                                <label for="password">Midlertidig adgangskode til dette lab-hold</label><input id="password" type="password" @bind="password" autocomplete="new-password" />
+                            }
+                            else { <p>Sletningen fjerner de matchende konti. CSV'en kan også matche brugere, der fandtes før importen.</p> }
+                            <label class="check"><input type="checkbox" @bind="confirmed" /> Jeg har gennemgået kontiene og vil @(operation == "Import" ? "oprette" : "slette") dem.</label>
+                            <button class="button @(operation == "Revert" ? "danger" : "primary")" disabled="@(!confirmed || (operation == "Import" && string.IsNullOrEmpty(password)))" @onclick="Execute">@(operation == "Import" ? "Importér medarbejdere" : "Slet de matchende konti") →</button>
+                        </div>
+                    }
+                </fieldset>
+                @if (message is not null) { <div class="error" role="alert">@message</div> }
+            </section>
+            <div class="right-column">
+                <section class="panel monitor">
+                    <div class="panel-title"><span class="step">02</span><div><h2>Overblik i realtid</h2><p>@(state.Total == 0 ? "Klar, når du er." : $"{state.FileName} · {state.Server}")</p></div><span class="run-state @(state.Running ? "live" : "")">@Status</span></div>
+                    <div class="metrics"><div><span>BEHANDLET</span><strong>@state.Results.Length<small>/ @state.Total</small></strong></div><div><span>@(state.Preview ? "FORHÅNDSVIST" : operationLabel)</span><strong>@Changed</strong></div><div><span>FEJL</span><strong class="@(Failed > 0 ? "red" : "")">@Failed</strong></div><div><span>FORLØBET TID</span><strong>@state.Elapsed.TotalSeconds.ToString("N1")<small>s</small></strong></div></div>
+                    <progress max="@(Math.Max(1, state.Total))" value="@state.Results.Length" aria-label="Behandlede medarbejdere"></progress>
+                    <div class="progress-caption"><span>@(state.Running && state.Results.Length == 0 ? "Validerer batchen — se aktuel aktivitet nedenfor" : $"{Skipped} oversprunget / ikke fundet")</span><span>@(state.Preview ? "PRØVEKØRSEL" : "AD-KØRSEL")</span></div>
+                    @if (state.Error is not null) { <div class="error" role="alert">@state.Error</div> }
+                    <div class="terminal-header"><span><i></i><i></i><i></i> AKTIVITETSLOG</span><label style="margin:0;font-size:10px"><input type="checkbox" @bind="followLog" /> Følg log</label></div>
+                    <pre class="terminal" @ref="logElement" aria-label="Aktivitetslog">@(state.Logs.Length == 0 ? "Ingen kørsel endnu.\n\nVælg en CSV og start med en prøvekørsel.\nStatus fra PowerShell vises her undervejs." : string.Join("\n", state.Logs.TakeLast(150)))</pre>
+                    <p class="hint">Kørslen fortsætter, hvis browseren afbrydes. Lad serverappen være åben, indtil den er færdig. PowerShells slutrapport og benchmark vises i loggen.</p>
+                </section>
+                <section class="panel results"><div class="panel-title"><span class="step">03</span><div><h2>Resultater</h2><p>Et resultat for hver behandlet medarbejder.</p></div>@if (state.Results.Length > 0) { <a class="download" href="/results.csv" download>↓ CSV</a> }</div>
+                    @if (state.Results.Length == 0) { <div class="empty"><span>▤</span><p>Medarbejderlisten lander her.</p><small>Du kan eksportere resultaterne efter kørslen.</small></div> }
+                    else
+                    {
+                        <div class="table-scroll"><table><thead><tr><th>BRUGER</th><th>STATUS</th><th>DETALJER</th></tr></thead><tbody>@foreach (var row in state.Results) { <tr><td>@row.GetValueOrDefault("SamAccountName")</td><td><span class="result-tag">@row.GetValueOrDefault("Status")</span></td><td>@row.GetValueOrDefault("Details")</td></tr> }</tbody></table></div>
+                    }
+                </section>
+            </div>
+        </div>
+        <footer>OnlyMAGS · Instructor tools <span>CSV → Validering → Active Directory</span></footer>
+    </main>
+</div>
+
+@code {
+    private string operation = "Import", server = "", delimiter = ";", password = "";
+    private string? message;
+    private bool confirmed;
+    private Batch? batch;
+    private byte[]? uploaded;
+    private string uploadedName = "";
+    private JobSnapshot state = default!;
+    private readonly CancellationTokenSource lifetime = new();
+    private Task? polling;
+    private bool followLog = true;
+    private ElementReference logElement;
+    private IJSObjectReference? logModule;
+    private bool Ready => batch is not null && Jobs.CanExecute(batch, server, operation);
+    private string Status => state.Running ? "I GANG" : state.Error is not null ? "KRÆVER HANDLING" : state.Success ? "AFSLUTTET" : "KLAR";
+    private string operationLabel => state.Operation == "Revert" ? "SLETTET" : "OPRETTET";
+    private int Changed => state.Results.Count(r => r.GetValueOrDefault("Status") == (state.Preview ? "WhatIf" : state.Operation == "Revert" ? "Deleted" : "Created"));
+    private int Failed => state.Results.Count(r => r.GetValueOrDefault("Status") == "Failed");
+    private int Skipped => state.Results.Count(r => r.GetValueOrDefault("Status") is "Missing" or "SkippedExisting" or "Declined");
+    protected override void OnInitialized() { state = Jobs.Snapshot(); }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            logModule = await JS.InvokeAsync<IJSObjectReference>("import", "./console.js");
+            polling = Poll();
+        }
+        if (followLog && logModule is not null) await logModule.InvokeVoidAsync("follow", logElement);
+    }
+    private async Task Poll()
+    {
+        try
+        {
+            using var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(750));
+            while (await timer.WaitForNextTickAsync(lifetime.Token))
+                await InvokeAsync(() => { state = Jobs.Snapshot(); StateHasChanged(); });
+        }
+        catch (OperationCanceledException) { }
+    }
+    private async Task Upload(InputFileChangeEventArgs e)
+    {
+        message = null; batch = null; uploaded = null; confirmed = false;
+        try
+        {
+            await using var stream = e.File.OpenReadStream(5_000_000);
+            using var buffer = new MemoryStream();
+            await stream.CopyToAsync(buffer);
+            uploaded = buffer.ToArray(); uploadedName = e.File.Name;
+            Reparse();
+        }
+        catch (Exception ex) { message = ex.Message; }
+    }
+    private void Reparse()
+    {
+        batch = null; confirmed = false; message = null;
+        try { if (uploaded is not null) batch = Batch.Parse(uploaded, uploadedName, delimiter); }
+        catch (Exception ex) { message = ex.Message; }
+    }
+    private void Preview() => Start(true);
+    private void Execute() { if (confirmed) Start(false); }
+    private void Start(bool dryRun)
+    {
+        message = null;
+        try
+        {
+            Jobs.Start(batch ?? throw new InvalidOperationException("Vælg en CSV først."), server, operation, dryRun, password);
+            password = ""; confirmed = false; state = Jobs.Snapshot();
+        }
+        catch (Exception ex) { message = ex.Message; }
+    }
+    public async ValueTask DisposeAsync()
+    {
+        await lifetime.CancelAsync();
+        if (polling is not null) await polling;
+        if (logModule is not null)
+        {
+            try { await logModule.DisposeAsync(); } catch (JSDisconnectedException) { }
+        }
+        lifetime.Dispose();
+    }
+}

@@ -1,5 +1,7 @@
 # Instructor solution: OnlyMAGS import
 
+A local Blazor Server GUI for these scripts is available in [server/README.md](../../server/README.md), including a standalone Windows Server package and startup instructions.
+
 `Import-Employees.ps1` is the reference solution for the CSV exercise. It is not linked or imported by the website and is outside `public/`. The entire `scripts/instructor/` folder is excluded from the Docker build context. The production container only serves the built `dist/` directory. This is not a secrecy boundary for anyone with repository access.
 
 Use **Windows PowerShell 5.1**, the **ActiveDirectory RSAT module**, and an account with delegated permissions to create users, set passwords and manage the selected groups. Run against a writable domain controller in the target lab domain.
@@ -29,3 +31,21 @@ Existing accounts matching both username and UPN are skipped without updates. A 
 The shared temporary password is only for the classroom lab. A production onboarding process should issue individual credentials through an approved channel.
 
 Run `Test-ImportEmployees.ps1` in Windows PowerShell to test the solution against simulated AD cmdlets. It tests dry run, operation order, groups, rerun, preflight failure, delimiters and partial failure without connecting to AD.
+
+## Remove the lab users
+
+`Revert-Employees.ps1` reads the same original employee CSV. Run with an account permitted to delete users:
+
+```powershell
+.\Revert-Employees.ps1 -CsvPath .\employees.csv -Server dc01.mags.local -WhatIf
+.\Revert-Employees.ps1 -CsvPath .\employees.csv -Server dc01.mags.local |
+    Export-Csv .\revert-results.csv -NoTypeInformation -Encoding UTF8
+```
+
+The execution asks for confirmation per user; use `-Confirm:$false` after reviewing the preview to run the batch without individual prompts. Comma CSVs use `-Delimiter ','`.
+
+The whole batch is checked before deletion: target domain, account, UPN, EmployeeID and original account CN/OU must match. A mismatch stops the batch. Missing users are skipped. Users are deleted by GUID after another identity check. Moved or renamed users require manual review. Groups, OUs and GPOs are retained. Runtime errors are reported per row and cause the script to fail after processing; completed deletions are not rolled back.
+
+The original CSV cannot prove which users were created by a previous import: a pre-existing user matching all these fields can also be deleted. This is lab cleanup, not a restoration of the previous AD state. Preview and check the selected identities before execution.
+
+Timestamped status and the final report stay separate from CSV result objects. Run `Test-RevertEmployees.ps1` to verify the behavior with simulated AD cmdlets, without contacting AD.
